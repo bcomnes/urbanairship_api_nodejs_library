@@ -86,46 +86,10 @@ function APIClient(_appKey, _appSecret) {
     }
     
     this.sendPush = function sendPush(push, callback){
-        
-        console.log("Building Payload");
-        console.log(push);
-        
-        console.log("Notifications in Push Object : " + push.notifications.length);
-        
+                
         // build payload
-        payload = {};
-        payload.notification = {};
-        
-        payload.device_types = 'all';
-        
-        payload.audience = push.notifications[0].deviceType;
-        payload.notification.alert = push.notifications[0].alert;
-        
-        if (push.notifications[0].badge !== undefined) {
-            if (payload.notification.ios === undefined) {
-                payload.notification.ios = {};                
-            }
-            payload.notification.ios.badge = push.notifications[0].badge;
-        }
-        
-        if (push.notifications[0].extras.length > 0) {
-            if (payload.notification.ios === undefined) {
-                payload.notification.ios = {};                
-            }
-            payload.notification.ios.extra = {};
-            
-            for (var i = 0; i < push.notifications[0].extras.length; i++) {
-                payload.notification.ios.extra[push.notifications[0].extras[0].key] = push.notifications[0].extras[0].value;
-            }            
-        }
-        
-        if (payload.notification.ios === undefined) {
-            payload.notification.ios = {};                
-        }
-        // payload.notification.ios.alert = push.notifications[0].alert;
-        
-        console.log(JSON.stringify(payload, null, 2));
-        
+        payload = push.toJSON();
+
         var b = JSON.stringify(payload);
                 
         var options = {
@@ -152,9 +116,32 @@ function DeviceType() {
 function Push() {
     
     this.notifications = [];
+    this.audience = {};
     
     this.addNotification = function addNotification(notification){
-        this.notifications.push(notification)
+        this.notifications.push(notification);
+    }
+    
+    this.setAudience = function(selector){
+        this.audience = selector;
+    }
+    
+    this.toJSON = function(){
+        var payload = {};
+
+        payload.device_types = "all";
+        
+        payload.notification = this.notifications[0].toJSON();
+        
+        if(this.audience.operator !== undefined){
+            payload.audience = this.audience.toJSON();
+        }
+        else {
+            payload.audience = "all";
+        }
+        
+        return payload;
+        
     }
 }
 
@@ -181,6 +168,39 @@ function Notification() {
         this.extras.push({ key: k, value: v});
     }
     
+    this.toJSON = function(){
+        var payload = {};
+        
+        if (this.deviceType === "all") {
+            payload.alert = this.alert;    
+        }
+        
+        // is there ios specific shit?
+        if (this.badge !== undefined) {
+            if (payload.ios === undefined) {
+                payload.ios = {};
+            }
+            payload.ios.badge = this.badge;
+        }
+        
+        // are there extras? add them to the ios payload
+        if (this.extras.length > 0) {
+            console.log("Extras Length : " + this.extras.length)
+            if (payload.ios === undefined) {
+                payload.ios = {};
+            }            
+            payload.ios.extra = {};
+            this.extras.forEach(function(extra){
+                console.log(extra);
+                payload.ios.extra[extra.key] = extra.value
+            })
+        }
+        
+
+        
+        return payload;    
+    }
+    
 }
 
 function Selector(booleanOperator) {
@@ -193,49 +213,87 @@ function Selector(booleanOperator) {
     this.selectors = []
     
     this.addTag = function(tag){
-        tags.push(tag)
+        this.tags.push(tag)
     }
     
     this.addAlias = function(alias){
-        aliases.push(alias)
+        this.aliases.push(alias)
     }
     
     this.addDeviceToken = function(deviceToken){
-        deviceTokens.push(deviceToken)
+        this.deviceTokens.push(deviceToken)
     }
     
     this.addApid = function(apid){
-        apids.push(apid)
+        this.apids.push(apid)
     }
     
     this.addSelector = function(selector){
-        selectors.push(selector)
+        this.selectors.push(selector)
     }
     
     this.toJSON = function(){
         
+        var payload = {}
+        payload[this.operator] = []
+        var nested = payload[this.operator]
         
+        this.tags.forEach(function(tag){            
+            nested.push({ "tag":tag })
+        })
+
+        this.aliases.forEach(function(alias){
+            nested.push({ "alias": alias })    
+        })
         
+        this.deviceTokens.forEach(function(deviceToken){
+            nested.push({ "device_token" : deviceToken })
+        })
+        
+        this.apids.forEach(function(apid){
+            nested.push({ "apid" : apid })
+        })
+        
+        this.selectors.forEach(function(selector){
+           nested.push(selector.toJSON())
+        })
+        
+        // sometimes the selector is nothing
+        if (nested.length === 0) {
+            payload = "all";
+        }
+        
+        return payload;        
     }
     
 }
 
-
-
 var client = new APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg');
 
+// build audience
+var s = new Selector("AND");
+    //s.addTag("foo");
+    
+    var s2 = new Selector("OR");
+    s2.addTag("bar");
+    s2.addTag("baz");
+    s.addSelector(s2);
+
+// build notification
 var n = new Notification();
-n.setDeviceType(new DeviceType().ALL);
-n.setAlert("Test.");
+    n.setDeviceType(new DeviceType().ALL);
+    n.setAlert("YAY.");
+    
+    // ios specific stuff
+    n.setBadge(88);
+    n.addExtra('url', 'http://google.com');
 
-// ios specific stuff
-n.setBadge(88);
-n.addExtra('url', 'http://google.com');
-
-console.log(n);
-
+// build push
 var p = new Push();
-p.addNotification(n);
+    p.addNotification(n);
+    p.setAudience(s);
+    
+    console.log(JSON.stringify(p.toJSON(),null,4));
 
 client.sendPush(p, displayResults);
 
