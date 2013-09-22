@@ -183,6 +183,45 @@ function Notification() {
     
 }
 
+function Selector(booleanOperator) {
+    
+    this.operator = booleanOperator
+    this.tags = []
+    this.aliases = []
+    this.deviceTokens = []
+    this.apids = []
+    this.selectors = []
+    
+    this.addTag = function(tag){
+        tags.push(tag)
+    }
+    
+    this.addAlias = function(alias){
+        aliases.push(alias)
+    }
+    
+    this.addDeviceToken = function(deviceToken){
+        deviceTokens.push(deviceToken)
+    }
+    
+    this.addApid = function(apid){
+        apids.push(apid)
+    }
+    
+    this.addSelector = function(selector){
+        selectors.push(selector)
+    }
+    
+    this.toJSON = function(){
+        
+        
+        
+    }
+    
+}
+
+
+
 var client = new APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg');
 
 var n = new Notification();
