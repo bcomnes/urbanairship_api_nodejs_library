@@ -1,5 +1,5 @@
 var request = require('request');
-// bloo bloo
+
 function APIClient(_appKey, _appSecret) {
     
     this.appKey = _appKey;
@@ -353,17 +353,5 @@ function displayResults(error, response, body) {
     
     console.log("Body");    
     console.log(JSON.stringify(JSON.parse(body),null,2));
-
-    // process.exit(0);
     
 }
-
-//435334
-
-/*
-
-    Todo:
-
-*/
-
-
