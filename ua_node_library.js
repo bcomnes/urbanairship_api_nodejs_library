@@ -96,7 +96,6 @@ function APIClient(_appKey, _appSecret) {
               method: 'POST'
             , auth: { user: client.appKey, pass: client.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/push/'
-            // , header: 'Accept: application/vnd.urbanairship+json; version=3; charset=utf8; Content-Type: application/json'        
             , body: b
             , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
                        , 'Content-Type' : 'application/json'
