@@ -1,5 +1,5 @@
 var request = require('request');
-
+// bloo bloo
 function APIClient(_appKey, _appSecret) {
     
     this.appKey = _appKey;
@@ -321,5 +321,11 @@ function displayResults(error, response, body) {
 
 //435334
 
+/*
+
+    Todo:
+        if there are extras and the device type is all for the notification
+
+*/
 
 
