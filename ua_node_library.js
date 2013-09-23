@@ -129,9 +129,69 @@ function Push() {
     this.toJSON = function(){
         var payload = {};
 
-        payload.device_types = "all";
+        // parse the device types in the list of notifications, do any of them have all?
+        var anyNotificationSetToAll = false;
+        this.notifications.forEach(function(notification){
+            if (notification.deviceType === 'all') {
+                anyNotificationSetToAll = true;
+            }
+        })
         
-        payload.notification = this.notifications[0].toJSON();
+        if (!anyNotificationSetToAll) {
+            // build an array of notificatons from the device types
+            payload.device_types = [];
+            this.notifications.forEach(function(notification){
+                payload.device_types.push(notification.deviceType)                
+            })
+        }
+        else {
+            payload.device_types = 'all';    
+        }
+
+        payload.notification = {}
+        
+        this.notifications.forEach(function(notification){
+            if (notification.deviceType === 'all') {
+                
+                payload.notification.alert = notification.alert;
+                
+            } else if (notification.deviceType === 'ios'){
+                
+                payload.notification.ios = {}
+                
+                if (notification.alert !== undefined) {
+                    payload.notification.ios.alert = notification.alert
+                }
+                
+                if (notification.badge !== undefined) {
+                    payload.notification.ios.badge = notification.badge
+                }
+                
+                if (notification.extras.length > 0) {
+                    payload.notification.ios.extra = {}
+                    notification.extras.forEach(function(extra){
+                        payload.notification.ios.extra[extra.key] = extra.value
+                    })
+                }
+                
+            } else if (notification.deviceType === 'android') {
+                
+                payload.notification.android = {}
+                
+                if (notification.alert !== undefined) {
+                    payload.notification.android.alert = notification.alert
+                }
+
+                if (notification.extras.length > 0) {
+                    payload.notification.android.extra = {}
+                    notification.extras.forEach(function(extra){
+                        payload.notification.android.extra[extra.key] = extra.value
+                    })
+                }
+            }
+
+        });
+        
         
         if(this.audience.operator !== undefined){
             payload.audience = this.audience.toJSON();
@@ -166,39 +226,6 @@ function Notification() {
     
     this.addExtra = function addExtra(k,v){
         this.extras.push({ key: k, value: v});
-    }
-    
-    this.toJSON = function(){
-        var payload = {};
-        
-        if (this.deviceType === "all") {
-            payload.alert = this.alert;    
-        }
-        
-        // is there ios specific shit?
-        if (this.badge !== undefined) {
-            if (payload.ios === undefined) {
-                payload.ios = {};
-            }
-            payload.ios.badge = this.badge;
-        }
-        
-        // are there extras? add them to the ios payload
-        if (this.extras.length > 0) {
-            console.log("Extras Length : " + this.extras.length)
-            if (payload.ios === undefined) {
-                payload.ios = {};
-            }            
-            payload.ios.extra = {};
-            this.extras.forEach(function(extra){
-                console.log(extra);
-                payload.ios.extra[extra.key] = extra.value
-            })
-        }
-        
-
-        
-        return payload;    
     }
     
 }
@@ -272,7 +299,7 @@ var client = new APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg');
 
 // build audience
 var s = new Selector("AND");
-    //s.addTag("foo");
+    s.addTag("foo");
     
     var s2 = new Selector("OR");
     s2.addTag("bar");
@@ -282,16 +309,25 @@ var s = new Selector("AND");
 // build notification
 var n = new Notification();
     n.setDeviceType(new DeviceType().ALL);
-    n.setAlert("YAY.");
-    
-    // ios specific stuff
-    n.setBadge(88);
-    n.addExtra('url', 'http://google.com');
+    n.setAlert("YAY. BASIC ALERT.");
+
+var n2 = new Notification();
+    n2.setDeviceType(new DeviceType().IOS);
+    n2.setAlert("YAY IOS.");
+    n2.setBadge(0);
+    n2.addExtra('url', 'http://apple.com');
+
+var n3 = new Notification();
+    n3.setDeviceType(new DeviceType().ANDROID);
+    n3.setAlert("YAY Android.");    
+    n3.addExtra('url', 'http://google.com');
 
 // build push
 var p = new Push();
-    p.addNotification(n);
-    p.setAudience(s);
+    p.addNotification(n)
+    p.addNotification(n2)
+    p.addNotification(n3);
+    // p.setAudience(s)
     
     console.log(JSON.stringify(p.toJSON(),null,4));
 
@@ -307,8 +343,12 @@ client.sendPush(p, displayResults);
 
 function displayResults(error, response, body) {
 
-    console.log("Error");
-    console.log(error);
+    console.log("");
+
+    if (error !== null) {
+        console.log("Error");
+        console.log(error);
+    }
 
     console.log("Response Status Code : " + response.statusCode);
     
@@ -324,7 +364,6 @@ function displayResults(error, response, body) {
 /*
 
     Todo:
-        if there are extras and the device type is all for the notification
 
 */
 
