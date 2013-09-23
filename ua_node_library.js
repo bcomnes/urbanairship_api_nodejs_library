@@ -15,77 +15,77 @@ function APIClient(_appKey, _appSecret) {
         return this.appSecret;
     }
     
-    this.getTags = function getTags(callback){
+    this.getTags = function getTags(ready){
         var options = {
               method: 'GET'
             , auth: { user: client.appKey, pass: client.appSecret, sendImmediately: true }
             , uri: 'https://go.urbanairship.com/api/tags'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, callback);        
+        request(options, ready);        
     }
     
-    this.createTag = function createTag(tag, callback){
+    this.createTag = function createTag(tag, ready){
         var options = {
               method: 'PUT'
             , auth: { user: client.appKey, pass: client.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/tags/' + tag
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, callback);                
+        request(options, ready);                
     }
     
-    this.deleteTag = function deleteTag(tag, callback){
+    this.deleteTag = function deleteTag(tag, ready){
         var options = {
               method: 'DELETE'
             , auth: { user: client.appKey, pass: client.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/tags/' + tag
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, callback);                
+        request(options, ready);                
     }
     
-    this.getDeviceTokens = function getDeviceTokens(callback){
+    this.getDeviceTokens = function getDeviceTokens(ready){
         var options = {
               method: 'GET'
             , auth: { user: client.appKey, pass: client.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/device_tokens/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, callback);                        
+        request(options, ready);                        
     }
 
-    this.getDeviceToken = function getDeviceTokens(deviceToken, callback){
+    this.getDeviceToken = function getDeviceTokens(deviceToken, ready){
         var options = {
               method: 'GET'
             , auth: { user: client.appKey, pass: client.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/device_tokens/' + deviceToken
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, callback);                        
+        request(options, ready);                        
     }
 
-    this.getApids = function getApids(callback){
+    this.getApids = function getApids(ready){
         var options = {
               method: 'GET'
             , auth: { user: client.appKey, pass: client.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/apids/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, callback);                        
+        request(options, ready);                        
     }
     
-    this.getApid = function getApid(apid, callback){
+    this.getApid = function getApid(apid, ready){
         var options = {
               method: 'GET'
             , auth: { user: client.appKey, pass: client.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/apids/' + apid
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, callback);        
+        request(options, ready);        
     }
     
-    this.sendPush = function sendPush(push, callback){
+    this.sendPush = function sendPush(push, ready){
                 
         // build payload
         payload = push.toJSON();
@@ -101,7 +101,7 @@ function APIClient(_appKey, _appSecret) {
                        , 'Content-Type' : 'application/json'
                     }   
         }        
-        request(options, callback);           
+        request(options, ready);           
     }
     
 }
