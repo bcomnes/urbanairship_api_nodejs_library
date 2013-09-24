@@ -1,9 +1,7 @@
-var request = require('request')
+var UA = require("./API_Client.js")
 
-var UA = require("./API_Client.js");
-
-var DeviceType = UA.DeviceType;
-var Push = UA.Push;
+var DeviceType = UA.DeviceType
+var Push = UA.Push
 var Notification = UA.Notification
 var Selector = UA.Selector
 var Message = UA.Message
