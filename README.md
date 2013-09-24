@@ -9,3 +9,5 @@
 * [X] Add Rich Message
 * [X] Add Segment to Selector
 * [X] Implement Full Payload Spec
+** [X] iOS
+** [X] Android
