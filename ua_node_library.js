@@ -6,19 +6,21 @@ var DeviceType = UA.DeviceType;
 var Push = UA.Push;
 var Notification = UA.Notification
 var Selector = UA.Selector
+var Message = UA.Message
 
 console.log(UA);
 
-var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg')
+// var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg')
+var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 
 // build audience
 var s = new Selector('AND')
-    s.addTag('foo')
+    s.addTag('snarf')
     
     var s2 = new Selector('OR')
     s2.addTag('bar')
     s2.addTag('baz')
-    s.addSelector(s2)
+    //s.addSelector(s2)
 
 // build notification
 var n = new Notification()
@@ -28,22 +30,28 @@ var n = new Notification()
 var n2 = new Notification()
     n2.setDeviceType(new DeviceType().IOS)
     n2.setAlert('YAY IOS.')
-    n2.setBadge(0)
+    n2.setBadge(33)
     n2.addExtra('url', 'http://apple.com')
 
 var n3 = new Notification()
     n3.setDeviceType(new DeviceType().ANDROID)
-    n3.setAlert('YAY Android.')
+    n3.setAlert('YAY Android. New Push Sample.')
     n3.addExtra('url', 'http://google.com')
+
+
+var m = new Message()
+    m.setTitle("from nodejs API")
+    m.setBody("<html><body><h1>blah blah</h1> etc...</html>")
 
 // build push
 var p = new Push()
     p.addNotification(n)
     p.addNotification(n2)
-    p.addNotification(n3)
-    p.setAudience(s)
+
+    p.setMessage(m)
+    // p.setAudience(s)
     
-    console.log(JSON.stringify(p.toJSON(),null,4))
+    //console.log(JSON.stringify(p.toJSON(),null,4))
 
 client.sendPush(p, displayResults)
 

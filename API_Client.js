@@ -3,6 +3,7 @@ var request = require("request")
 exports.Push = require("./Push.js").Push
 exports.Notification = require("./Notification.js").Notification
 exports.Selector = require("./Selector.js").Selector
+exports.Message = require("./Message.js").Message
 
 exports.DeviceType = function DeviceType() {
     this.IOS = 'ios'

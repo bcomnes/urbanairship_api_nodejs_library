@@ -1,10 +1,15 @@
 exports.Push = function Push() {
     
     this.notifications = []
+    this.message
     this.audience = {}
     
     this.addNotification = function(notification){
         this.notifications.push(notification)
+    }
+
+    this.setMessage = function(message){
+        this.message = message
     }
     
     this.setAudience = function(selector){
@@ -52,6 +57,22 @@ exports.Push = function Push() {
                     payload.notification.ios.badge = notification.badge
                 }
                 
+                if (notification.sound !== undefined) {
+                    payload.notification.ios.sound == notification.sound
+                }
+                
+                if (notification.content_available !== undefined) {
+                    payload.notification.ios.content_available = notification.content_available
+                }
+                
+                if (notification.expiry !== undefined) {
+                    payload.notification.ios.expiry = notification.expiry
+                }
+                
+                if (notification.priority !== undefined) {
+                    payload.notification.ios.priority = notification.priority
+                }
+                
                 if (notification.extras.length > 0) {
                     payload.notification.ios.extra = {}
                     notification.extras.forEach(function(extra){
@@ -67,6 +88,18 @@ exports.Push = function Push() {
                     payload.notification.android.alert = notification.alert
                 }
 
+                if (notification.collapse_key !== undefined) {
+                    payload.notification.android.collapse_key = notification.collapse_key
+                }
+                
+                if (notification.time_to_live !== undefined) {
+                    payload.notification.android.time_to_live = notification.time_to_live
+                }
+                
+                if (notification.delay_while_idle !== undefined) {
+                    payload.notification.android.delay_while_idle = notification.delay_while_idle
+                }
+                
                 if (notification.extras.length > 0) {
                     payload.notification.android.extra = {}
                     notification.extras.forEach(function(extra){
@@ -77,13 +110,15 @@ exports.Push = function Push() {
 
         });
         
-        
         if(this.audience.operator !== undefined){
             payload.audience = this.audience.toJSON()
         }
         else {
-            payload.audience = 'all'
-            
+            payload.audience = 'all'            
+        }
+        
+        if (this.message !== undefined) {
+            payload.message = this.message.toJSON()
         }
         
         return payload

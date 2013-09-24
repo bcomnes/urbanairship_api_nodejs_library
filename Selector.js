@@ -5,6 +5,7 @@ exports.Selector = function Selector(booleanOperator) {
     this.aliases = []
     this.deviceTokens = []
     this.apids = []
+    this.segments = []
     this.selectors = []
     
     this.addTag = function(tag){
@@ -47,6 +48,10 @@ exports.Selector = function Selector(booleanOperator) {
         
         this.apids.forEach(function(apid){
             nested.push({ 'apid' : apid })
+        })
+        
+        this.segments.forEach(function(segment){
+            nested.push({ 'segment' : segment })    
         })
         
         this.selectors.forEach(function(selector){
