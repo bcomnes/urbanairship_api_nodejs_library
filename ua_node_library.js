@@ -36,7 +36,6 @@ var n3 = new Notification()
     n3.setAlert('YAY Android. New Push Sample.')
     n3.addExtra('url', 'http://google.com')
 
-
 var m = new Message()
     m.setTitle("from nodejs API")
     m.setBody("<html><body><h1>blah blah</h1> etc...</html>")
