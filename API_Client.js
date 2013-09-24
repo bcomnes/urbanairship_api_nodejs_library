@@ -4,6 +4,7 @@ exports.Push = require("./Push.js").Push
 exports.Notification = require("./Notification.js").Notification
 exports.Selector = require("./Selector.js").Selector
 exports.Message = require("./Message.js").Message
+exports.Segment = require("./Segment.js").Segment
 
 exports.DeviceType = function DeviceType() {
     this.IOS = 'ios'
@@ -114,5 +115,79 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
         }        
         request(options, ready)
     }
+    
+    this.getSegments = function(ready){
+        
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/segments'
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }        
+        request(options, ready)           
+        
+    }
+    
+    this.getSegment = function(segment_id, ready){
+        
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }        
+        request(options, ready)           
+        
+    }
+    
+    this.createSegment = function(segment, ready){
+        
+        payload = segment.toJSON()
+        
+        var b = JSON.stringify(payload)
+       
+        var options = {
+              method: 'POST'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/segments'
+            , body: b
+            , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+                       , 'Content-Type' : 'application/json'
+                    }   
+        }        
+        request(options, ready)        
+        
+    }
+    
+    this.changeSegment = function(segment_id, segment, ready){
+        
+        payload = segment.toJSON()
+        
+        var b = JSON.stringify(payload)
+       
+        var options = {
+              method: 'PUT'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+            , body: b
+            , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+                       , 'Content-Type' : 'application/json'
+                    }   
+        }        
+        request(options, ready)        
+        
+    }
+    
+    this.deleteSegment = function(segment_id, ready){
+        
+        var options = {
+              method: 'DELETE'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }        
+        request(options, ready)           
+        
+    }    
     
 }
