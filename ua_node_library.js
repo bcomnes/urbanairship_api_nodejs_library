@@ -49,7 +49,7 @@ var p = new Push()
     p.setMessage(m)
     // p.setAudience(s)
     
-    //console.log(JSON.stringify(p.toJSON(),null,4))
+    console.log(JSON.stringify(p.toJSON(),null,4))
 
 client.sendPush(p, displayResults)
 
