@@ -27,6 +27,7 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
         return this.appSecret
     }
     
+    // Tags
     this.getTags = function(ready){
         var options = {
               method: 'GET'
@@ -57,6 +58,7 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
         request(options, ready)
     }
     
+    // Device lookup
     this.getDeviceTokens = function(ready){
         var options = {
               method: 'GET'
@@ -97,6 +99,7 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
         request(options, ready)
     }
     
+    // Push
     this.sendPush = function(push, ready){
                 
         // build payload
@@ -116,6 +119,8 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
         request(options, ready)
     }
     
+    
+    // Segments
     this.getSegments = function(ready){
         
         var options = {
@@ -189,5 +194,62 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
         request(options, ready)           
         
     }    
+    
+    // Location
+    this.getLocationFromString = function(query, alias, ready){
+        
+        var params = '?q=' + query
+        
+        if (alias !== null) {
+            params += '&type=' + alias
+        }
+        
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/location/' + params
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        console.log(options)
+        
+        request(options, ready)           
+    }
+    
+    this.getLocationFromLatLong = function(lat, lon, alias, ready){
+        
+        var params = '?q=' + lat + ',' + lon
+        
+        if (alias !== null) {
+            params += '&type=' + alias
+        }
+        
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/location/' + params
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        console.log(options);
+        
+        request(options, ready)           
+    }
+    
+    this.getLocationFromAlias = function(query, alias, ready){
+        
+        var params = '?' + alias + '=' + query
+        
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/location/from-alias' + params
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        console.log(options);
+        
+        request(options, ready)           
+    }      
     
 }

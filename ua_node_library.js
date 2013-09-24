@@ -8,7 +8,7 @@ var Message = UA.Message
 var Segment = UA.Segment
 
 // var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg')
-var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
+// var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 
 // build audience
 var s = new Selector('and')
@@ -24,11 +24,15 @@ var seg = new Segment("API_test");
     
     // console.log(JSON.stringify(seg.toJSON(),null,4))
 
+//client.getLocationFromString('Memphis,TN','city',displayResults);
 
-
+client.getLocationFromString('92705', 'postalcode', displayResults);
+// client.getLocationFromLatLong(37.7749295, -122.4194155, 'postalcode', displayResults)
+    
+// client.getLocationFromAlias("CA", "us_state", displayResults)    
     
 // client.createSegment(seg, displayResults);
-//client.getSegments(displayResults);
+// client.getSegments(displayResults);
 // client.deleteSegment('682d62a6-ef11-4000-9a8e-b32d9aa9376c', displayResults)
 // client.getSegment('287867ca-b603-46ae-b6fd-eac52ba1675b', displayResults)
 // client.changeSegment('287867ca-b603-46ae-b6fd-eac52ba1675b', seg, displayResults)
