@@ -5,6 +5,7 @@ exports.Notification = require("./Notification.js").Notification
 exports.Selector = require("./Selector.js").Selector
 exports.Message = require("./Message.js").Message
 exports.Segment = require("./Segment.js").Segment
+exports.Location = require("./Location.js").Location
 
 exports.DeviceType = function DeviceType() {
     this.IOS = 'ios'

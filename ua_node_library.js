@@ -4,12 +4,17 @@ var credentials = JSON.parse(fs.readFileSync('./keys.json', 'utf-8'))
 
 var UA = require("./API_Client.js")
 
+var thisDate = new Date()
+console.log(thisDate.toJSON())
+
+
 var DeviceType = UA.DeviceType
 var Push = UA.Push
 var Notification = UA.Notification
 var Selector = UA.Selector
 var Message = UA.Message
 var Segment = UA.Segment
+var Location = UA.Location
 
 // var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg')
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
@@ -20,6 +25,15 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 var s = new Selector('and')
     s.addTag('snarf')
     
+    var l = new Location()
+    l.setId("00xb78Jw3Zz1TyrjqRykN9")
+    // l.setTimeAbsolute(new Date(2013,09,01), new Date(2013,12,01), "months")
+    l.setTimeRelative(4, "months")
+    
+    console.log(l.toJSON())
+    
+    s.addLocation(l)
+    
     var s2 = new Selector('or')
     s2.addTag('bar')
     s2.addTag('bazzzzzzz')
@@ -28,13 +42,17 @@ var s = new Selector('and')
 var seg = new Segment("API_test");
     seg.setCriteria(s);
 
+console.log(JSON.stringify(seg,null,4))
+
+client.createSegment(seg, displayResults);
+
 // client.getLocationFromString('Memphis,TN','city',displayResults);
 // client.getLocationFromString('92705', 'postalcode', displayResults);
 // client.getLocationFromLatLong(37.7749295, -122.4194155, 'city', displayResults)
     
-client.getLocationFromAlias("CA", "us_state", displayResults)    
+// client.getLocationFromAlias("CA", "us_state", displayResults)    
     
-// client.createSegment(seg, displayResults);
+
 // client.getSegments(displayResults);
 // client.deleteSegment('682d62a6-ef11-4000-9a8e-b32d9aa9376c', displayResults)
 // client.getSegment('287867ca-b603-46ae-b6fd-eac52ba1675b', displayResults)

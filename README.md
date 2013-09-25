@@ -1,6 +1,9 @@
 ###TODO
 * Add Location Lookup
+  * [] it's complicated
 * Add Location to Selector
+  * fix weeks resolution for absolute time
+* "not" behavior in audience selector
 * Add Logging
 * Add Schedule Push
 * Add Pagination Recursion

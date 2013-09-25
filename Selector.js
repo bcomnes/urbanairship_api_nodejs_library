@@ -6,6 +6,7 @@ exports.Selector = function Selector(booleanOperator) {
     this.deviceTokens = []
     this.apids = []
     this.segments = []
+    this.locations = []
     this.selectors = []
     
     this.addTag = function(tag){
@@ -26,6 +27,10 @@ exports.Selector = function Selector(booleanOperator) {
     
     this.addSelector = function(selector){
         this.selectors.push(selector)
+    }
+    
+    this.addLocation = function(location){
+        this.locations.push(location)
     }
     
     this.toJSON = function(){
@@ -52,6 +57,10 @@ exports.Selector = function Selector(booleanOperator) {
         
         this.segments.forEach(function(segment){
             nested.push({ 'segment' : segment })    
+        })
+        
+        this.locations.forEach(function(location){
+            nested.push({ 'location' : location.toJSON() })  
         })
         
         this.selectors.forEach(function(selector){
