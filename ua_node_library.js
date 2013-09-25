@@ -21,8 +21,12 @@ var Location = UA.Location
 
 var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 
-// build audience
 
+
+client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'DAILY', displayResults)
+
+// build audience
+/*
 var s2 = new Selector('or')
     s2.addTag('notSnarf', true)
 
@@ -44,7 +48,7 @@ var seg = new Segment("API_test_with_Segment");
 console.log(JSON.stringify(seg,null,4))
 
 client.createSegment(seg, displayResults);
-
+*/
 // client.getLocationFromString('Memphis,TN','city',displayResults);
 // client.getLocationFromString('92705', 'postalcode', displayResults);
 // client.getLocationFromLatLong(37.7749295, -122.4194155, 'city', displayResults)
@@ -110,7 +114,12 @@ function displayResults(error, response, body) {
     console.log("Body : ");
     
     try {
+        
         console.log(JSON.stringify(JSON.parse(body),null,2));
+        
+        if (body.next_page !== undefined) {
+        }
+        
     } catch(e) {
         console.log(body)
     }

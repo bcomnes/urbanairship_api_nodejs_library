@@ -252,4 +252,78 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
         request(options, ready)           
     }      
     
+    // reports
+    this.getPushReport = function(start,end,precision,ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/sends/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, ready)
+    }
+
+    this.getResponseReport = function(start,end,precision,ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/responses/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, ready)
+    }
+    
+    this.getAppOpensReport = function(start,end,precision,ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/opens/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, ready)
+    }
+
+    this.getTimeInAppReport = function(start,end,precision,ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/timeinapp/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, ready)
+    }
+    
+    this.getOptInReport = function(start,end,precision,ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/optins/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, ready)
+    }
+    
+    this.getOptOutReport = function(start,end,precision,ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/optouts/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, ready)
+    }
+    
+    
 }
