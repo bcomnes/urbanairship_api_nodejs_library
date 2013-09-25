@@ -1,70 +1,126 @@
 exports.Selector = function Selector(booleanOperator) {
     
     this.operator = booleanOperator
+
     this.tags = []
     this.aliases = []
     this.deviceTokens = []
     this.apids = []
-    this.segments = []
     this.locations = []
+    
     this.selectors = []
     
-    this.addTag = function(tag){
-        this.tags.push(tag)
+    this.addTag = function(tag, bIsNot){
+        if (bIsNot === undefined || bIsNot === false) {
+            this.tags.push(tag)    
+        } else {
+            this.tags.push({ tag: tag, not: true})    
+        }
+        
     }
     
-    this.addAlias = function(alias){
-        this.aliases.push(alias)
+    this.addAlias = function(alias, bIsNot){
+        if (bIsNot === undefined || bIsNot === false) {
+            this.aliases.push(alias)
+        } else {
+            this.aliases.push({ alias: alias, not:true })
+        }
+        
     }
     
-    this.addDeviceToken = function(deviceToken){
-        this.deviceTokens.push(deviceToken)
+    this.addDeviceToken = function(deviceToken, bIsNot){
+        if (bIsNot === undefined || bIsNot === false) {
+            this.deviceTokens.push(deviceToken)
+        } else {
+            this.deviceTokens.push({ deviceToken: deviceToken, not:true })
+        }
+        
     }
     
-    this.addApid = function(apid){
-        this.apids.push(apid)
+    this.addApid = function(apid, bIsNot){
+        if (bIsNot === undefined || bIsNot === false) {
+            this.apids.push(apid)
+        } else {
+            this.apids.push({ apid: apid, not: true })
+        }
+        
     }
     
-    this.addSelector = function(selector){
-        this.selectors.push(selector)
+    this.addSelector = function(selector, bIsNot){
+        
+        if (bIsNot === undefined || bIsNot === false) {        
+            this.selectors.push(selector)
+        }
+        else {
+            this.selectors.push( { selector: selector, not: true })
+        }
     }
-    
-    this.addLocation = function(location){
-        this.locations.push(location)
+        
+    this.addLocation = function(location, bIsNot){
+
+        if (bIsNot === undefined || bIsNot === false) {
+            this.locations.push(location)
+        }
+        else {
+            this.locations.push( { location: location, not: true })
+        }
     }
     
     this.toJSON = function(){
-        
+                
         var payload = {}
         payload[this.operator] = []
         var nested = payload[this.operator]
         
-        this.tags.forEach(function(tag){            
-            nested.push({ 'tag':tag })
+        this.tags.forEach(function(tag){
+            if (tag.not === undefined || tag.not === false) {
+                nested.push({ 'tag' : tag })    
+            } else {
+                nested.push({ 'not' : { 'tag':tag.tag }})
+            }
         })
 
         this.aliases.forEach(function(alias){
-            nested.push({ 'alias': alias })    
+            if (alias.not === undefined || alias.not === false) {
+                nested.push({ 'alias': alias })    
+            } else {
+                nested.push({ 'not' : { 'alias': alias.alias }})    
+            }            
+            
         })
         
         this.deviceTokens.forEach(function(deviceToken){
-            nested.push({ 'device_token' : deviceToken })
+            if (deviceToken.not === undefined || deviceToken.not === false) {
+                nested.push({ 'device_token' : deviceToken.deviceToken })    
+            } else {
+                nested.push({ 'not' : { 'device_token' : deviceToken }})    
+            }
+            
         })
         
         this.apids.forEach(function(apid){
-            nested.push({ 'apid' : apid })
-        })
-        
-        this.segments.forEach(function(segment){
-            nested.push({ 'segment' : segment })    
+            if (apid.not === undefined || apid.not === false) {
+                nested.push({ 'apid' : apid })    
+            } else {
+                nested.push({ 'not' : { 'apid' : apid.apid }})
+            }
+            
         })
         
         this.locations.forEach(function(location){
-            nested.push({ 'location' : location.toJSON() })  
+            if (location.not === undefined || location.not === false) {
+                 nested.push({ 'location' : location.toJSON() })
+            } else {
+                nested.push({ 'not' : { 'location' : location.location.toJSON() }})
+            }
         })
         
         this.selectors.forEach(function(selector){
-           nested.push(selector.toJSON())
+            if(selector.not === undefined || selector.not === false){    
+                nested.push(selector.toJSON())            
+            } else {
+                nested.push({ 'not': selector.selector.toJSON() })
+            }
         })
         
         // sometimes the selector is nothing, so the audience would be all

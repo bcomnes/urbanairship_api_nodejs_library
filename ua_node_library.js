@@ -22,24 +22,23 @@ var Location = UA.Location
 var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 
 // build audience
+
+var s2 = new Selector('or')
+    s2.addTag('notSnarf', true)
+
 var s = new Selector('and')
     s.addTag('snarf')
-    
+        
     var l = new Location()
     l.setId("00xb78Jw3Zz1TyrjqRykN9")
     // l.setTimeAbsolute(new Date(2013,09,01), new Date(2013,12,01), "months")
     l.setTimeRelative(4, "months")
-    
-    console.log(l.toJSON())
-    
-    s.addLocation(l)
-    
-    var s2 = new Selector('or')
-    s2.addTag('bar')
-    s2.addTag('bazzzzzzz')
-    s.addSelector(s2)
+        
+    s.addLocation(l, true)
 
-var seg = new Segment("API_test");
+    s.addSelector(s2, true)
+
+var seg = new Segment("API_test_with_Segment");
     seg.setCriteria(s);
 
 console.log(JSON.stringify(seg,null,4))
@@ -51,7 +50,6 @@ client.createSegment(seg, displayResults);
 // client.getLocationFromLatLong(37.7749295, -122.4194155, 'city', displayResults)
     
 // client.getLocationFromAlias("CA", "us_state", displayResults)    
-    
 
 // client.getSegments(displayResults);
 // client.deleteSegment('682d62a6-ef11-4000-9a8e-b32d9aa9376c', displayResults)

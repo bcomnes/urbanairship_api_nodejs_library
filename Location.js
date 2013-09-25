@@ -101,8 +101,6 @@ exports.Location = function(){
                 
                 var splitStart = this.start.toJSON().split("T")
                 
-                console.log(this.start.getWeeks());
-                                
                 payload.date.weeks.start = splitStart[0].substring(0,5) + "-W" + this.start.getUTCWeek();
                 payload.date.weeks.end = splitEnd[0]            
             

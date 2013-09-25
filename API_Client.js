@@ -120,7 +120,6 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
         request(options, ready)
     }
     
-    
     // Segments
     this.getSegments = function(ready){
         
