@@ -6,7 +6,7 @@
   * [] Adding & Removing Devices from a tag
 * Add Pagination Recursion
   * [] check the parse the HTTP response for the API endpoint and continue the query
-  * [] identify which queries can have pagination and create a special recursive call back which calls the passed in callback once all of the queries are complete
+  * [] identify which queries can have pagination and create an intermediate recursive call back which calls the passed in callback once all of the queries are complete
 * Reports
   * [] active users
   * [] individual push response
