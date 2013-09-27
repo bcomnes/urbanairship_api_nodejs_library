@@ -16,10 +16,15 @@ var Location = UA.Location
 // var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg')
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 
-var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
+// var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
+
+var client = new UA.API_Client('p5q0bOSXQcCRmqRbiv88Hg', 'XBdMRIFYRau9FFHEbIOBTQ') // redbox
+
+// client.getSegments(displayResults);
+// client.getSegment('65e4bde8-5135-4898-871a-54b035e9741d', displayResults)
 
 // client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', recurisveResults)
-// client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'DAILY', recurisveResults)
+client.getPushReport(new Date(2013,8,23), new Date(2013,8,30), 'DAILY', displayResults)
 
 // build audience
 /*
@@ -52,9 +57,9 @@ client.createSegment(seg, displayResults);
     
 // client.getLocationFromAlias("CA", "us_state", displayResults)    
 
-// client.getSegments(displayResults);
+
 // client.deleteSegment('682d62a6-ef11-4000-9a8e-b32d9aa9376c', displayResults)
-// client.getSegment('287867ca-b603-46ae-b6fd-eac52ba1675b', displayResults)
+
 // client.changeSegment('287867ca-b603-46ae-b6fd-eac52ba1675b', seg, displayResults)
 // client.sendPush(p, displayResults)
 // client.getApids(displayResults)
@@ -67,33 +72,6 @@ client.createSegment(seg, displayResults);
 // client.createTag("library", displayResults)
 // client.deleteTag("library", displayResults)
 
-
-// build notification
-var n = new Notification()
-    n.setDeviceType(new DeviceType().ALL)
-    n.setAlert('YAY. BASIC ALERT.')
-
-var n2 = new Notification()
-    n2.setDeviceType(new DeviceType().IOS)
-    n2.setAlert('YAY IOS.')
-    n2.setBadge(33)
-    n2.addExtra('url', 'http://apple.com')
-
-var n3 = new Notification()
-    n3.setDeviceType(new DeviceType().ANDROID)
-    n3.setAlert('YAY Android. New Push Sample.')
-    n3.addExtra('url', 'http://google.com')
-
-var m = new Message()
-    m.setTitle('from nodejs API')
-    m.setBody('<html><body><h1>blah blah</h1> etc...</html>')
-
-// build push
-var p = new Push()
-    p.addNotification(n)
-    p.addNotification(n2)
-
-client.sendPush(p, displayResults)
 
     // p.setMessage(m)
     // p.setAudience(s)

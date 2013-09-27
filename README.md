@@ -45,4 +45,17 @@
   * [x] get all
   * [x] delete
   * [x] change
-  
+
+##List of API Endpoints
+
+| Method | Endpoint  | reponse format   |
+| ------ | --------- | ---------------: |
+| POST   | /api/push | crap
+
+POST /api/push/validate
+
+POST /api/schedules
+GET  /api/schedules
+GET  /api/schedules/(id)
+PUT  /api/schedules/(id)
+DELETE /api/schedules/(id)

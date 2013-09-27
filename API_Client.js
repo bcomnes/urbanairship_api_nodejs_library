@@ -125,7 +125,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     }
     
     // Push
-    this.sendPush = function(push, ready){
+    this.sendPushDDEEERRRP = function(push, ready){
                 
         // build payload
         payload = push.toJSON()
@@ -171,7 +171,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-            , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+            , url: 'https://go.urbanairship.com/api/segments/' + segment_id + '?with_count=1'
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }        
 
@@ -403,7 +403,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     
     this.recursiveReady = function(error, response, body, data, ready){
     
-        // console.log(body)
+        console.log(body)
     
         if (error !== null) {
             
