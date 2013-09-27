@@ -13,12 +13,14 @@ exports.DeviceType = function DeviceType() {
     this.ALL = 'all'
 }
 
-exports.API_Client = function APIClient(_appKey, _appSecret) {
+exports.API_Client = function APIClient(appKey, appSecret) {
     
-    this.appKey = _appKey
-    this.appSecret = _appSecret
+    this.appKey = appKey
+    this.appSecret = appSecret
     
     this.auth = new Buffer(this.appKey + ":" + this.appSecret).toString('base64')
+    
+    var self = this    
     
     this.getKey = function(){
         return this.appKey
@@ -253,18 +255,6 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
     }      
     
     // reports
-    this.getPushReport = function(start,end,precision,ready){
-
-        var options = {
-              method: 'GET'
-            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-            , url: 'https://go.urbanairship.com/api/reports/sends/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
-            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-        }
-        
-        request(options, ready)
-    }
-
     this.getResponseReport = function(start,end,precision,ready){
 
         var options = {
@@ -323,6 +313,66 @@ exports.API_Client = function APIClient(_appKey, _appSecret) {
         }
         
         request(options, ready)
+    }
+    
+    this.getPushReport = function(start,end,precision,ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/sends/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, function(error, response, body){
+                var data = []
+                self.recursiveReady(error, response, body, data, ready)
+        })
+    }    
+    
+    this.recursiveReady = function(error, response, body, data, ready){
+        
+        try {
+            var b = JSON.parse(body)
+            // console.log(b)
+            
+            var keys_array = Object.keys(b)
+            
+            keys_array.forEach(function(key){
+            
+                if(key !== "next_page"){
+                    b[key].forEach(function(element){
+                        data.push(element)    
+                    })                     
+                }
+                
+            })
+            
+            if (b.next_page !== undefined) {
+
+                console.log("Data.length : " + data.length)
+                
+                var options = {
+                      method: 'GET'
+                    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+                    , url: b.next_page
+                    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+                }
+                
+                request(options, function(error, response, body){ self.recursiveReady(error, response, body, data, ready) })
+                
+            }
+            else {
+                // you have it all call the original callback
+                ready(data)
+            }            
+            
+        } catch(e) {
+            // pokemon!
+        }
+        
+
+        
     }
     
     

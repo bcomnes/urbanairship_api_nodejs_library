@@ -21,9 +21,8 @@ var Location = UA.Location
 
 var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 
-
-
-client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'DAILY', displayResults)
+client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', recurisveResults)
+client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'DAILY', recurisveResults)
 
 // build audience
 /*
@@ -99,6 +98,12 @@ var p = new Push()
     
     //console.log(JSON.stringify(p.toJSON(),null,4))
 */
+
+function recurisveResults(data) {
+    console.log("Done : ")
+    console.log(data.length)
+    console.log(data)
+}
 
 function displayResults(error, response, body) {
 
