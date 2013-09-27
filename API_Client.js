@@ -14,13 +14,14 @@ exports.DeviceType = function DeviceType() {
 }
 
 exports.API_Client = function APIClient(appKey, appSecret) {
+
+    // pagination requires recursion with anonymous functions, thus self
+    var self = this
     
     this.appKey = appKey
     this.appSecret = appSecret
     
     this.auth = new Buffer(this.appKey + ":" + this.appSecret).toString('base64')
-    
-    var self = this    
     
     this.getKey = function(){
         return this.appKey
@@ -38,7 +39,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , uri: 'https://go.urbanairship.com/api/tags'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
     
     this.createTag = function(tag, ready){
@@ -48,7 +52,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , url: 'https://go.urbanairship.com/api/tags/' + tag
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
     
     this.deleteTag = function(tag, ready){
@@ -58,7 +65,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , url: 'https://go.urbanairship.com/api/tags/' + tag
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
     
     // Device lookup
@@ -69,7 +79,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , url: 'https://go.urbanairship.com/api/device_tokens/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
 
     this.getDeviceToken = function(deviceToken, ready){
@@ -79,7 +92,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , url: 'https://go.urbanairship.com/api/device_tokens/' + deviceToken
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
 
     this.getApids = function(ready){
@@ -89,7 +105,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , url: 'https://go.urbanairship.com/api/apids/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
     
     this.getApid = function(apid, ready){
@@ -99,7 +118,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , url: 'https://go.urbanairship.com/api/apids/' + apid
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
     
     // Push
@@ -119,7 +141,12 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                        , 'Content-Type' : 'application/json'
                     }   
         }        
-        request(options, ready)
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })        
+        
     }
     
     // Segments
@@ -131,7 +158,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , url: 'https://go.urbanairship.com/api/segments'
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }        
-        request(options, ready)           
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })          
         
     }
     
@@ -143,7 +174,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , url: 'https://go.urbanairship.com/api/segments/' + segment_id
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }        
-        request(options, ready)           
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })           
         
     }
     
@@ -162,7 +197,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                        , 'Content-Type' : 'application/json'
                     }   
         }        
-        request(options, ready)        
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })        
         
     }
     
@@ -180,8 +219,12 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
                        , 'Content-Type' : 'application/json'
                     }   
-        }        
-        request(options, ready)        
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })        
         
     }
     
@@ -192,8 +235,12 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/segments/' + segment_id
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-        }        
-        request(options, ready)           
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })       
         
     }    
     
@@ -215,7 +262,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         console.log(options)
         
-        request(options, ready)           
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })          
     }
     
     this.getLocationFromLatLong = function(lat, lon, alias, ready){
@@ -235,7 +285,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         console.log(options);
         
-        request(options, ready)           
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })           
     }
     
     this.getLocationFromAlias = function(query, alias, ready){
@@ -251,7 +304,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         console.log(options);
         
-        request(options, ready)           
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })          
     }      
     
     // reports
@@ -264,7 +320,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
     
     this.getAppOpensReport = function(start,end,precision,ready){
@@ -276,7 +335,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
 
     this.getTimeInAppReport = function(start,end,precision,ready){
@@ -288,7 +350,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
     
     this.getOptInReport = function(start,end,precision,ready){
@@ -300,7 +365,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
     
     this.getOptOutReport = function(start,end,precision,ready){
@@ -312,7 +380,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
-        request(options, ready)
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
     }
     
     this.getPushReport = function(start,end,precision,ready){
@@ -325,53 +396,94 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         }
         
         request(options, function(error, response, body){
-                var data = []
+                var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
     }    
     
     this.recursiveReady = function(error, response, body, data, ready){
+    
+        // console.log(body)
+    
+        if (error !== null) {
+            
+            console.log("BIG ERROR" + error)
+            ready(error, null)
+            return
+        }         
         
-        try {
-            var b = JSON.parse(body)
-            // console.log(b)
+        try { // is the body JSON(?)
             
-            var keys_array = Object.keys(b)
+            var b = JSON.parse(body);
             
-            keys_array.forEach(function(key){
-            
-                if(key !== "next_page"){
-                    b[key].forEach(function(element){
-                        data.push(element)    
-                    })                     
-                }
+            // check if the body contains an error
+            if (b.error !== undefined) {
                 
-            })
-            
-            if (b.next_page !== undefined) {
+                console.log("Verbose Error")
+                // return it as an error
+                ready(JSON.stringify(b), null)
+                
+            } else {
+                
+                console.log("Success!")
+                var b = JSON.parse(body)
+                
+                var keys_array = Object.keys(b)
+                
+                keys_array.forEach(function(key){
+                
+                    if(key !== "next_page" && key != "prev_page" ){
+                        // this packet has data, append it to the dump
+                        
+                        if (data[key] === undefined) {
+                            data[key] = []
+                        }
+                        
+                        b[key].forEach(function(element){
+                            data[key].push(element)    
+                        })                     
+                    }
+                    
+                })
+                
+                if (b.next_page !== undefined) {
+                    // there is a next_page element, run the recursive call
+                    // console.log("Data.length : " + data.length)
+                    
+                    var options = {
+                          method: 'GET'
+                        , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+                        , url: b.next_page
+                        , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+                    }
+                    
+                    request(options, function(error, response, body){ self.recursiveReady(error, response, body, data, ready) })
+                    
+                }
+                else {
+                    // you have it all call the original callback
+                    console.log("Got all the data calling final callback:")
+                    ready(null, data)
+                }            
 
-                console.log("Data.length : " + data.length)
-                
-                var options = {
-                      method: 'GET'
-                    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-                    , url: b.next_page
-                    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-                }
-                
-                request(options, function(error, response, body){ self.recursiveReady(error, response, body, data, ready) })
-                
-            }
-            else {
-                // you have it all call the original callback
-                ready(data)
             }            
-            
-        } catch(e) {
-            // pokemon!
-        }
-        
 
+        } catch(e) {
+            //
+            
+            console.log("First try catch error " + e)
+            
+            // console.log("Object is not an array.")
+            try {
+                console.log(JSON.parse(body))
+                ready(null, JSON.parse(body))
+                return 
+            } catch(e) {
+                console.log("Body is not JSON")
+                ready(null, body)
+            }
+        }
+    
         
     }
     

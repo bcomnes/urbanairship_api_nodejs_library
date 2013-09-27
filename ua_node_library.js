@@ -1,12 +1,9 @@
 var fs = require('fs')
+var UA = require("./API_Client.js")
 
 var credentials = JSON.parse(fs.readFileSync('./keys.json', 'utf-8'))
 
 var UA = require("./API_Client.js")
-
-var thisDate = new Date()
-console.log(thisDate.toJSON())
-
 
 var DeviceType = UA.DeviceType
 var Push = UA.Push
@@ -21,8 +18,8 @@ var Location = UA.Location
 
 var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 
-client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', recurisveResults)
-client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'DAILY', recurisveResults)
+// client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', recurisveResults)
+// client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'DAILY', recurisveResults)
 
 // build audience
 /*
@@ -49,8 +46,9 @@ console.log(JSON.stringify(seg,null,4))
 client.createSegment(seg, displayResults);
 */
 // client.getLocationFromString('Memphis,TN','city',displayResults);
+// client.getLocationFromString('Memphis,TN',null,displayResults);
 // client.getLocationFromString('92705', 'postalcode', displayResults);
-// client.getLocationFromLatLong(37.7749295, -122.4194155, 'city', displayResults)
+// client.getLocationFromLatLong(37.7749295, -122.4194155, 'hasc', displayResults)
     
 // client.getLocationFromAlias("CA", "us_state", displayResults)    
 
@@ -61,13 +59,15 @@ client.createSegment(seg, displayResults);
 // client.sendPush(p, displayResults)
 // client.getApids(displayResults)
 // client.getApid("b7962a6b-4c54-456d-91d1-de1466788db2", displayResults)
+
 // client.getDeviceTokens(displayResults)
+
 // client.getDeviceToken('068A81174355005612A4BA390B99E6F7BC7567F754C54D1B079EABAC8340A1E1', displayResults)
 // client.getTags(displayResults)
 // client.createTag("library", displayResults)
 // client.deleteTag("library", displayResults)
 
-/*
+
 // build notification
 var n = new Notification()
     n.setDeviceType(new DeviceType().ALL)
@@ -93,40 +93,34 @@ var p = new Push()
     p.addNotification(n)
     p.addNotification(n2)
 
-    p.setMessage(m)
+client.sendPush(p, displayResults)
+
+    // p.setMessage(m)
     // p.setAudience(s)
     
     //console.log(JSON.stringify(p.toJSON(),null,4))
-*/
 
-function recurisveResults(data) {
-    console.log("Done : ")
-    console.log(data.length)
-    console.log(data)
-}
 
-function displayResults(error, response, body) {
-
-    console.log();
-
-    if (error !== null) {
-        console.log("Error");
-        console.log(error);
-    }
-
-    console.log("Response Status Code : " + response.statusCode);
+function displayResults(error, data) {
     
-    console.log("Body : ");
+    console.log("Made it to the final callback")
+    console.log("Error : " + error)
+    console.log("Data  : " + data )
     
-    try {
+    if (error !== null || data === null) {
+        console.log("ERROR " + error)
+    } else {
         
-        console.log(JSON.stringify(JSON.parse(body),null,2));
-        
-        if (body.next_page !== undefined) {
+        try {
+            var keys_array = Object.keys(data)
+            // console.log(keys_array)
+            console.log(JSON.stringify(data,null,4))
+
+        } catch(e) {
+            // console.log("no keys in return object")
+            
         }
-        
-    } catch(e) {
-        console.log(body)
+
     }
-    
 }
+

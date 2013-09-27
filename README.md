@@ -1,12 +1,19 @@
 ###TODO
+* Testing this is a bitch.
+  * Some API endpoints return JSON object
+  * Some API endpoints return JSON object that is an array
+  * Some API endpoints *NOTHING*
+  * Some API endpoints return non JSON text
+  * [] Sort this out.
 * Add Logging
 * Add Schedule Push
 * Feedback
 * Tags
   * [] Adding & Removing Devices from a tag
 * Add Pagination Recursion
-  * [] check the parse the HTTP response for the API endpoint and continue the query
-  * [] identify which queries can have pagination and create an intermediate recursive call back which calls the passed in callback once all of the queries are complete
+  * [X] check the parse the HTTP response for the API endpoint and continue the query
+  * [X] use the possibly recursive intermediate callback function on all API requests
+  * [X] the last function should have accept (error, data) as arguments
 * Reports
   * [] active users
   * [] individual push response
