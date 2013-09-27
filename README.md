@@ -49,7 +49,7 @@
 ##List of API Endpoints
 
 | Method | Endpoint  | reponse format   |
-| ------ | --------- | ---------------: |
+| ------ | --------- | ---------------  |
 | POST   | /api/push | crap
 
 POST /api/push/validate
