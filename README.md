@@ -51,8 +51,7 @@
 | Method | Endpoint  | reponse format   |
 | ------ | --------- | ---------------  |
 | POST   | /api/push | crap
-
-POST /api/push/validate
+| POST  |  /api/push/validate | |
 
 POST /api/schedules
 GET  /api/schedules
