@@ -108,14 +108,14 @@ var s = new Selector('and')
     // l.setTimeAbsolute(new Date(2013,09,01), new Date(2013,12,01), "months")
     l.setTimeRelative(4, "months")
         
-    // s.addLocation(l, true)
+    s.addLocation(l, true)
 
     s.addSelector(s2, true)
 
 var seg = new Segment("API_test_with_Segments");
     seg.setCriteria(s);
 
-// console.log(JSON.stringify(seg,null,4))
+console.log(JSON.stringify(seg,null,4))
 
 
 
