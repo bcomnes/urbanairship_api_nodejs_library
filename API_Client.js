@@ -588,7 +588,6 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         if (primaryPathName === 'push' && secondaryPathName === 'stats' && method === 'GET') {
             return [ 'object' ]
         }
-
         
         // return(LUT[path][method])
     }

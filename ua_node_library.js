@@ -58,7 +58,7 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     // client.getResponseReport(new Date(2013,0,1), new Date(2013,8,30), 'DAILY', displayResults)
     // client.getIndividualResponseStatistics('9012ad1a-59fd-11e2-8074-d4bed9a88504', displayResults)
 
-    client.getStatistics(new Date(2013,0,1), new Date(2013,0,2), displayResults)
+    client.getStatistics(new Date(2013,1,1), new Date(2013,1,2), displayResults)
 
 //////////////////////////////////////////////////
 /// Not Handled
