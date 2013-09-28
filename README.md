@@ -65,12 +65,12 @@
 | O | Active User Count | GET | /api/reports/activeusers/?date=(date) | { "android" : integer, "ios" : integer } |
 | O | Individual Response Statistics | GET | /api/reports/responses/(push_id) | { "push_uuid": UUID , "direct_responses": integer , "sends": integer , "push_type": "UNICAST_PUSH", "push_time": Date() } |
 | O | Push Report | GET | /api/reports/sends/?start=(date)&end=(date)&precision=(precision) | { "sends" : [], "next_page" : String, "prev_page" : String }
-| O | Push Reponse Report | GET | /api/reports/responses/?start=(date)&end=(date)&precision=(precision) | { "responses" : [], "next_page" : String, "prev_page" : String }
+| X | Push Reponse Report | GET | /api/reports/responses/?start=(date)&end=(date)&precision=(precision) | { "responses" : [], "next_page" : String, "prev_page" : String }
 | O | Response Listing | GET | /api/reports/responses/list?start=(date)&end=(date)&limit=(int) | { "pushes" : [], "next_page" : String, "prev_page" : String }
-| O | App Opens Report | GET | /api/reports/opens/?start=(date)&end=(date)&precision=(precision) | { "opens" : [] , "next_page" : String, "prev_page" : String }
-| O | Time in App Report | GET | /api/reports/timeinapp/?start=(date)&end=(date)&precision=(precision) | "timeinapp" : [], "next_page" : String, "prev_page" : String }
-| O | Opt-in Report | GET | /api/reports/optins/?start=(date)&end=(date)&precision=(precision) | { "optins" : [], "next_page" : String, "prev_page" : String }
-| O | Opt-out Report | GET | /api/reports/optouts/?start=(date)&end=(date)&precision=(precision) | { "optouts" : [] , "next_page" : String, "prev_page" : String }
+| X | App Opens Report | GET | /api/reports/opens/?start=(date)&end=(date)&precision=(precision) | { "opens" : [] , "next_page" : String, "prev_page" : String }
+| X | Time in App Report | GET | /api/reports/timeinapp/?start=(date)&end=(date)&precision=(precision) | "timeinapp" : [], "next_page" : String, "prev_page" : String }
+| X | Opt-in Report | GET | /api/reports/optins/?start=(date)&end=(date)&precision=(precision) | { "optins" : [], "next_page" : String, "prev_page" : String }
+| X | Opt-out Report | GET | /api/reports/optouts/?start=(date)&end=(date)&precision=(precision) | { "optouts" : [] , "next_page" : String, "prev_page" : String }
 | O | Statistics | GET | /api/push/stats/?start=(start_time)&end=(end_time) | Not documented. |
 | O | Per Push Reporting | GET | /api/reports/perpush/detail/(push_id) | {} |
 | O | Per Push Reporting Series | GET | /api/reports/perpush/series/(push_id) | {} |
