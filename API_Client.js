@@ -1,11 +1,11 @@
-var request = require("request")
+var request = require('request')
 
-exports.Push = require("./Push.js").Push
-exports.Notification = require("./Notification.js").Notification
-exports.Selector = require("./Selector.js").Selector
-exports.Message = require("./Message.js").Message
-exports.Segment = require("./Segment.js").Segment
-exports.Location = require("./Location.js").Location
+exports.Push = require('./Push.js').Push
+exports.Notification = require('./Notification.js').Notification
+exports.Selector = require('./Selector.js').Selector
+exports.Message = require('./Message.js').Message
+exports.Segment = require('./Segment.js').Segment
+exports.Location = require('./Location.js').Location
 
 exports.DeviceType = function DeviceType() {
     this.IOS = 'ios'
@@ -688,32 +688,33 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     
     this.recursiveReady = function(error, response, body, data, ready){
     
-        console.log("//////////////////////////////////////////////////////////////////////////////")
+        console.log('//////////////////////////////////////////////////////////////////////////////')
         
-        console.log("Error:")
+        console.log('Error : ')
         console.log(error)
         
         console.log()
     
-        console.log("PathName    : " + response.request.uri.pathname)
+        console.log('PathName    : ' + response.request.uri.pathname)
+        console.log('Params      : ' + response.request.uri.query)
         // console.log("Path        : " + response.req.path)
-        console.log("Method      : " + response.req.method)    
-        console.log("Status Code : " + response.statusCode)
+        console.log('Method      : ' + response.req.method)    
+        console.log('Status Code : ' + response.statusCode)
         
         console.log()
         
-        console.log("Body length " + body.length)
-        console.log("-----")
+        console.log('Body length : ' + body.length)
+        console.log('-----')
         console.log(body)
 
         console.log()
         
-        console.log("Data ")
+        console.log('Data : ')
         // console.log(data)
 
         console.log()
         var pertinentData = this.responseLUT(response.request.uri.pathname, response.req.method);
-        console.log("Pertinent Data : " + pertinentData)
+        console.log('Pertinent Data : ' + pertinentData)
 
         // possible options at this point
         /*

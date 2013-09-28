@@ -63,7 +63,7 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     // client.getPerPush('9012ad1a-59fd-11e2-8074-d4bed9a88504', displayResults)
     // client.getPerPushSeries('9012ad1a-59fd-11e2-8074-d4bed9a88504', displayResults)
     // client.getPerPushSeriesWithPrecision('9012ad1a-59fd-11e2-8074-d4bed9a88504', 'DAILY', displayResults)
-    client.getPerPushSeriesWithPrecisionAndRange('9012ad1a-59fd-11e2-8074-d4bed9a88504', new Date(2013,0,9), new Date(2013,0,10), 'DAILY', displayResults)
+    client.getPerPushSeriesWithPrecisionAndRange('9012ad1a-59fd-11e2-8074-d4bed9a88504', new Date(Date.UTC(2013,0,9)), new Date(Date.UTC(2013,0,10)), 'DAILY', displayResults)
 
 // Location
     // client.getLocationFromString('Memphis,TN','city',displayResults);
