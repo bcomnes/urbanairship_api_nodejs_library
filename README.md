@@ -50,14 +50,16 @@
 
 | Name | Method | Endpoint  | Reponse Format   |
 | ---- | ------ | --------- | ---------------  |
-| Push | POST | /api/push | { "ok":boolean, "operation_id" : UUID, "push_ids" : [] }  |
+| Push | POST | /api/push/ | { "ok":boolean, "operation_id" : UUID, "push_ids" : [] }  |
 | Validate | POST | /api/push/validate | not documented |
-| Create Schedule | POST | /api/schedules | { "ok":boolean, "operation_id" : UUID, "schedule_urls" : [] } |
-| List Schedules | GET | /api/schedules | { "ok":boolean, "count" : integer, "schedules" : [] } |
+| Create Schedule | POST | /api/schedules/ | { "ok":boolean, "operation_id" : UUID, "schedule_urls" : [] } |
+| List Schedules | GET | /api/schedules/ | { "ok":boolean, "count" : integer, "schedules" : [] } |
 | List Specific Schedule | GET | /api/schedules/(id) | { "name" : String, "schedule" : {}, "push" : {} |
 | Update Schedule | PUT | /api/schedules/(id) | { "ok": boolean, "operation_id" : UUID } |
 | Delete Schedule | DELETE | /api/schedules/(id) | No content. (e_e) |
-
-
+| Tag Listing | GET | /api/tags/ | { "tags": [] } |
+| Tag Creation | PUT | /api/tags/(tag) | Not documented. Rely on Status Code. |
+| Adding / Removing Devices From a Tag | POST | /api/tags/(tag) | Rely on Status Code. |
+| Delete a Tag | DELETE | /apit/tags/(tag) | Rely on Status Code. |
 
 derp derp derp
