@@ -49,8 +49,8 @@
   
 ###List of API Endpoints, Methods, and Response Formats
 
-| Implemented?  | Name | Method | Endpoint  | Reponse Format   |
-| -- | ---- | ------ | --------- | ---------------  |
+| Implemented? | Name | Method | Endpoint  | Reponse Format   |
+| ------------ | ---- | ------ | --------- | ---------------  |
 | X | Push | POST | /api/push/ | { "ok" : boolean, "operation_id" : UUID, "push_ids" : [] }  |
 | O | Validate | POST | /api/push/validate | Rely on Status Codes. |
 | O | Create Schedule | POST | /api/schedules/ | { "ok":boolean, "operation_id" : UUID, "schedule_urls" : [] } |
