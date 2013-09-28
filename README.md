@@ -61,5 +61,5 @@
 | Tag Creation | PUT | /api/tags/(tag) | Not documented. Rely on Status Code. |
 | Adding / Removing Devices From a Tag | POST | /api/tags/(tag) | Rely on Status Code. |
 | Delete a Tag | DELETE | /apit/tags/(tag) | Rely on Status Code. |
-
-derp derp derp
+| Active User Count | GET | /api/reports/activeusers/?date=(date) | { "android" : integer, "ios" : integer } |
+| Individual Response Statistics | GET | /api/reports/responses/(push_id) | { "push_uuid": "f133a7c8-d750-11e1-a6cf-e06995b6c872", "direct_responses": "45", "sends": 123, "push_type": "UNICAST_PUSH", "push_time": "2012-07-31 12:34:56"} |
