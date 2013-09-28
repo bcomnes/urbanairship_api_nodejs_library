@@ -15,8 +15,6 @@ var Location = UA.Location
 
 var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
-
-
 // var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 
 /// Staging
@@ -29,7 +27,6 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     // client.getApid("c3800096-29ba-4453-8609-208a178c7ba1", displayResults)
     // client.getDeviceTokens(displayResults)
     // client.getDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A', displayResults)
-
 
 // Tags
     // client.getTags(displayResults)
@@ -52,11 +49,15 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     // client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', displayResults)
     // client.getPushReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
     // client.getAppOpensReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
-    client.getTimeInAppReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+    // client.getTimeInAppReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+    // client.getOptInReport(new Date(2013,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+    // client.getOptOutReport(new Date(2013,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+    client.getPushReport(new Date(2013,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+
 
 //////////////////////////////////////////////////
 /// Not Handled
-
+// LOCATION
 
 // build audience
 
