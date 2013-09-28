@@ -546,15 +546,15 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         }
 
         if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName === "list" && method === 'GET') {
-        
+            // getResponseListing()
             return [ 'pushes' ]
         
         } else if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length === 0 && method === 'GET') {
-        
+            // getResponseReport()
             return [ 'responses' ]
         
         } else if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length > 6 && method === 'GET') {
-        
+            // getIndividualResponseStatistics()
             return [ 'object' ]
         }
 
