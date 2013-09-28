@@ -291,6 +291,29 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         })           
     }
     
+    this.getLocationFromLatLongBounds = function(lat1, lon1, lat2, lon2, alias, ready){
+        
+        var params = '?q=' + lat1 + ',' + lon1 + ',' + lat2 + ',' + lon2
+        
+        if (alias !== null) {
+            params += '&type=' + alias
+        }
+        
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/location/' + params
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        console.log(options);
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })           
+    }    
+    
     this.getLocationFromAlias = function(query, alias, ready){
         
         var params = '?' + alias + '=' + query
@@ -589,6 +612,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             return [ 'object' ]
         }
         
+        if (primaryPathName === 'location' && method === 'GET') {
+            return [ 'object' ]
+        }
+        
+        
         // return(LUT[path][method])
     }
     
@@ -649,7 +677,16 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         } else if (pertinentData.indexOf('object') !== -1) {
             
             console.log('Returned an Object.  Running callback with status code and object')
-            ready( null, { status_code: response.statusCode, data: JSON.parse(body) } )
+            
+            try {
+                var b = JSON.parse(body)
+                ready( null, { status_code: response.statusCode, data: b } )
+                
+            } catch(e) {
+                ready( null, { status_code: response.statusCode, data: body } )
+            }
+            
+            
             return
             
         } else {

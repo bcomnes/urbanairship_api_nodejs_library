@@ -58,7 +58,7 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     // client.getResponseReport(new Date(2013,0,1), new Date(2013,8,30), 'DAILY', displayResults)
     // client.getIndividualResponseStatistics('9012ad1a-59fd-11e2-8074-d4bed9a88504', displayResults)
 
-    client.getStatistics(new Date(2013,1,1), new Date(2013,1,2), displayResults)
+    // client.getStatistics(new Date(2013,1,1), new Date(2013,1,2), displayResults)
 
 //////////////////////////////////////////////////
 /// Not Handled
@@ -89,8 +89,12 @@ var seg = new Segment("API_test_with_Segments");
 // client.getLocationFromString('Memphis,TN','city',displayResults);
 // client.getLocationFromString('Memphis,TN',null,displayResults);
 // client.getLocationFromString('92705', 'postalcode', displayResults);
-// client.getLocationFromLatLong(37.7749295, -122.4194155, 'hasc', displayResults)
-// client.getLocationFromAlias("CA", "us_state", displayResults)    
+// client.getLocationFromLatLong(37.7749295, -122.4194155, 'city', displayResults)
+// client.getLocationFromLatLongBounds(32.528832,-124.482003,42.009517,-114.131211,'postalcode',displayResults)
+
+client.getLocationFromAlias("CA", "us_state", displayResults)    
+
+
 
 function displayResults(error, data) {
     

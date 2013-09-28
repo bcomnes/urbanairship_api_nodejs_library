@@ -85,8 +85,8 @@
 | X | Create Segment | POST | /api/segments/ | Rely on Status Codes |
 | X | Change Segment | PUT | /api/segments/(segment_id) | Rely on Status Codes. |
 | X | Delete Segment | DELETE | /api/segments/(segment_id) | Rely on Status Codes. |
-| O | Location Lookup By String | GET | /api/location/?q=(String)&type=(String) | { "features" : [] } |
+| X | Location Lookup By String | GET | /api/location/?q=(String)&type=(String) | { "features" : [] } |
 | O | Location Lookup by Lat/Lon | GET | /api/location/(latitude),(longitude)?type=(boundary_type) | { "features" : [] } |
 | O | Location Lookup by Lat/Lon Box | GET | /api/location/(latitude_1),(longitude_1),(latitude_2),(longitude_2)&type=(boundary_type) | { "features" : [] } |
-| O | Location Lookup by Alias | GET | /api/location/from-alias?(String)=(String) | {} |
+| X | Location Lookup by Alias | GET | /api/location/from-alias?(String)=(String) | {} |
 
