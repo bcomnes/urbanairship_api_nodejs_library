@@ -60,9 +60,18 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 
     // client.getStatistics(new Date(2013,1,1), new Date(2013,1,2), displayResults)
 
+// Location
+    // client.getLocationFromString('Memphis,TN','city',displayResults);
+    // client.getLocationFromString('Memphis,TN',null,displayResults);
+    // client.getLocationFromString('92705', 'postalcode', displayResults);
+    // client.getLocationFromLatLong(37.7749295, -122.4194155, 'city', displayResults)
+    // client.getLocationFromLatLongBounds(32.528832,-124.482003,42.009517,-114.131211,'postalcode',displayResults)
+    
+    // client.getLocationFromAlias("CA", "us_state", displayResults)    
+
+
 //////////////////////////////////////////////////
 /// Not Handled
-// LOCATION
 
 // build audience
 
@@ -86,13 +95,6 @@ var seg = new Segment("API_test_with_Segments");
 
 // console.log(JSON.stringify(seg,null,4))
 
-// client.getLocationFromString('Memphis,TN','city',displayResults);
-// client.getLocationFromString('Memphis,TN',null,displayResults);
-// client.getLocationFromString('92705', 'postalcode', displayResults);
-// client.getLocationFromLatLong(37.7749295, -122.4194155, 'city', displayResults)
-// client.getLocationFromLatLongBounds(32.528832,-124.482003,42.009517,-114.131211,'postalcode',displayResults)
-
-client.getLocationFromAlias("CA", "us_state", displayResults)    
 
 
 
