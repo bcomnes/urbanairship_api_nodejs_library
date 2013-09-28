@@ -50,11 +50,11 @@
 
 | Name | Method | Endpoint  | Reponse Format   |
 | ---- | ------ | --------- | ---------------  |
-| Push | POST | /api/push/ | { "ok":boolean, "operation_id" : UUID, "push_ids" : [] }  |
+| Push | POST | /api/push/ | { "ok" : boolean, "operation_id" : UUID, "push_ids" : [] }  |
 | Validate | POST | /api/push/validate | Rely on Status Codes. |
 | Create Schedule | POST | /api/schedules/ | { "ok":boolean, "operation_id" : UUID, "schedule_urls" : [] } |
 | List Schedules | GET | /api/schedules/ | { "ok":boolean, "count" : integer, "schedules" : [] } |
-| List Specific Schedule | GET | /api/schedules/(id) | { "name" : String, "schedule" : {}, "push" : {} |
+| List Specific Schedule | GET | /api/schedules/(id) | { "name" : String, "schedule" : {}, "push" : {} } |
 | Update Schedule | PUT | /api/schedules/(id) | { "ok": boolean, "operation_id" : UUID } |
 | Delete Schedule | DELETE | /api/schedules/(id) | Rely on Status Codes |
 | Tag Listing | GET | /api/tags/ | { "tags": [] } |
