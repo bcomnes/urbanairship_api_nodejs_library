@@ -62,7 +62,7 @@
 | X | Tag Creation | PUT | /api/tags/(tag) | Rely on Status Code. |
 | O | Adding / Removing Devices From a Tag | POST | /api/tags/(tag) | Rely on Status Code. |
 | X | Delete a Tag | DELETE | /apit/tags/(tag) | Rely on Status Code. |
-| O | Active User Count | GET | /api/reports/activeusers/?date=(date) | { "android" : integer, "ios" : integer } |
+| X | Active User Count | GET | /api/reports/activeusers/?date=(date) | { "android" : integer, "ios" : integer } |
 | O | Individual Response Statistics | GET | /api/reports/responses/(push_id) | { "push_uuid": UUID , "direct_responses": integer , "sends": integer , "push_type": "UNICAST_PUSH", "push_time": Date() } |
 | O | Push Report | GET | /api/reports/sends/?start=(date)&end=(date)&precision=(precision) | { "sends" : [], "next_page" : String, "prev_page" : String }
 | X | Push Reponse Report | GET | /api/reports/responses/?start=(date)&end=(date)&precision=(precision) | { "responses" : [], "next_page" : String, "prev_page" : String }

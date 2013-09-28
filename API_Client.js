@@ -311,6 +311,21 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     }      
     
     // reports
+    this.getActiveUserCount = function(date,ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/activeusers/?date='+date.toJSON()
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
+    }
+        
     this.getResponseReport = function(start,end,precision,ready){
 
         var options = {
@@ -485,6 +500,10 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         }        
         
         // Reports
+        if (primaryPathName === 'reports' && secondaryPathName === 'activeusers' && method === 'GET') {
+            return [ 'object' ]
+        }
+                
         if (primaryPathName === 'reports' && secondaryPathName === 'sends' && method === 'GET') {
             return [ 'sends' ]
         }
@@ -529,7 +548,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         console.log("Body ")
         console.log("-----")
-        // console.log(body)
+        console.log(body)
 
         console.log()
         
@@ -561,11 +580,12 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         if (pertinentData.indexOf('none') !== -1) {
 
+            console.log("Got none.  Running callback with status code.")
             ready(null, { status_code: response.statusCode, data:null })
         
         } else if (pertinentData.indexOf('object') !== -1) {
             
-            console.log('Returned an Object')
+            console.log('Returned an Object.  Running callback with status code and object')
             ready( null, { status_code: response.statusCode, data: JSON.parse(body) } )
             
         } else {

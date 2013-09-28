@@ -52,7 +52,8 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     // client.getTimeInAppReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
     // client.getOptInReport(new Date(2013,0,1), new Date(2013,8,30), 'DAILY', displayResults)
     // client.getOptOutReport(new Date(2013,0,1), new Date(2013,8,30), 'DAILY', displayResults)
-    client.getPushReport(new Date(2013,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+    // client.getPushReport(new Date(2013,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+    client.getActiveUserCount(new Date(2013,0,1), displayResults)
 
 
 //////////////////////////////////////////////////
