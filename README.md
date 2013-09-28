@@ -46,15 +46,15 @@
   * [x] delete
   * [x] change
 
-##List of API Endpoints
+##List of API Endpoints, Methods, and Response Formats
 
 | Method | Endpoint  | reponse format   |
 | ------ | --------- | ---------------  |
 | POST | /api/push | { "ok":boolean, "operation_id" : UUID, "push_ids" : [] }  |
-| POST | /api/push/validate | |
-| POST | /api/schedules | |
-| GET | /api/schedules | |
-| GET | /api/schedules/(id) | |
+| POST | /api/push/validate | not documented |
+| POST | /api/schedules | { "ok":boolean, "operation_id" : UUID, "schedule_urls" : [] } |
+| GET | /api/schedules | { "ok":boolean, "count" : integer, "schedules" : [] } |
+| GET | /api/schedules/(id) | { "name" : String, "schedule" : {}, "push" : {} |
 | PUT | /api/schedules/(id) | |
 | DELETE | /api/schedules/(id) | |
 
