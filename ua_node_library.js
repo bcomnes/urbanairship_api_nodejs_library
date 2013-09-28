@@ -13,16 +13,18 @@ var Message = UA.Message
 var Segment = UA.Segment
 var Location = UA.Location
 
-// var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg')
+var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 
-var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
+// var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
+
+
 
 // client.getSegments(displayResults);
 // client.getSegment('65e4bde8-5135-4898-871a-54b035e9741d', displayResults)
 
 // client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', recurisveResults)
-client.getPushReport(new Date(2013,8,23), new Date(2013,8,30), 'DAILY', displayResults)
+// client.getPushReport(new Date(2013,8,23), new Date(2013,8,30), 'DAILY', displayResults)
 
 // build audience
 /*

@@ -403,8 +403,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     
     this.recursiveReady = function(error, response, body, data, ready){
     
+        
         console.log(body)
-    
+        
+        
+/*    
         if (error !== null) {
             
             console.log("BIG ERROR" + error)
@@ -484,7 +487,8 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             }
         }
     
-        
+*/
+
     }
     
     
