@@ -46,7 +46,7 @@
   * [x] delete
   * [x] change
 
-##List of API Endpoints, Methods, and Response Formats
+###List of API Endpoints, Methods, and Response Formats
 
 | Name | Method | Endpoint  | Reponse Format   |
 | ---- | ------ | --------- | ---------------  |
