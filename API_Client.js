@@ -484,6 +484,68 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         })
     }    
     
+    // per push
+    this.getPerPush = function(pushID, ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/perpush/detail/'+pushID
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
+    }     
+
+    this.getPerPushSeries = function(pushID, ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+pushID
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
+    }    
+
+    this.getPerPushSeriesWithPrecision = function(pushID, precision, ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+ pushID + '?precision=' + precision
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
+    }    
+
+    this.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, precision, ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+ pushID + '?precision=' + precision + '&start=' + start.toJSON() + '&end=' + end.toJSON()
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
+    }    
+
+    
     ///////////////////////////////////////////////////////////////////////////////
     this.responseLUT = function name(path, method) {
         
@@ -574,7 +636,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         if (primaryPathName === 'reports' && secondaryPathName === 'activeusers' && method === 'GET') {
             return [ 'object' ]
         }
-                
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'perpush' && method === 'GET') {
+            return [ 'object' ]
+        }
+
         if (primaryPathName === 'reports' && secondaryPathName === 'sends' && method === 'GET') {
             return [ 'sends' ]
         }
