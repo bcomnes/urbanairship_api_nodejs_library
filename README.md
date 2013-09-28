@@ -9,11 +9,11 @@
 | ------------ | ---- | ------ | --------- | ---------------  |
 | X | Push | POST | /api/push/ | { "ok" : boolean, "operation_id" : UUID, "push_ids" : [] }  |
 | O | Validate | POST | /api/push/validate | Rely on Status Codes. |
-| O | Create Schedule | POST | /api/schedules/ | { "ok":boolean, "operation_id" : UUID, "schedule_urls" : [] } |
-| O | List Schedules | GET | /api/schedules/ | { "ok":boolean, "count" : integer, "schedules" : [] } |
-| O | List Specific Schedule | GET | /api/schedules/(id) | { "name" : String, "schedule" : {}, "push" : {} } |
-| O | Update Schedule | PUT | /api/schedules/(id) | { "ok": boolean, "operation_id" : UUID } |
-| O | Delete Schedule | DELETE | /api/schedules/(id) | Rely on Status Codes |
+| X | Create Schedule | POST | /api/schedules/ | { "ok":boolean, "operation_id" : UUID, "schedule_urls" : [] } |
+| X | List Schedules | GET | /api/schedules/ | { "ok":boolean, "count" : integer, "schedules" : [] } |
+| X | List Specific Schedule | GET | /api/schedules/(id) | { "name" : String, "schedule" : {}, "push" : {} } |
+| X | Update Schedule | PUT | /api/schedules/(id) | { "ok": boolean, "operation_id" : UUID } |
+| X | Delete Schedule | DELETE | /api/schedules/(id) | Rely on Status Codes |
 | X | Tag Listing | GET | /api/tags/ | { "tags": [] } |
 | X | Tag Creation | PUT | /api/tags/(tag) | Rely on Status Code. |
 | O | Adding / Removing Devices From a Tag | POST | /api/tags/(tag) | Rely on Status Code. |

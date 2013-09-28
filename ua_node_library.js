@@ -12,6 +12,8 @@ var Selector = UA.Selector
 var Message = UA.Message
 var Segment = UA.Segment
 var Location = UA.Location
+var Schedule = UA.Schedule
+
 
 var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
@@ -41,11 +43,26 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     // client.createSegment(seg, displayResults);
 
 // Push
-    // var n = new Notification(); n.setAlert("from API"); n.setDeviceType("all")
-    // var p = new Push(); p.addNotification(n) 
+    var n = new Notification(); n.setAlert("from API updated"); n.setDeviceType("all")
+    var p = new Push(); p.addNotification(n) 
     // client.sendPush(p, displayResults)
 
-// Reports
+// Schedule
+
+    var s = new Schedule();
+        s.setName('scheduled_by_api');
+        s.setDate(new Date(2014,0,1));
+        s.setPush(p)
+
+    //client.schedulePush(s, displayResults)
+    // client.listSchedules(displayResults)
+    // client.listSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
+    // client.updateSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', s, displayResults)  
+    client.deleteSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
+    
+      
+                          
+// Reports                 
     // client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', displayResults)
     // client.getPushReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
     // client.getAppOpensReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
@@ -63,7 +80,7 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     // client.getPerPush('9012ad1a-59fd-11e2-8074-d4bed9a88504', displayResults)
     // client.getPerPushSeries('9012ad1a-59fd-11e2-8074-d4bed9a88504', displayResults)
     // client.getPerPushSeriesWithPrecision('9012ad1a-59fd-11e2-8074-d4bed9a88504', 'DAILY', displayResults)
-    client.getPerPushSeriesWithPrecisionAndRange('9012ad1a-59fd-11e2-8074-d4bed9a88504', new Date(Date.UTC(2013,0,9)), new Date(Date.UTC(2013,0,10)), 'DAILY', displayResults)
+    // client.getPerPushSeriesWithPrecisionAndRange('9012ad1a-59fd-11e2-8074-d4bed9a88504', new Date(Date.UTC(2013,0,9)), new Date(Date.UTC(2013,0,10)), 'DAILY', displayResults)
 
 // Location
     // client.getLocationFromString('Memphis,TN','city',displayResults);

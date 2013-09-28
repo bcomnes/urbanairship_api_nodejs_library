@@ -6,6 +6,7 @@ exports.Selector = require('./Selector.js').Selector
 exports.Message = require('./Message.js').Message
 exports.Segment = require('./Segment.js').Segment
 exports.Location = require('./Location.js').Location
+exports.Schedule = require('./Schedule.js').Schedule
 
 exports.DeviceType = function DeviceType() {
     this.IOS = 'ios'
@@ -148,6 +149,103 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         })        
         
     }
+    
+    // Schedule
+    this.schedulePush = function(schedule, ready){
+       
+        // build payload
+        payload = schedule.toJSON()
+
+        var b = JSON.stringify(payload)
+                
+        var options = {
+              method: 'POST'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/schedules/'
+            , body: b
+            , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+                       , 'Content-Type' : 'application/json'
+                    }   
+        }        
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })        
+        
+    }
+    
+    this.listSchedules = function(ready){
+    
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/schedules/'
+            , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
+        }        
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })      
+    
+    }
+
+    this.listSchedule = function(scheduleID, ready){
+    
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
+            , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
+        }        
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })      
+    
+    }
+
+    this.updateSchedule = function(scheduleID, schedule, ready){
+    
+        // build payload
+        payload = schedule.toJSON()
+
+        var b = JSON.stringify(payload)
+                
+        var options = {
+              method: 'PUT'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
+            , body: b
+            , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+                       , 'Content-Type' : 'application/json'
+                    }   
+        }        
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })  
+    
+    }
+
+    this.deleteSchedule = function(scheduleID, ready){
+    
+        var options = {
+              method: 'DELETE'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
+            , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
+        }        
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })      
+    
+    }    
     
     // Segments
     this.getSegments = function(ready){
@@ -572,6 +670,24 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             return [ 'object' ]
         }
         
+        // Schedules
+        if (primaryPathName === 'schedules' && method === 'POST') {
+            return [ 'object' ]
+        }
+
+        if (primaryPathName === 'schedules' && method === 'GET') {
+            return [ 'object' ]
+        }
+
+        if (primaryPathName === 'schedules' && method === 'PUT') {
+            return [ 'object' ]
+        }
+
+        if (primaryPathName === 'schedules' && method === 'DELETE') {
+            return [ 'none' ]
+        }
+
+                
         // Device Listing
         // get apids
         if (primaryPathName === 'apids' && secondaryPathName.length === 0 && method === 'GET') {
