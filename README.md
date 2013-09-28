@@ -71,7 +71,7 @@
 | X | Time in App Report | GET | /api/reports/timeinapp/?start=(date)&end=(date)&precision=(precision) | "timeinapp" : [], "next_page" : String, "prev_page" : String }
 | X | Opt-in Report | GET | /api/reports/optins/?start=(date)&end=(date)&precision=(precision) | { "optins" : [], "next_page" : String, "prev_page" : String }
 | X | Opt-out Report | GET | /api/reports/optouts/?start=(date)&end=(date)&precision=(precision) | { "optouts" : [] , "next_page" : String, "prev_page" : String }
-| O | Statistics | GET | /api/push/stats/?start=(start_time)&end=(end_time) | Not documented. |
+| X | Statistics | GET | /api/push/stats/?start=(start_time)&end=(end_time) | Not documented. |
 | O | Per Push Reporting | GET | /api/reports/perpush/detail/(push_id) | {} |
 | O | Per Push Reporting Series | GET | /api/reports/perpush/series/(push_id) | {} |
 | O | Per Push Reporting Series with Precision | GET | /api/reports/perpush/series/(push_id)?precision=(precision) | {} |
@@ -80,11 +80,11 @@
 | X | Individual Device Lookup, APID | GET | /api/apids/(APID) | {} |
 | X | Device Listing, Device Tokens | GET | /api/device_tokens/ | { "device_tokens" : [], "next_page" : String, "device_tokens_count" : integer }
 | X | Device Listing, APIDs | GET | /api/apids/ | { "apids" : [], "next_page" : String, "device_tokens_count" : integer }
-| O | Segments Listing | GET | /api/segments/ | { "segments" : [], "next_page" : String, "prev_page" : String }
-| O | Individual Segment Lookup | GET | /api/segments/(segment_id) | {} |
-| O | Create Segment | POST | /api/segments/ | Rely on Status Codes |
-| O | Change Segment | PUT | /api/segments/(segment_id) | Rely on Status Codes. |
-| O | Delete Segment | DELETE | /api/segments/(segment_id) | Rely on Status Codes. |
+| X | Segments Listing | GET | /api/segments/ | { "segments" : [], "next_page" : String, "prev_page" : String }
+| X | Individual Segment Lookup | GET | /api/segments/(segment_id) | {} |
+| X | Create Segment | POST | /api/segments/ | Rely on Status Codes |
+| X | Change Segment | PUT | /api/segments/(segment_id) | Rely on Status Codes. |
+| X | Delete Segment | DELETE | /api/segments/(segment_id) | Rely on Status Codes. |
 | O | Location Lookup By String | GET | /api/location/?q=(String)&type=(String) | { "features" : [] } |
 | O | Location Lookup by Lat/Lon | GET | /api/location/(latitude),(longitude)?type=(boundary_type) | { "features" : [] } |
 | O | Location Lookup by Lat/Lon Box | GET | /api/location/(latitude_1),(longitude_1),(latitude_2),(longitude_2)&type=(boundary_type) | { "features" : [] } |

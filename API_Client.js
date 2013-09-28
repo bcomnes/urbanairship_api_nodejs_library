@@ -446,6 +446,21 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         })
     }       
     
+    this.getStatistics = function(start, end, ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/push/stats/?start='+start.toJSON()+'&end='+end.toJSON()
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
+    }    
+    
     ///////////////////////////////////////////////////////////////////////////////
     this.responseLUT = function name(path, method) {
         
@@ -569,6 +584,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         if (primaryPathName === 'reports' && secondaryPathName === 'optouts' && method === 'GET') {
             return [ 'optouts' ]
         }
+
+        if (primaryPathName === 'push' && secondaryPathName === 'stats' && method === 'GET') {
+            return [ 'object' ]
+        }
+
         
         // return(LUT[path][method])
     }
@@ -623,7 +643,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         if (pertinentData.indexOf('none') !== -1) {
 
-            console.log("Got none.  Running callback with status code.")
+            console.log('Got none.  Running callback with status code.')
             ready(null, { status_code: response.statusCode, data:null })
             return
         
@@ -635,7 +655,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             
         } else {
             
-            console.log("Possibly a next page... do complicated shit.")
+            console.log('Possibly a next page... do complicated shit.')
             
             if (body.length === 0) {
                 // there is a 504, all hell is breaking loose
@@ -669,7 +689,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 
                 console.log('There is a next_page')
 
-                // run the request again
+                // run the request again with the URI found in the next page
                 var options = {
                       method: response.req.method
                     , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
