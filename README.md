@@ -66,3 +66,26 @@
 | Push Report | GET | /api/reports/sends/?start=(date)&end=(date)&precision=(precision) | { "sends" : [], "next_page" : String, "prev_page" : String }
 | Push Reponse Report | GET | /api/reports/responses/?start=(date)&end=(date)&precision=(precision) | { "responses" : [], "next_page" : String, "prev_page" : String }
 | Response Listing | GET | /api/reports/responses/list?start=(date)&end=(date)&limit=(int) | { "pushes" : [], "next_page" : String, "prev_page" : String }
+| App Opens Report | GET | /api/reports/opens/?start=(date)&end=(date)&precision=(precision) | { "opens" : [] , "next_page" : String, "prev_page" : String }
+| Time in App Report | GET | /api/reports/timeinapp/?start=(date)&end=(date)&precision=(precision) | "timeinapp" : [], "next_page" : String, "prev_page" : String }
+| Opt-in Report | GET | /api/reports/optins/?start=(date)&end=(date)&precision=(precision) | { "optins" : [], "next_page" : String, "prev_page" : String }
+| Opt-out Report | GET | /api/reports/optouts/?start=(date)&end=(date)&precision=(precision) | { "optouts" : [] , "next_page" : String, "prev_page" : String }
+| Statistics | GET | /api/push/stats/?start=(start_time)&end=(end_time) | Not documented. |
+| Per Push Reporting | GET | /api/reports/perpush/detail/(push_id) | {} |
+| Per Push Reporting Series | GET | /api/reports/perpush/series/(push_id) | {} |
+| Per Push Reporting Series with Precision | GET | /api/reports/perpush/series/(push_id)?precision=(precision) | {} |
+| Per Push Reporting Series with Precision & Range | GET | /api/reports/perpush/series/(push_id)?precision=(precision)&start=(start_time)&end=(end_time) | {} |
+| Individual Device Lookup, Device Token | GET | /api/device_tokens/(device_token) | {} |
+| Individual Device Lookup, APID | GET | /api/apids/(APID) | {} |
+| Device Listing, Device Tokens | GET | /api/device_tokens/ | { "device_tokens" : [], "next_page" : String, "device_tokens_count" : integer }
+| Device Listing, APIDs | GET | /api/apids/ | { "apids" : [], "next_page" : String, "device_tokens_count" : integer }
+| Segments Listing | GET | /api/segments/ | { "segments" : [], "next_page" : String, "prev_page" : String }
+| Individual Segment Lookup | GET | /api/segments/(segment_id) | {} |
+| Create Segment | POST | /api/segments/ | Rely on Status Codes |
+| Change Segment | PUT | /api/segments/(segment_id) | Rely on Status Codes. |
+| Delete Segment | DELETE | /api/segments/(segment_id) | Rely on Status Codes. |
+| Location Lookup By String | GET | /api/location/?q=(String)&type=(String) | { "features" : [] } |
+| Location Lookup by Lat/Lon | GET | /api/location/(latitude),(longitude)?type=(boundary_type) | { "features" : [] } |
+| Location Lookup by Lat/Lon Box | GET | /api/location/(latitude_1),(longitude_1),(latitude_2),(longitude_2)&type=(boundary_type) | { "features" : [] } |
+| Location Lookup by Alias | GET | /api/location/from-alias?(String)=(String) | {} |
+
