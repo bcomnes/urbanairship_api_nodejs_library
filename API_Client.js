@@ -416,6 +416,37 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         })
     }    
     
+    this.getResponseListing = function(start,end, limit, ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/responses/list/?start='+start.toJSON()+'&end='+end.toJSON()+'&limit='+limit
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
+    }    
+    
+    this.getIndividualResponseStatistics = function(pushID, ready){
+
+        var options = {
+              method: 'GET'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/reports/responses/'+pushID
+            , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+        }
+        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
+    }       
+    
+    ///////////////////////////////////////////////////////////////////////////////
     this.responseLUT = function name(path, method) {
         
         // there is no elegant solution to this problem
@@ -425,6 +456,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
          
         var primaryPathName = path.split('/')[2]
         var secondaryPathName = path.split('/')[3]
+        var thirdPathName = path.split('/')[4]
         
         if (secondaryPathName === undefined) {
             secondaryPathName = ""
@@ -433,6 +465,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         console.log('Primary Path Name   : ' + primaryPathName)
         console.log('Secondary Path Name : ' + secondaryPathName)
         console.log('Secondary Path Name Length : ' + secondaryPathName.length)
+        console.log('Third Path Name     : ' + thirdPathName)
         
         // Push
         if (primaryPathName === 'push' && method === 'POST') {
@@ -512,8 +545,17 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             return [ 'opens' ]
         }
 
-        if (primaryPathName === 'reports' && secondaryPathName === 'responses' && method === 'GET') {
+        if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName === "list" && method === 'GET') {
+        
+            return [ 'pushes' ]
+        
+        } else if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length === 0 && method === 'GET') {
+        
             return [ 'responses' ]
+        
+        } else if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length > 6 && method === 'GET') {
+        
+            return [ 'object' ]
         }
 
         if (primaryPathName === 'reports' && secondaryPathName === 'timeinapp' && method === 'GET') {
@@ -533,6 +575,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     
     this.recursiveReady = function(error, response, body, data, ready){
     
+        console.log("//////////////////////////////////////////////////////////////////////////////")
         
         console.log("Error:")
         console.log(error)
@@ -546,7 +589,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         console.log()
         
-        console.log("Body ")
+        console.log("Body length " + body.length)
         console.log("-----")
         console.log(body)
 
@@ -582,13 +625,23 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
             console.log("Got none.  Running callback with status code.")
             ready(null, { status_code: response.statusCode, data:null })
+            return
         
         } else if (pertinentData.indexOf('object') !== -1) {
             
             console.log('Returned an Object.  Running callback with status code and object')
             ready( null, { status_code: response.statusCode, data: JSON.parse(body) } )
+            return
             
         } else {
+            
+            console.log("Possibly a next page... do complicated shit.")
+            
+            if (body.length === 0) {
+                // there is a 504, all hell is breaking loose
+                ready( null, { status_code: response.statusCode, data: data } )
+                return
+            }
             
             var d = JSON.parse(body);
                  
@@ -605,11 +658,13 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             })
                         
             if (d.next_page === undefined) {
+            
                 console.log('There is NOT a next_page')
                 // run the callback
                 console.log('Running ready() with all the data.')
                 ready( null, { status_code: response.statusCode, data: data } )
-                
+                return
+            
             } else {
                 
                 console.log('There is a next_page')
