@@ -488,6 +488,26 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         if (primaryPathName === 'reports' && secondaryPathName === 'sends' && method === 'GET') {
             return [ 'sends' ]
         }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'opens' && method === 'GET') {
+            return [ 'opens' ]
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'responses' && method === 'GET') {
+            return [ 'responses' ]
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'timeinapp' && method === 'GET') {
+            return [ 'timeinapp' ]
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'optins' && method === 'GET') {
+            return [ 'optins' ]
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'optouts' && method === 'GET') {
+            return [ 'optouts' ]
+        }
         
         // return(LUT[path][method])
     }

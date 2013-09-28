@@ -1,10 +1,10 @@
 ###TODO
 * Testing this is a bitch.
-  * Some API endpoints return JSON object
-  * Some API endpoints return JSON object that is an array
-  * Some API endpoints *NOTHING*
-  * Some API endpoints return non JSON text
-  * [] Sort this out.
+  * [X] Some API endpoints return JSON object
+  * [X] Some API endpoints return JSON object that is an array
+  * [X] Some API endpoints *NOTHING*
+  * [X] Some API endpoints return non JSON text
+  * [X] Sort this out.
 * Add Logging
 * Add Schedule Push
 * Feedback

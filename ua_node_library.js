@@ -51,6 +51,8 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 // Reports
     // client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', displayResults)
     // client.getPushReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+    // client.getAppOpensReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+    client.getTimeInAppReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
 
 //////////////////////////////////////////////////
 /// Not Handled
