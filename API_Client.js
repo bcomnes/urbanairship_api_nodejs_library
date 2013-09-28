@@ -125,7 +125,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     }
     
     // Push
-    this.sendPushDDEEERRRP = function(push, ready){
+    this.sendPush = function(push, ready){
                 
         // build payload
         payload = push.toJSON()
@@ -401,11 +401,82 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         })
     }    
     
+    this.responseLUT = function name(path, method) {
+        
+        // there is no elegant solution to this problem
+        // every endpoint has different behavior and pertinent data
+        // handle them all
+        // this is where the sausage gets made
+         
+        var primaryPathName = path.split('/')[2]
+        
+        console.log('Primary Path Name   : ' + primaryPathName)
+        
+        if (primaryPathName === 'push' && method === 'POST') {
+            return [ 'operation_id', 'push_ids', 'message_ids' ]
+        }
+        
+        if (primaryPathName === 'tags' && method === 'PUT') {
+            return [ 'status_code' ]
+        }        
+
+        if (primaryPathName === 'tags' && method === 'DELETE') {
+            return [ 'status_code' ]
+        }        
+
+        if (primaryPathName === 'tags' && method === 'GET') {
+            return [ 'tags' ]
+        }        
+
+        if (primaryPathName === 'segments' && method === 'GET') {
+            return [ 'segments' ]
+        }
+        
+        if (primaryPathName === 'segments' && method === 'GET') {
+            return [ 'segments', 'next_page' ]
+        }
+        
+        if (primaryPathName === 'segments' && method === 'POST') {
+            return [ 'status_code' ]
+        }
+
+        if (primaryPathName === 'segments' && method === 'PUT') {
+            return [ 'status_code' ]
+        }        
+        
+        if (primaryPathName === 'segments' && method === 'DELETE') {
+            return [ 'status_code' ]
+        }        
+        
+        
+        // return(LUT[path][method])
+    }
+    
     this.recursiveReady = function(error, response, body, data, ready){
     
+        console.log("Error:")
+        console.log(error)
         
+        console.log()
+    
+        console.log("Path        : " + response.req.path)
+        console.log("Method      : " + response.req.method)    
+        console.log("Status Code : " + response.statusCode)
+        
+        console.log()
+        
+        console.log("Body ")
+        console.log("-----")
         console.log(body)
+
+        console.log()
         
+        console.log("Data ")
+        console.log(data)
+
+        console.log()
+        console.log("Pertinent Data : " + this.responseLUT(response.req.path, response.req.method))
+    
         
 /*    
         if (error !== null) {

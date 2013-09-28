@@ -13,21 +13,41 @@ var Message = UA.Message
 var Segment = UA.Segment
 var Location = UA.Location
 
-var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
+// var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 
-// var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 
+var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 
-
+/// Staging
 // client.getSegments(displayResults);
+
+/// Handled
+
+// client.getTags(displayResults)
+// client.createTag("library", displayResults)
+// client.deleteTag("library", displayResults)
+
+var n = new Notification()
+    n.setAlert("from API")
+    n.setDeviceType("all")
+
+var p = new Push()
+    p.addNotification(n)
+    
+// client.sendPush(p, displayResults)
+
+
+/// Not Handled
+
+
 // client.getSegment('65e4bde8-5135-4898-871a-54b035e9741d', displayResults)
 
 // client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', recurisveResults)
 // client.getPushReport(new Date(2013,8,23), new Date(2013,8,30), 'DAILY', displayResults)
 
 // build audience
-/*
+
 var s2 = new Selector('or')
     s2.addTag('notSnarf', true)
 
@@ -39,17 +59,18 @@ var s = new Selector('and')
     // l.setTimeAbsolute(new Date(2013,09,01), new Date(2013,12,01), "months")
     l.setTimeRelative(4, "months")
         
-    s.addLocation(l, true)
+    // s.addLocation(l, true)
 
     s.addSelector(s2, true)
 
-var seg = new Segment("API_test_with_Segment");
+var seg = new Segment("API_test_with_Segments");
     seg.setCriteria(s);
 
 console.log(JSON.stringify(seg,null,4))
 
 client.createSegment(seg, displayResults);
-*/
+
+
 // client.getLocationFromString('Memphis,TN','city',displayResults);
 // client.getLocationFromString('Memphis,TN',null,displayResults);
 // client.getLocationFromString('92705', 'postalcode', displayResults);
@@ -68,9 +89,7 @@ client.createSegment(seg, displayResults);
 // client.getDeviceTokens(displayResults)
 
 // client.getDeviceToken('068A81174355005612A4BA390B99E6F7BC7567F754C54D1B079EABAC8340A1E1', displayResults)
-// client.getTags(displayResults)
-// client.createTag("library", displayResults)
-// client.deleteTag("library", displayResults)
+
 
 
     // p.setMessage(m)
