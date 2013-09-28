@@ -13,38 +13,48 @@ var Message = UA.Message
 var Segment = UA.Segment
 var Location = UA.Location
 
-// var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
+var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 
 
-var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
+// var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 
 /// Staging
-// client.getSegments(displayResults);
 
+////////////////////////////////
 /// Handled
 
-// client.getTags(displayResults)
-// client.createTag("library", displayResults)
-// client.deleteTag("library", displayResults)
-
-var n = new Notification()
-    n.setAlert("from API")
-    n.setDeviceType("all")
-
-var p = new Push()
-    p.addNotification(n)
-    
-// client.sendPush(p, displayResults)
+// Device Listing
+    // client.getApids(displayResults)
+    // client.getApid("c3800096-29ba-4453-8609-208a178c7ba1", displayResults)
+    // client.getDeviceTokens(displayResults)
+    // client.getDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A', displayResults)
 
 
+// Tags
+    // client.getTags(displayResults)
+    // client.createTag("library", displayResults)
+    // client.deleteTag("library", displayResults)
+
+// Segments
+    // client.getSegments(displayResults);
+    // client.getSegment('0180abda-db50-4eda-860a-aa74cfe4c90d', displayResults)
+    // client.deleteSegment('682d62a6-ef11-4000-9a8e-b32d9aa9376c', displayResults)
+    // client.changeSegment('287867ca-b603-46ae-b6fd-eac52ba1675b', seg, displayResults)
+    // client.createSegment(seg, displayResults);
+
+// Push
+    // var n = new Notification(); n.setAlert("from API"); n.setDeviceType("all")
+    // var p = new Push(); p.addNotification(n) 
+    // client.sendPush(p, displayResults)
+
+// Reports
+    // client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', displayResults)
+    // client.getPushReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
+
+//////////////////////////////////////////////////
 /// Not Handled
 
-
-// client.getSegment('65e4bde8-5135-4898-871a-54b035e9741d', displayResults)
-
-// client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', recurisveResults)
-// client.getPushReport(new Date(2013,8,23), new Date(2013,8,30), 'DAILY', displayResults)
 
 // build audience
 
@@ -66,58 +76,24 @@ var s = new Selector('and')
 var seg = new Segment("API_test_with_Segments");
     seg.setCriteria(s);
 
-console.log(JSON.stringify(seg,null,4))
-
-client.createSegment(seg, displayResults);
-
+// console.log(JSON.stringify(seg,null,4))
 
 // client.getLocationFromString('Memphis,TN','city',displayResults);
 // client.getLocationFromString('Memphis,TN',null,displayResults);
 // client.getLocationFromString('92705', 'postalcode', displayResults);
 // client.getLocationFromLatLong(37.7749295, -122.4194155, 'hasc', displayResults)
-    
 // client.getLocationFromAlias("CA", "us_state", displayResults)    
-
-
-// client.deleteSegment('682d62a6-ef11-4000-9a8e-b32d9aa9376c', displayResults)
-
-// client.changeSegment('287867ca-b603-46ae-b6fd-eac52ba1675b', seg, displayResults)
-// client.sendPush(p, displayResults)
-// client.getApids(displayResults)
-// client.getApid("b7962a6b-4c54-456d-91d1-de1466788db2", displayResults)
-
-// client.getDeviceTokens(displayResults)
-
-// client.getDeviceToken('068A81174355005612A4BA390B99E6F7BC7567F754C54D1B079EABAC8340A1E1', displayResults)
-
-
-
-    // p.setMessage(m)
-    // p.setAudience(s)
-    
-    //console.log(JSON.stringify(p.toJSON(),null,4))
-
 
 function displayResults(error, data) {
     
-    console.log("Made it to the final callback")
-    console.log("Error : " + error)
-    console.log("Data  : " + data )
+    console.log('///////////////////////////////////////////')
+    console.log('Made it to the final callback')
+    console.log('Error : ' + error)
+    console.log('Status Code : ' + data.status_code)
+    console.log('Data  : ' + data )
+    console.log('Data String : ')
+    console.log('--------------')
+    console.log(JSON.stringify(data,null,2))
     
-    if (error !== null || data === null) {
-        console.log("ERROR " + error)
-    } else {
-        
-        try {
-            var keys_array = Object.keys(data)
-            // console.log(keys_array)
-            console.log(JSON.stringify(data,null,4))
-
-        } catch(e) {
-            // console.log("no keys in return object")
-            
-        }
-
-    }
 }
 

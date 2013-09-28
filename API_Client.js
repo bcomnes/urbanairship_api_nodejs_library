@@ -155,7 +155,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-            , url: 'https://go.urbanairship.com/api/segments'
+            , url: 'https://go.urbanairship.com/api/segments/'
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }        
 
@@ -191,7 +191,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         var options = {
               method: 'POST'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-            , url: 'https://go.urbanairship.com/api/segments'
+            , url: 'https://go.urbanairship.com/api/segments/'
             , body: b
             , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
                        , 'Content-Type' : 'application/json'
@@ -409,57 +409,99 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         // this is where the sausage gets made
          
         var primaryPathName = path.split('/')[2]
+        var secondaryPathName = path.split('/')[3]
         
-        console.log('Primary Path Name   : ' + primaryPathName)
-        
-        if (primaryPathName === 'push' && method === 'POST') {
-            return [ 'operation_id', 'push_ids', 'message_ids' ]
+        if (secondaryPathName === undefined) {
+            secondaryPathName = ""
         }
         
+        console.log('Primary Path Name   : ' + primaryPathName)
+        console.log('Secondary Path Name : ' + secondaryPathName)
+        console.log('Secondary Path Name Length : ' + secondaryPathName.length)
+        
+        // Push
+        if (primaryPathName === 'push' && method === 'POST') {
+            return [ 'object' ]
+        }
+        
+        // Device Listing
+        // get apids
+        if (primaryPathName === 'apids' && secondaryPathName.length === 0 && method === 'GET') {
+            return [ 'apids' ]
+        }        
+        
+        // get single apid
+        if (primaryPathName === 'apids' && secondaryPathName.length !== 0 && method === 'GET') {
+            return [ 'object' ]
+        }        
+        
+        // get device tokens
+        if (primaryPathName === 'device_tokens' && secondaryPathName.length === 0 && method === 'GET') {
+            return [ 'device_tokens' ]
+        }        
+        
+        // get single device token
+        if (primaryPathName === 'device_tokens' && secondaryPathName.length !== 0 && method === 'GET') {
+            return [ 'object' ]
+        }        
+        
+        // Tags
+        if (primaryPathName === 'tags' && method === 'GET') {
+            return [ 'tags' ]
+        }             
+        
         if (primaryPathName === 'tags' && method === 'PUT') {
-            return [ 'status_code' ]
+            return [ 'none' ]
         }        
 
         if (primaryPathName === 'tags' && method === 'DELETE') {
-            return [ 'status_code' ]
+            return [ 'none' ]
         }        
 
-        if (primaryPathName === 'tags' && method === 'GET') {
-            return [ 'tags' ]
-        }        
-
-        if (primaryPathName === 'segments' && method === 'GET') {
+        // Segments        
+        // single segment
+        if (primaryPathName === 'segments' && secondaryPathName.length > 0 && method === 'GET') {
+            return [ 'object' ]
+        }
+        
+        // multiple segments
+        if (primaryPathName === 'segments' && secondaryPathName.length === 0 && method === 'GET') {
             return [ 'segments' ]
         }
         
-        if (primaryPathName === 'segments' && method === 'GET') {
-            return [ 'segments', 'next_page' ]
-        }
-        
+        // create a segment
         if (primaryPathName === 'segments' && method === 'POST') {
-            return [ 'status_code' ]
+            return [ 'none' ]
         }
 
+        // change segment
         if (primaryPathName === 'segments' && method === 'PUT') {
-            return [ 'status_code' ]
+            return [ 'none' ]
         }        
         
+        // delete segment
         if (primaryPathName === 'segments' && method === 'DELETE') {
-            return [ 'status_code' ]
+            return [ 'none' ]
         }        
         
+        // Reports
+        if (primaryPathName === 'reports' && secondaryPathName === 'sends' && method === 'GET') {
+            return [ 'sends' ]
+        }
         
         // return(LUT[path][method])
     }
     
     this.recursiveReady = function(error, response, body, data, ready){
     
+        
         console.log("Error:")
         console.log(error)
         
         console.log()
     
-        console.log("Path        : " + response.req.path)
+        console.log("PathName    : " + response.request.uri.pathname)
+        // console.log("Path        : " + response.req.path)
         console.log("Method      : " + response.req.method)    
         console.log("Status Code : " + response.statusCode)
         
@@ -467,99 +509,87 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         console.log("Body ")
         console.log("-----")
-        console.log(body)
+        // console.log(body)
 
         console.log()
         
         console.log("Data ")
-        console.log(data)
+        // console.log(data)
 
         console.log()
-        console.log("Pertinent Data : " + this.responseLUT(response.req.path, response.req.method))
-    
+        var pertinentData = this.responseLUT(response.request.uri.pathname, response.req.method);
+        console.log("Pertinent Data : " + pertinentData)
+
+        // possible options at this point
+        /*
+            ==
+            if 'none' in the pertinent data? {
+                call ready(null, { "status_code" : response.statusCode })
+            } else if 'object' is in the pertinent data {
+                call ready(null, JSON.parse(data))
+            } else if 'next_page' is in the pertinent data {
+                if 'next_page' is undefined {
+                    this is the last of the results 
+                    append the pertinent information to 'data' call ready(null, data)
+                } else {
+                    append the pertinent information to 'data' and send another request with the updated URL
+                }
+            }
+            
+        */
+        // 
         
-/*    
-        if (error !== null) {
-            
-            console.log("BIG ERROR" + error)
-            ready(error, null)
-            return
-        }         
+        if (pertinentData.indexOf('none') !== -1) {
+
+            ready(null, { status_code: response.statusCode, data:null })
         
-        try { // is the body JSON(?)
+        } else if (pertinentData.indexOf('object') !== -1) {
             
-            var b = JSON.parse(body);
+            console.log('Returned an Object')
+            ready( null, { status_code: response.statusCode, data: JSON.parse(body) } )
             
-            // check if the body contains an error
-            if (b.error !== undefined) {
+        } else {
+            
+            var d = JSON.parse(body);
+                 
+            if (data[pertinentData[0]] === undefined) {
+                console.log('Creating Array in data object')
+                data[pertinentData[0]] = []
+            }                 
+
+            console.log('Appending each element in the body to the data array...')
+            d[pertinentData[0]].forEach(function(item){
+            
+                data[pertinentData[0]].push(item)
                 
-                console.log("Verbose Error")
-                // return it as an error
-                ready(JSON.stringify(b), null)
+            })
+                        
+            if (d.next_page === undefined) {
+                console.log('There is NOT a next_page')
+                // run the callback
+                console.log('Running ready() with all the data.')
+                ready( null, { status_code: response.statusCode, data: data } )
                 
             } else {
                 
-                console.log("Success!")
-                var b = JSON.parse(body)
-                
-                var keys_array = Object.keys(b)
-                
-                keys_array.forEach(function(key){
-                
-                    if(key !== "next_page" && key != "prev_page" ){
-                        // this packet has data, append it to the dump
-                        
-                        if (data[key] === undefined) {
-                            data[key] = []
-                        }
-                        
-                        b[key].forEach(function(element){
-                            data[key].push(element)    
-                        })                     
-                    }
-                    
-                })
-                
-                if (b.next_page !== undefined) {
-                    // there is a next_page element, run the recursive call
-                    // console.log("Data.length : " + data.length)
-                    
-                    var options = {
-                          method: 'GET'
-                        , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-                        , url: b.next_page
-                        , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-                    }
-                    
-                    request(options, function(error, response, body){ self.recursiveReady(error, response, body, data, ready) })
-                    
+                console.log('There is a next_page')
+
+                // run the request again
+                var options = {
+                      method: response.req.method
+                    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+                    , url: d.next_page
+                    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
                 }
-                else {
-                    // you have it all call the original callback
-                    console.log("Got all the data calling final callback:")
-                    ready(null, data)
-                }            
-
-            }            
-
-        } catch(e) {
-            //
-            
-            console.log("First try catch error " + e)
-            
-            // console.log("Object is not an array.")
-            try {
-                console.log(JSON.parse(body))
-                ready(null, JSON.parse(body))
-                return 
-            } catch(e) {
-                console.log("Body is not JSON")
-                ready(null, body)
+                
+                request(options, function(error, response, body){
+                        self.recursiveReady(error, response, body, data, ready)
+                })                  
+                
             }
+            
         }
-    
-*/
-
+        
     }
     
     
