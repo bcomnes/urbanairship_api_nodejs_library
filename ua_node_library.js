@@ -33,7 +33,7 @@ var t = new Tag
     t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
     t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD2793')
     t.removeDeviceToken('EFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
-    client.tagAddRemoveDevices(t, displayResults)
+    // client.tagAddRemoveDevices(t, displayResults)
 
 // Segments
     // client.getSegments(displayResults);

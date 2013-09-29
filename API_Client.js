@@ -21,15 +21,14 @@ exports.DeviceType = function DeviceType() {
 
 exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
+    // set up logging
     var log
 
     if (loginfo !== undefined) {
-
-        console.log("Custom Log Information Present")
     
         var loglevel = 'info'
         if (loginfo.loglevel !== undefined) {
-            loglevel = loginfo.logLevel
+            loglevel = loginfo.loglevel
         }
         
         var filename = appKey+'.log'
@@ -47,6 +46,7 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     } else {
         
         log = new Log('info', fs.createWriteStream('urban_airship.log', {'flags': 'a'}))
+        
     }
 
     log.info('Creating client with app key : %s', appKey)
@@ -74,13 +74,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         
         var payload = tag.toJSON()
         
-        log.debug('tag name : %s', tag.name)
-        log.debug('tag payload : %s', JSON.stringify(payload))
+        log.info('tag name : %s', tag.name)        
+        log.info('For tag named: \'%s\' \t %s device_tokens added', tag.name, tag.addedDeviceTokens.length)
+        log.info('For tag named: \'%s\' \t %s device_tokens removed', tag.name, tag.removedDeviceTokens.length)
+        log.info('For tag named: \'%s\' \t %s apids added', tag.name, tag.addedApids.length)
+        log.info('For tag named: \'%s\' \t %s apids removed', tag.name, tag.removedApids.length)
         
-        log.info('For tag named: \'%s\' | adding %s device_tokens ', tag.name, tag.addedDeviceTokens.length)
-        log.info()
+        log.debug('building payload')
         
         var b = JSON.stringify(payload)
+        
+        log.debug('done building payload')
         
         var options = {
               method: 'POST'
@@ -103,12 +107,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.getTags = function(ready){
         
+        log.info('getTags called')
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , uri: 'https://go.urbanairship.com/api/tags/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -119,12 +127,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.createTag = function(tag, ready){
         
+        log.info('createTag called')
+        log.info('tag name : %s', tag)
+        
         var options = {
               method: 'PUT'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/tags/' + tag
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -135,12 +148,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.deleteTag = function(tag, ready){
         
+        log.info('deleteTag called')
+        log.info('tag name : %s', tag)
+        
         var options = {
               method: 'DELETE'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/tags/' + tag
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -152,12 +170,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     // Device lookup
     this.getDeviceTokens = function(ready){
         
+        log.info('getDeviceTokens called')
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/device_tokens/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -168,12 +190,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
     this.getDeviceToken = function(deviceToken, ready){
         
+        log.info('getDeviceToken called')
+        log.info('device_token : %s', deviceToken)
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/device_tokens/' + deviceToken
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -184,12 +211,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
     this.getApids = function(ready){
         
+        log.info('getApids called')
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/apids/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -200,12 +231,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.getApid = function(apid, ready){
         
+        log.info('getApid called')
+        log.info('apid : %s', apid)
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/apids/' + apid
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -216,11 +252,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     // Push
     this.sendPush = function(push, ready){
-                
+
+        log.info('sendPush called')
+    
+        log.debug('building payload')
         // build payload
         payload = push.toJSON()
-
+        log.debug('done building payload')
+        
         var b = JSON.stringify(payload)
+        
+        log.debug('push payload : %s', b)
                 
         var options = {
               method: 'POST'
@@ -232,6 +274,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                     }   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -240,11 +284,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     }
 
     this.validatePush = function(push, ready){
-                
+
+        log.info('validatePush called')
+    
+        log.debug('building payload')
         // build payload
         payload = push.toJSON()
+        log.debug('done building payload')
 
         var b = JSON.stringify(payload)
+                
+        log.debug('push payload : %s', b)
                 
         var options = {
               method: 'POST'
@@ -256,6 +306,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                     }   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -265,11 +317,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     // Schedule
     this.schedulePush = function(schedule, ready){
-       
+
+        log.info('schedulePush called')
+    
+        log.debug('building payload')
         // build payload
         payload = schedule.toJSON()
+        log.debug('done building payload')
 
         var b = JSON.stringify(payload)
+                
+        log.debug('schedule payload : %s', b)
                 
         var options = {
               method: 'POST'
@@ -281,6 +339,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                     }   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -290,6 +350,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.listSchedules = function(ready){
     
+        log.info('listSchedules called')
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -297,6 +359,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -305,6 +369,9 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     }
 
     this.listSchedule = function(scheduleID, ready){
+
+        log.info('listSchedule called')
+        log.info('schedule id : %s', scheduleID)
     
         var options = {
               method: 'GET'
@@ -313,6 +380,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -322,10 +391,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
     this.updateSchedule = function(scheduleID, schedule, ready){
     
+        log.info('updateSchedule called')
+        log.info('schedule id : %s', scheduleID)
+    
+        log.debug('building payload')
         // build payload
         payload = schedule.toJSON()
+        log.debug('done building payload')
 
         var b = JSON.stringify(payload)
+        
+        log.debug('schedule payload : %s', b)
                 
         var options = {
               method: 'PUT'
@@ -337,6 +413,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                     }   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -346,6 +424,9 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
     this.deleteSchedule = function(scheduleID, ready){
     
+        log.info('delete schedule called')
+        log.infl('schedule id : %s', scheduleID)
+    
         var options = {
               method: 'DELETE'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -353,6 +434,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -363,6 +446,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     // Segments
     this.getSegments = function(ready){
         
+        log.info('getSegments called')
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -370,6 +455,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -379,6 +466,9 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.getSegment = function(segment_id, ready){
         
+        log.info('getSegment called')
+        log.info('segment id : %s', segment_id)
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -386,6 +476,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -395,9 +487,15 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.createSegment = function(segment, ready){
         
+        log.info('createSegment called')
+        
+        log.debug('building payload')
         payload = segment.toJSON()
+        log.debug('done building payload')
         
         var b = JSON.stringify(payload)
+       
+        log.debug('segment payload : %s', b)
        
         var options = {
               method: 'POST'
@@ -409,6 +507,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                     }   
         }        
 
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -418,9 +518,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.changeSegment = function(segment_id, segment, ready){
         
-        payload = segment.toJSON()
+        log.info('changeSegment called')
+        log.info('segment id : %s', segment_id)
         
+        log.debug('building payload')
+        payload = segment.toJSON()
+        log.debug('done building payload')
+                
         var b = JSON.stringify(payload)
+        
+        log.debug('segment payload : %s', b)
        
         var options = {
               method: 'PUT'
@@ -432,6 +539,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                     }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -441,12 +550,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.deleteSegment = function(segment_id, ready){
         
+        log.info('deleteSegment called')
+        log.info('segment id : %s ', segment_id)
+        
         var options = {
               method: 'DELETE'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/segments/' + segment_id
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -457,6 +571,9 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     // Location
     this.getLocationFromString = function(query, alias, ready){
+        
+        log.info('getLocationFromString called')
+        log.info('query : %s \t alias : %s', query, alias)
         
         var params = '?q=' + query
         
@@ -471,6 +588,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -479,6 +598,9 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     }
     
     this.getLocationFromLatLon = function(lat, lon, alias, ready){
+        
+        log.info('getLocationFromLatLon called')
+        log.info('lat : %s \t lon : %s \t alias : %s', lat, lon, alias)
         
         var params = '?q=' + lat + ',' + lon
         
@@ -493,6 +615,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -501,6 +625,9 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     }
     
     this.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, ready){
+
+        log.info('getLocationFromLatLonBounds called')
+        log.info('lat1 : %s \t lon1 : %s \t lat2 : %s \t lon2 : %s \t alias : %s', lat1, lon1, lat2, lon2, alias)
         
         var params = '?q=' + lat1 + ',' + lon1 + ',' + lat2 + ',' + lon2
         
@@ -515,6 +642,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -523,6 +652,9 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     }    
     
     this.getLocationFromAlias = function(query, alias, ready){
+        
+        log.info('getLocationFromAlias called')
+        log.info('query : %s \t alias : %s', query, alias)
         
         var params = '?' + alias + '=' + query
         
@@ -533,6 +665,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -541,14 +675,18 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     }      
     
     // reports
-    this.getActiveUserCount = function(date,ready){
+    this.getActiveUserCount = function(date, ready){
 
+        log.info('getActiveUserCount called \t date : %s', date.toJSON())
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/reports/activeusers/?date='+date.toJSON()
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -557,7 +695,9 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         
     }
         
-    this.getResponseReport = function(start,end,precision,ready){
+    this.getResponseReport = function(start, end, precision, ready){
+
+        log.info('getResponseReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
 
         var options = {
               method: 'GET'
@@ -566,6 +706,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -573,8 +715,10 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         
     }
     
-    this.getAppOpensReport = function(start,end,precision,ready){
+    this.getAppOpensReport = function(start, end, precision, ready){
 
+        log.info('getAppOpensReportcalled \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -582,6 +726,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -589,8 +735,10 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         
     }
 
-    this.getTimeInAppReport = function(start,end,precision,ready){
+    this.getTimeInAppReport = function(start, end, precision, ready){
 
+        log.info('getTimeInAppReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -598,6 +746,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -605,8 +755,10 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         
     }
     
-    this.getOptInReport = function(start,end,precision,ready){
+    this.getOptInReport = function(start, end, precision, ready){
 
+        log.info('getOptInReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -614,6 +766,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -621,8 +775,10 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         
     }
     
-    this.getOptOutReport = function(start,end,precision,ready){
+    this.getOptOutReport = function(start, end, precision, ready){
 
+        log.info('getOptOutReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -630,6 +786,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.processApiResponse(error, response, body, data, ready)
@@ -637,14 +795,18 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         
     }
     
-    this.getPushReport = function(start,end,precision,ready){
+    this.getPushReport = function(start, end, precision, ready){
 
+        log.info('getPushReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/reports/sends/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -653,14 +815,18 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         
     }    
     
-    this.getResponseListing = function(start,end, limit, ready){
+    this.getResponseListing = function(start, end, limit, ready){
 
+        log.info('getReponseListing called \t start : %s \t end : %s \t limit : %s', start.toJSON(), end.toJSON(), limit)    
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/reports/responses/list/?start='+start.toJSON()+'&end='+end.toJSON()+'&limit='+limit
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -671,12 +837,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.getIndividualResponseStatistics = function(pushID, ready){
 
+        log.info('getIndividualResponseStatistics called \t push id : %s',pushID)
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/reports/responses/'+pushID
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -687,12 +857,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.getStatistics = function(start, end, ready){
 
+        log.info('getStatistics called \t start : %s \t end : %s', start.toJSON(), end.toJSON())    
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/push/stats/?start='+start.toJSON()+'&end='+end.toJSON()
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -704,12 +878,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     // per push
     this.getPerPush = function(pushID, ready){
 
+        log.info('getPerPush called \t push id : %s',pushID)    
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/reports/perpush/detail/'+pushID
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -720,12 +898,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
     this.getPerPushSeries = function(pushID, ready){
 
+        log.info('getPerPushSeries called \t push id : %s',pushID)
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+pushID
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -736,12 +918,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
     this.getPerPushSeriesWithPrecision = function(pushID, precision, ready){
 
+        log.info('getPerPushSeriesWithPrecision called \t push id : %s \t precision : %s',pushID, precision)    
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+ pushID + '?precision=' + precision
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -752,12 +938,16 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
     this.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, precision, ready){
 
+        log.info('getPerPushSeriesWithPrecisionAndRange called \t push id : %s \t start : %s \t end : %s \t precision : %s',pushID, start.toJSON(), end.toJSON(), precision)        
+    
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+ pushID + '?precision=' + precision + '&start=' + start.toJSON() + '&end=' + end.toJSON()
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
+
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))        
         
         request(options, function(error, response, body){
                 var data = {}
@@ -765,14 +955,13 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         })
         
     }    
-
     
     ///////////////////////////////////////////////////////////////////////////////
     this.responseLUT = function name(path, method) {
         
         // there is no elegant solution to this problem
-        // every endpoint has different behavior and pertinent data
-        // handle them all
+        // every endpoint has different behavior and pertinent data        
+        // handle them all by parsing the endpoint and using an awful if/else chain
         // this is where the sausage gets made
          
         var primaryPathName = path.split('/')[2]
@@ -783,10 +972,7 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             secondaryPathName = ""
         }
         
-        console.log('Primary Path Name   : ' + primaryPathName)
-        console.log('Secondary Path Name : ' + secondaryPathName)
-        console.log('Secondary Path Name Length : ' + secondaryPathName.length)
-        console.log('Tertiary Path Name  : ' + thirdPathName)
+        log.debug('Calling responseLUT | path: %s | method: %s', path, method)
         
         // Push
         if (primaryPathName === 'push' && method === 'POST') {
@@ -895,11 +1081,15 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
             // getResponseListing()
             return 'pushes'
         
-        } else if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length === 0 && method === 'GET') {
+        }
+        
+        if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length === 0 && method === 'GET') {
             // getResponseReport()
             return 'responses'
         
-        } else if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length > 6 && method === 'GET') {
+        }
+        
+        if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length > 6 && method === 'GET') {
             // getIndividualResponseStatistics()
             return 'object'
         }
@@ -928,32 +1118,18 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
     
     this.processApiResponse = function(error, response, body, data, ready){
     
-        console.log('//////////////////////////////////////////////////////////////////////////////')
-        
-        console.log('Error : ')
-        console.log(error)
-        
-        console.log()
-    
-        console.log('PathName    : ' + response.request.uri.pathname)
-        console.log('Params      : ' + response.request.uri.query)
-        console.log('Method      : ' + response.req.method)    
-        console.log('Status Code : ' + response.statusCode)
-        
-        console.log()
-        
-        console.log('Body length : ' + body.length)
-        console.log('-----')
-        // console.log(body)
+        log.debug('processApiResponse called')
+        log.debug('response status code %s', response.statusCode)        
 
-        console.log()
+        log.debug('error %s', error)
         
-        console.log('Data : ')
-        // console.log(data)
+        log.debug('body length %s', body.length)
+        log.debug('body : %s', body)
 
-        console.log()
+        log.debug('Looking up API response type...')
+        
         var apiResponseType = this.responseLUT(response.request.uri.pathname, response.req.method);
-        console.log('API Reponse Type : ' + apiResponseType)
+        log.debug('API reponse type : ' + apiResponseType)
 
         // possible options at this point
         /*
@@ -978,30 +1154,47 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
         
         if (apiResponseType === 'none') {
 
-            console.log('Got none.  Running callback with status code.')
+            log.debug('API response type was \'none\'.')
+            log.debug('Calling final callback function passing the status code and null data.')
+
             ready(null, { status_code: response.statusCode, data:null })
             return
         
         } else if (apiResponseType === 'object') {
             
-            console.log('Returned an Object.  Running callback with status code and object')
+            log.debug('API response type was \'object\'')
             
             try {
+                
+                log.debug('Trying to parse body as JSON object')                
                 var b = JSON.parse(body)
+                log.debug('Succeeded parsing body as JSON object')
+                
+                log.debug('Calling final callback function passing the status code and returning a javascript object as the data.')
+                
                 ready( null, { status_code: response.statusCode, data: b } )
                 
             } catch(e) {
+                
+                log.debug('Failed trying to parse body as JSON object')
+                log.debug('Calling final callback function passing the status code and returning simple text string as the data.')
+                
                 ready( null, { status_code: response.statusCode, data: body } )
+                
             }
             return
             
         } else {
             
-            console.log('Possibly a next page... do complicated shit.')
+            log.debug('API response type \'%s\' possibly has a next page', apiResponseType)
             
             if (body.length === 0) {
                 // there is a 504, all hell is breaking loose
                 // sometimes the last page of a series of requests is empty and will time out
+                
+                log.debug("last page returned zero byte body with response code %s", response.statusCode)
+                log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
+                
                 ready( null, { status_code: response.statusCode, data: data } )
                 return
             }
@@ -1013,7 +1206,7 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                 data[apiResponseType] = []
             }                 
 
-            console.log('Appending each element in the body to the data array...')
+            log.debug('Appending %s elements in the body to the data array', d[apiResponseType].length)
             d[apiResponseType].forEach(function(item){
             
                 data[apiResponseType].push(item)
@@ -1022,15 +1215,17 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                         
             if (d.next_page === undefined) {
             
-                console.log('There is NOT a next_page')
+                log.debug('next_page was undefined')
+                
                 // run the callback
-                console.log('Running ready() with all the data.')
+                log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
+                
                 ready( null, { status_code: response.statusCode, data: data } )
                 return
             
             } else {
                 
-                console.log('There is a next_page')
+                log.debug('getting next page: %s', d.next_page)
 
                 // run the request again with the URI found in the next page
                 var options = {
@@ -1039,6 +1234,8 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                     , url: d.next_page
                     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
                 }
+                
+                log.debug('Making HTTP request with options %s', JSON.stringify(options))                        
                 
                 request(options, function(error, response, body){
                         self.processApiResponse(error, response, body, data, ready)
