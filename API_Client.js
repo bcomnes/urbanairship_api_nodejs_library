@@ -7,6 +7,7 @@ exports.Message = require('./Message.js').Message
 exports.Segment = require('./Segment.js').Segment
 exports.Location = require('./Location.js').Location
 exports.Schedule = require('./Schedule.js').Schedule
+exports.Tag = require('./Tag.js').Tag
 
 exports.DeviceType = function DeviceType() {
     this.IOS = 'ios'
@@ -33,11 +34,33 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     }
     
     // Tags
+    this.tagAddRemoveDevices = function(tag, ready){
+        
+        var payload = tag.toJSON()
+        
+        var b = JSON.stringify(payload)
+        
+        var options = {
+              method: 'POST'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , uri: 'https://go.urbanairship.com/api/tags/' + tag.name
+            , body: b
+            , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+                       , 'Content-Type' : 'application/json'
+                    }
+        }        
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })
+        
+    }
+    
     this.getTags = function(ready){
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-            , uri: 'https://go.urbanairship.com/api/tags'
+            , uri: 'https://go.urbanairship.com/api/tags/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
         }        
         request(options, function(error, response, body){
@@ -137,6 +160,30 @@ exports.API_Client = function APIClient(appKey, appSecret) {
               method: 'POST'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/push/'
+            , body: b
+            , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+                       , 'Content-Type' : 'application/json'
+                    }   
+        }        
+
+        request(options, function(error, response, body){
+                var data = {}
+                self.recursiveReady(error, response, body, data, ready)
+        })        
+        
+    }
+
+    this.validatePush = function(push, ready){
+                
+        // build payload
+        payload = push.toJSON()
+
+        var b = JSON.stringify(payload)
+                
+        var options = {
+              method: 'POST'
+            , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+            , url: 'https://go.urbanairship.com/api/push/validate/'
             , body: b
             , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
                        , 'Content-Type' : 'application/json'
@@ -663,7 +710,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         console.log('Primary Path Name   : ' + primaryPathName)
         console.log('Secondary Path Name : ' + secondaryPathName)
         console.log('Secondary Path Name Length : ' + secondaryPathName.length)
-        console.log('Third Path Name     : ' + thirdPathName)
+        console.log('Tertiary Path Name         : ' + thirdPathName)
         
         // Push
         if (primaryPathName === 'push' && method === 'POST') {
@@ -710,6 +757,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         }        
         
         // Tags
+        if (primaryPathName === 'tags' && method === 'POST') {
+            return [ 'none' ]
+        }             
+
+
         if (primaryPathName === 'tags' && method === 'GET') {
             return [ 'tags' ]
         }             

@@ -13,11 +13,20 @@ var Message = UA.Message
 var Segment = UA.Segment
 var Location = UA.Location
 var Schedule = UA.Schedule
-
+var Tag = UA.Tag
 
 var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 // var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
+
+var t = new Tag()
+    t.setName("nodejs_lib_tag")
+
+    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
+    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD2793')
+    t.removeDeviceToken('EFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
+
+// client.tagAddRemoveDevices(t, displayResults)
 
 /// Staging
 
@@ -47,6 +56,8 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     var p = new Push(); p.addNotification(n) 
     // client.sendPush(p, displayResults)
 
+client.validatePush(p, displayResults)
+
 // Schedule
 
     var s = new Schedule();
@@ -58,7 +69,7 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     // client.listSchedules(displayResults)
     // client.listSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
     // client.updateSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', s, displayResults)  
-    client.deleteSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
+    // client.deleteSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
     
       
                           
@@ -91,7 +102,6 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
     
     // client.getLocationFromAlias("CA", "us_state", displayResults)    
 
-
 //////////////////////////////////////////////////
 /// Not Handled
 
@@ -115,9 +125,7 @@ var s = new Selector('and')
 var seg = new Segment("API_test_with_Segments");
     seg.setCriteria(s);
 
-console.log(JSON.stringify(seg,null,4))
-
-
+// console.log(JSON.stringify(seg,null,2))
 
 
 function displayResults(error, data) {

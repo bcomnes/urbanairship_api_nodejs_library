@@ -8,7 +8,7 @@
 | ? | Name | Method | Endpoint  | Reponse Format   |
 | ------------ | ---- | ------ | --------- | ---------------  |
 | X | Push | POST | /api/push/ | { "ok" : boolean, "operation_id" : UUID, "push_ids" : [] }  |
-| O | Validate | POST | /api/push/validate | Rely on Status Codes. |
+| X | Validate | POST | /api/push/validate | Rely on Status Codes. |
 | X | Create Schedule | POST | /api/schedules/ | { "ok":boolean, "operation_id" : UUID, "schedule_urls" : [] } |
 | X | List Schedules | GET | /api/schedules/ | { "ok":boolean, "count" : integer, "schedules" : [] } |
 | X | List Specific Schedule | GET | /api/schedules/(id) | { "name" : String, "schedule" : {}, "push" : {} } |
@@ -16,7 +16,7 @@
 | X | Delete Schedule | DELETE | /api/schedules/(id) | Rely on Status Codes |
 | X | Tag Listing | GET | /api/tags/ | { "tags": [] } |
 | X | Tag Creation | PUT | /api/tags/(tag) | Rely on Status Code. |
-| O | Adding / Removing Devices From a Tag | POST | /api/tags/(tag) | Rely on Status Code. |
+| X | Adding / Removing Devices From a Tag | POST | /api/tags/(tag) | Rely on Status Code. |
 | X | Delete a Tag | DELETE | /apit/tags/(tag) | Rely on Status Code. |
 | X | Active User Count | GET | /api/reports/activeusers/?date=(date) | { "android" : integer, "ios" : integer } |
 | X | Push Report | GET | /api/reports/sends/?start=(date)&end=(date)&precision=(precision) | { "sends" : [], "next_page" : String, "prev_page" : String }
