@@ -26,7 +26,7 @@ exports.Notification = function Notification() {
         this.alert = alert
     }
     
-    // ios settings
+    // ios specific settings
     this.setBadge = function(badge){
         this.badge = badge      
     }
@@ -47,7 +47,7 @@ exports.Notification = function Notification() {
         this.priority = priority
     }
     
-    // android settings
+    // android specific settings
     this.setCollapseKey = function(collapse_key){
         this.collapse_key = collapse_key
     }
@@ -60,7 +60,7 @@ exports.Notification = function Notification() {
         this.delay_while_idle = delay_while_idle
     }
     
-    // ios and android specific
+    // both ios and android specific
     this.addExtra = function(k,v){
         this.extras.push({ key: k, value: v})
     }

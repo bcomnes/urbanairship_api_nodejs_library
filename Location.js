@@ -65,61 +65,61 @@ exports.Location = function(){
         
         } else {
         
-            if (this.resolution === "minutes") {
+            if (this.resolution === 'minutes') {
                 
                 payload.date.minutes = {}
                 
-                var splitStart = this.start.toJSON().split("T")
-                var splitEnd = this.end.toJSON().split("T")
+                var splitStart = this.start.toJSON().split('T')
+                var splitEnd = this.end.toJSON().split('T')
                 
-                payload.date.minutes.start = splitStart[0] + " " + splitStart[1].substring(0,5)
-                payload.date.minutes.end = splitEnd[0] + " " + splitEnd[1].substring(0,5)
+                payload.date.minutes.start = splitStart[0] + ' ' + splitStart[1].substring(0,5)
+                payload.date.minutes.end = splitEnd[0] + ' ' + splitEnd[1].substring(0,5)
                 
-            } else if (this.resolution === "hours") {
+            } else if (this.resolution === 'hours') {
                 
                 payload.date.hours = {}
                 
-                var splitStart = this.start.toJSON().split("T")
-                var splitEnd = this.end.toJSON().split("T")
+                var splitStart = this.start.toJSON().split('T')
+                var splitEnd = this.end.toJSON().split('T')
                 
-                payload.date.hours.start = splitStart[0] + " " + splitStart[1].substring(0,3)
-                payload.date.hours.end = splitEnd[0] + " " + splitEnd[1].substring(0,3)
+                payload.date.hours.start = splitStart[0] + ' ' + splitStart[1].substring(0,3)
+                payload.date.hours.end = splitEnd[0] + ' ' + splitEnd[1].substring(0,3)
                 
-            } else if (this.resolution === "days") {
+            } else if (this.resolution === 'days') {
                 
                 payload.date.days = {}
                 
-                var splitStart = this.start.toJSON().split("T")
-                var splitEnd = this.end.toJSON().split("T")
+                var splitStart = this.start.toJSON().split('T')
+                var splitEnd = this.end.toJSON().split('T')
                 
                 payload.date.days.start = splitStart[0]
                 payload.date.days.end = splitEnd[0]
                 
-            } else if (this.resolution === "weeks") {
+            } else if (this.resolution === 'weeks') {
                 // TODO FIX THIS SHIT
                 payload.date.weeks = {}
                 
-                var splitStart = this.start.toJSON().split("T")
+                var splitStart = this.start.toJSON().split('T')
                 
-                payload.date.weeks.start = splitStart[0].substring(0,5) + "-W" + this.start.getUTCWeek();
+                payload.date.weeks.start = splitStart[0].substring(0,5) + '-W' + this.start.getUTCWeek();
                 payload.date.weeks.end = splitEnd[0]            
             
-            } else if (this.resolution === "months") {
+            } else if (this.resolution === 'months') {
                 
                 payload.date.months = {}
                 
-                var splitStart = this.start.toJSON().split("T")
-                var splitEnd = this.end.toJSON().split("T")
+                var splitStart = this.start.toJSON().split('T')
+                var splitEnd = this.end.toJSON().split('T')
                 
                 payload.date.months.start = splitStart[0].substring(0,7)
                 payload.date.months.end = splitEnd[0].substring(0,7)
                 
-            } else if (this.resolution === "years") {
+            } else if (this.resolution === 'years') {
             
                 payload.date.years = {}
                 
-                var splitStart = this.start.toJSON().split("T")
-                var splitEnd = this.end.toJSON().split("T")
+                var splitStart = this.start.toJSON().split('T')
+                var splitEnd = this.end.toJSON().split('T')
                 
                 payload.date.years.start = splitStart[0].substring(0,4)
                 payload.date.years.end = splitEnd[0].substring(0,4)

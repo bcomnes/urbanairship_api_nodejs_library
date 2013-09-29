@@ -1,7 +1,13 @@
-exports.Segment = function Segment(display_name){
+exports.Segment = function Segment(){
     
-    this.display_name = display_name
+    this.display_name
     this.criteria
+    
+    this.setName = function(name){
+        
+        this.display_name = name
+        
+    }
     
     this.setCriteria = function(criteria){
         

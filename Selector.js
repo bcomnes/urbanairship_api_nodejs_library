@@ -10,6 +10,9 @@ exports.Selector = function Selector(booleanOperator) {
     
     this.selectors = []
     
+    // the arrays are format { not: boolean, type: object/string }
+    // this is the most elegant solution for the not conditionals
+    
     this.addTag = function(tag, bIsNot){
         if (bIsNot === undefined || bIsNot === false) {
             this.tags.push(tag)    

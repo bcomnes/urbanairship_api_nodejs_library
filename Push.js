@@ -19,6 +19,7 @@ exports.Push = function Push() {
     this.toJSON = function(){
         var payload = {}
 
+        // determine the device types
         // parse the device types in the list of notifications, do any of them have all?
         var anyNotificationSetToAll = false
         this.notifications.forEach(function(notification){
@@ -38,6 +39,8 @@ exports.Push = function Push() {
             payload.device_types = 'all'
         }
 
+        
+        // add the notifications to the push payload
         payload.notification = {}
         
         this.notifications.forEach(function(notification){
@@ -110,6 +113,7 @@ exports.Push = function Push() {
 
         });
         
+        // determine if there is an ad-hoc audience selector
         if(this.audience.operator !== undefined){
             payload.audience = this.audience.toJSON()
         }

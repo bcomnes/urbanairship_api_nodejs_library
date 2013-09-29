@@ -20,7 +20,7 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 var t = new Tag()
     t.setName("nodejs_lib_tag")
 
-    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD27')
+    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
     t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD2793')
     t.removeDeviceToken('EFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
 
@@ -62,9 +62,7 @@ var t = new Tag()
     // client.listSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
     // client.updateSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', s, displayResults)  
     // client.deleteSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
-    
-      
-                          
+
 // Reports                 
     // client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', displayResults)
     // client.getPushReport(new Date(2012,0,1), new Date(2013,8,30), 'DAILY', displayResults)
@@ -114,7 +112,8 @@ var s = new Selector('and')
 
     s.addSelector(s2, true)
 
-var seg = new Segment("API_test_with_Segments");
+var seg = new Segment();
+    seg.setName("API_test_with_segments")
     seg.setCriteria(s);
 
 // console.log(JSON.stringify(seg,null,2))

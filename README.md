@@ -1,6 +1,9 @@
 ###TODO
 
 * Add Logging
+  * [ ] Debug log level
+  * [ ] Verbose log level
+  * [ ] log to file?
 * [ ] Write Documentation
 * [X] Completely implement spec
   

@@ -2,8 +2,8 @@ exports.Message = function Message(){
     
     this.title
     this.body
-    this.content_type = "text/html"
-    this.content_encoding = "utf-8"
+    this.content_type = 'text/html'
+    this.content_encoding = 'utf-8'
     this.expiry
     this.icons
     this.extras = []

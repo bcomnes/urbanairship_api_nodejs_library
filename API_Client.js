@@ -48,7 +48,8 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
                        , 'Content-Type' : 'application/json'
                     }
-        }        
+        }
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
@@ -57,95 +58,116 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     }
     
     this.getTags = function(ready){
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , uri: 'https://go.urbanairship.com/api/tags/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
-        }        
+        }
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
     
     this.createTag = function(tag, ready){
+        
         var options = {
               method: 'PUT'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/tags/' + tag
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
-        }        
+        }
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
     
     this.deleteTag = function(tag, ready){
+        
         var options = {
               method: 'DELETE'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/tags/' + tag
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
-        }        
+        }
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
     
     // Device lookup
     this.getDeviceTokens = function(ready){
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/device_tokens/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
-        }        
+        }
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
 
     this.getDeviceToken = function(deviceToken, ready){
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/device_tokens/' + deviceToken
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
-        }        
+        }
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
 
     this.getApids = function(ready){
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/apids/'
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
-        }        
+        }
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
     
     this.getApid = function(apid, ready){
+        
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
             , url: 'https://go.urbanairship.com/api/apids/' + apid
             , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
-        }        
+        }
+        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
     
     // Push
@@ -405,12 +427,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
-        console.log(options)
-        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
-        })          
+        })
+        
     }
     
     this.getLocationFromLatLon = function(lat, lon, alias, ready){
@@ -428,12 +449,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
-        console.log(options);
-        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
-        })           
+        })
+        
     }
     
     this.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, ready){
@@ -451,12 +471,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
-        console.log(options);
-        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
-        })           
+        })
+        
     }    
     
     this.getLocationFromAlias = function(query, alias, ready){
@@ -470,12 +489,11 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }
         
-        console.log(options);
-        
         request(options, function(error, response, body){
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
-        })          
+        })
+        
     }      
     
     // reports
@@ -492,6 +510,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
         
     this.getResponseReport = function(start,end,precision,ready){
@@ -507,6 +526,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
     
     this.getAppOpensReport = function(start,end,precision,ready){
@@ -522,6 +542,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
 
     this.getTimeInAppReport = function(start,end,precision,ready){
@@ -537,6 +558,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
     
     this.getOptInReport = function(start,end,precision,ready){
@@ -552,6 +574,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
     
     this.getOptOutReport = function(start,end,precision,ready){
@@ -567,6 +590,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }
     
     this.getPushReport = function(start,end,precision,ready){
@@ -582,6 +606,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }    
     
     this.getResponseListing = function(start,end, limit, ready){
@@ -597,6 +622,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }    
     
     this.getIndividualResponseStatistics = function(pushID, ready){
@@ -612,6 +638,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }       
     
     this.getStatistics = function(start, end, ready){
@@ -627,6 +654,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }    
     
     // per push
@@ -643,6 +671,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }     
 
     this.getPerPushSeries = function(pushID, ready){
@@ -658,6 +687,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }    
 
     this.getPerPushSeriesWithPrecision = function(pushID, precision, ready){
@@ -673,6 +703,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }    
 
     this.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, precision, ready){
@@ -688,6 +719,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 var data = {}
                 self.recursiveReady(error, response, body, data, ready)
         })
+        
     }    
 
     
@@ -850,7 +882,6 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             return [ 'object' ]
         }
         
-        
         // return(LUT[path][method])
     }
     
@@ -865,7 +896,6 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     
         console.log('PathName    : ' + response.request.uri.pathname)
         console.log('Params      : ' + response.request.uri.query)
-        // console.log("Path        : " + response.req.path)
         console.log('Method      : ' + response.req.method)    
         console.log('Status Code : ' + response.statusCode)
         
@@ -873,7 +903,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         console.log('Body length : ' + body.length)
         console.log('-----')
-        console.log(body)
+        // console.log(body)
 
         console.log()
         
@@ -891,12 +921,14 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 call ready(null, { "status_code" : response.statusCode })
             } else if 'object' is in the pertinent data {
                 call ready(null, JSON.parse(data))
-            } else if 'next_page' is in the pertinent data {
+            } else {
                 if 'next_page' is undefined {
                     this is the last of the results 
-                    append the pertinent information to 'data' call ready(null, data)
+                    append the pertinent information to 'data'
+                    call ready(null, data)
                 } else {
-                    append the pertinent information to 'data' and send another request with the updated URL
+                    append the pertinent information to 'data'
+                    send another request with the updated URL
                 }
             }
             
