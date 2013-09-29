@@ -13,7 +13,7 @@ var Location = UA.Location
 var Schedule = UA.Schedule
 var Tag = UA.Tag
 
-var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
+// var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 // var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 
@@ -52,10 +52,10 @@ var t = new Tag()
 
 // Schedule
 
-    var s = new Schedule();
-        s.setName('scheduled_by_api');
-        s.setDate(new Date(2014,0,1));
-        s.setPush(p)
+    // var s = new Schedule();
+    //     s.setName('scheduled_by_api');
+    //     s.setDate(new Date(2014,0,1));
+    //     s.setPush(p)
 
     //client.schedulePush(s, displayResults)
     // client.listSchedules(displayResults)
@@ -91,9 +91,6 @@ var t = new Tag()
     // client.getLocationFromLatLonBounds(32.528832,-124.482003,42.009517,-114.131211,'postalcode',displayResults)
     
     // client.getLocationFromAlias("CA", "us_state", displayResults)    
-
-//////////////////////////////////////////////////
-/// Not Handled
 
 // build audience
 

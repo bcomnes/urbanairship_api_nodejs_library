@@ -903,7 +903,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         console.log('Body length : ' + body.length)
         console.log('-----')
-        // console.log(body)
+        console.log(body)
 
         console.log()
         
