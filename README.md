@@ -1,7 +1,7 @@
 ###TODO
 
 * Add Logging
-* Completely implement spec
+* [X] Completely implement spec
   
 ###List of API Endpoints, Methods, and Response Formats
 
