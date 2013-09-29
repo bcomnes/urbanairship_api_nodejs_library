@@ -13,18 +13,9 @@ var Location = UA.Location
 var Schedule = UA.Schedule
 var Tag = UA.Tag
 
-// var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
+var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 // var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
-
-var t = new Tag()
-    t.setName("nodejs_lib_tag")
-
-    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
-    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD2793')
-    t.removeDeviceToken('EFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
-
-// client.tagAddRemoveDevices(t, displayResults)
 
 // Device Listing
     // client.getApids(displayResults)
@@ -37,6 +28,13 @@ var t = new Tag()
     // client.createTag("library", displayResults)
     // client.deleteTag("library", displayResults)
 
+// var t = new Tag
+    // t.setName("nodejs_lib_tag")
+    // t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
+    // t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD2793')
+    // t.removeDeviceToken('EFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
+    // client.tagAddRemoveDevices(t, displayResults)
+
 // Segments
     // client.getSegments(displayResults);
     // client.getSegment('0180abda-db50-4eda-860a-aa74cfe4c90d', displayResults)
@@ -45,19 +43,18 @@ var t = new Tag()
     // client.createSegment(seg, displayResults);
 
 // Push
-    /// var n = new Notification(); n.setAlert("from API updated"); n.setDeviceType("all")
-    // var p = new Push(); p.addNotification(n) 
+    // var n = new Notification; n.setAlert('this is an alert'); n.setDeviceType('all')
+    // var p = new Push; p.addNotification(n) 
     // client.sendPush(p, displayResults)
     // client.validatePush(p, displayResults)
 
 // Schedule
-
-    // var s = new Schedule();
+    // var s = new Schedule;
     //     s.setName('scheduled_by_api');
     //     s.setDate(new Date(2014,0,1));
     //     s.setPush(p)
 
-    //client.schedulePush(s, displayResults)
+    // client.schedulePush(s, displayResults)
     // client.listSchedules(displayResults)
     // client.listSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
     // client.updateSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', s, displayResults)  
@@ -85,11 +82,10 @@ var t = new Tag()
 
 // Location
     // client.getLocationFromString('Memphis,TN','city',displayResults);
-    // client.getLocationFromString('Memphis,TN',null,displayResults);
+    // client.getLocationFromString('Street', null, displayResults);
     // client.getLocationFromString('92705', 'postalcode', displayResults);
     // client.getLocationFromLatLon(37.7749295, -122.4194155, 'city', displayResults)
-    // client.getLocationFromLatLonBounds(32.528832,-124.482003,42.009517,-114.131211,'postalcode',displayResults)
-    
+    // client.getLocationFromLatLonBounds(32.528832,-124.482003,42.009517,-114.131211,'postalcode',displayResults)    
     // client.getLocationFromAlias("CA", "us_state", displayResults)    
 
 // build audience
@@ -101,19 +97,20 @@ var s = new Selector('and')
     s.addTag('snarf')
         
     var l = new Location()
-    l.setId("00xb78Jw3Zz1TyrjqRykN9")
+    l.setId('00xb78Jw3Zz1TyrjqRykN9')
     // l.setTimeAbsolute(new Date(2013,09,01), new Date(2013,12,01), "months")
-    l.setTimeRelative(4, "months")
+    l.setTimeRelative(4, 'months')
         
     s.addLocation(l, true)
 
     s.addSelector(s2, true)
 
 var seg = new Segment();
-    seg.setName("API_test_with_segments")
+    seg.setName('API_test_with_segments')
     seg.setCriteria(s);
 
 // console.log(JSON.stringify(seg,null,2))
+client.createSegment(seg, displayResults)
 
 function displayResults(error, data) {
     
@@ -126,4 +123,3 @@ function displayResults(error, data) {
     console.log(JSON.stringify(data,null,2))
     
 }
-

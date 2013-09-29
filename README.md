@@ -5,6 +5,7 @@
   * [ ] Verbose log level
   * [ ] log to file?
 * [ ] Write Documentation
+* [ ] Error Checking - Each Object must have all the required criteria
 * [X] Completely implement spec
   
 ###List of API Endpoints, Methods, and Response Formats

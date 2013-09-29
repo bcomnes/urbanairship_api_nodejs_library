@@ -10,8 +10,8 @@ exports.Selector = function Selector(booleanOperator) {
     
     this.selectors = []
     
-    // the arrays are format { not: boolean, type: object/string }
-    // this is the most elegant solution for the not conditionals
+    // though it is a boolean trap (http://ariya.ofilabs.com/2011/08/hall-of-api-shame-boolean-trap.html) it is the most elegant solution for the not conditionals
+    // I wrote it many other ways, and this was the least complicated way, trust me.
     
     this.addTag = function(tag, bIsNot){
         if (bIsNot === undefined || bIsNot === false) {
@@ -79,7 +79,7 @@ exports.Selector = function Selector(booleanOperator) {
             if (tag.not === undefined || tag.not === false) {
                 nested.push({ 'tag' : tag })    
             } else {
-                nested.push({ 'not' : { 'tag':tag.tag }})
+                nested.push({ 'not' : { 'tag': tag.tag }})
             }
         })
 

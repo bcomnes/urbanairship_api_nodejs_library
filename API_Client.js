@@ -52,7 +52,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -68,7 +68,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -84,7 +84,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -100,7 +100,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -117,7 +117,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -133,7 +133,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -149,7 +149,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -165,7 +165,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -190,7 +190,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })        
         
     }
@@ -214,7 +214,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })        
         
     }
@@ -239,7 +239,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })        
         
     }
@@ -255,7 +255,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })      
     
     }
@@ -271,7 +271,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })      
     
     }
@@ -295,7 +295,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })  
     
     }
@@ -311,7 +311,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })      
     
     }    
@@ -328,7 +328,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })          
         
     }
@@ -344,7 +344,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })           
         
     }
@@ -367,7 +367,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
 
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })        
         
     }
@@ -390,7 +390,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })        
         
     }
@@ -406,7 +406,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })       
         
     }    
@@ -429,7 +429,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -451,7 +451,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -473,7 +473,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }    
@@ -491,7 +491,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }      
@@ -508,7 +508,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -524,7 +524,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -540,7 +540,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -556,7 +556,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -572,7 +572,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -588,7 +588,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }
@@ -604,7 +604,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }    
@@ -620,7 +620,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }    
@@ -636,7 +636,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }       
@@ -652,7 +652,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }    
@@ -669,7 +669,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }     
@@ -685,7 +685,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }    
@@ -701,7 +701,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }    
@@ -717,7 +717,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         request(options, function(error, response, body){
                 var data = {}
-                self.recursiveReady(error, response, body, data, ready)
+                self.processApiResponse(error, response, body, data, ready)
         })
         
     }    
@@ -742,150 +742,147 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         console.log('Primary Path Name   : ' + primaryPathName)
         console.log('Secondary Path Name : ' + secondaryPathName)
         console.log('Secondary Path Name Length : ' + secondaryPathName.length)
-        console.log('Tertiary Path Name         : ' + thirdPathName)
+        console.log('Tertiary Path Name  : ' + thirdPathName)
         
         // Push
         if (primaryPathName === 'push' && method === 'POST') {
-            return [ 'object' ]
+            return 'object'
         }
         
         // Schedules
         if (primaryPathName === 'schedules' && method === 'POST') {
-            return [ 'object' ]
+            return 'object'
         }
 
         if (primaryPathName === 'schedules' && method === 'GET') {
-            return [ 'object' ]
+            return 'object'
         }
 
         if (primaryPathName === 'schedules' && method === 'PUT') {
-            return [ 'object' ]
+            return 'object'
         }
 
         if (primaryPathName === 'schedules' && method === 'DELETE') {
-            return [ 'none' ]
+            return 'none'
         }
 
-                
         // Device Listing
         // get apids
         if (primaryPathName === 'apids' && secondaryPathName.length === 0 && method === 'GET') {
-            return [ 'apids' ]
+            return 'apids'
         }        
         
         // get single apid
         if (primaryPathName === 'apids' && secondaryPathName.length !== 0 && method === 'GET') {
-            return [ 'object' ]
+            return 'object'
         }        
         
         // get device tokens
         if (primaryPathName === 'device_tokens' && secondaryPathName.length === 0 && method === 'GET') {
-            return [ 'device_tokens' ]
+            return 'device_tokens'
         }        
         
         // get single device token
         if (primaryPathName === 'device_tokens' && secondaryPathName.length !== 0 && method === 'GET') {
-            return [ 'object' ]
+            return 'object'
         }        
         
         // Tags
         if (primaryPathName === 'tags' && method === 'POST') {
-            return [ 'none' ]
+            return 'none'
         }             
 
-
         if (primaryPathName === 'tags' && method === 'GET') {
-            return [ 'tags' ]
+            return 'tags'
         }             
         
         if (primaryPathName === 'tags' && method === 'PUT') {
-            return [ 'none' ]
+            return 'none'
         }        
 
         if (primaryPathName === 'tags' && method === 'DELETE') {
-            return [ 'none' ]
+            return 'none'
         }        
 
         // Segments        
         // single segment
         if (primaryPathName === 'segments' && secondaryPathName.length > 0 && method === 'GET') {
-            return [ 'object' ]
+            return 'object'
         }
         
         // multiple segments
         if (primaryPathName === 'segments' && secondaryPathName.length === 0 && method === 'GET') {
-            return [ 'segments' ]
+            return 'segments'
         }
         
         // create a segment
         if (primaryPathName === 'segments' && method === 'POST') {
-            return [ 'none' ]
+            return 'none'
         }
 
         // change segment
         if (primaryPathName === 'segments' && method === 'PUT') {
-            return [ 'none' ]
+            return 'none'
         }        
         
         // delete segment
         if (primaryPathName === 'segments' && method === 'DELETE') {
-            return [ 'none' ]
+            return 'none'
         }        
         
         // Reports
         if (primaryPathName === 'reports' && secondaryPathName === 'activeusers' && method === 'GET') {
-            return [ 'object' ]
+            return 'object'
         }
 
         if (primaryPathName === 'reports' && secondaryPathName === 'perpush' && method === 'GET') {
-            return [ 'object' ]
+            return 'object'
         }
 
         if (primaryPathName === 'reports' && secondaryPathName === 'sends' && method === 'GET') {
-            return [ 'sends' ]
+            return 'sends'
         }
 
         if (primaryPathName === 'reports' && secondaryPathName === 'opens' && method === 'GET') {
-            return [ 'opens' ]
+            return 'opens'
         }
 
         if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName === "list" && method === 'GET') {
             // getResponseListing()
-            return [ 'pushes' ]
+            return 'pushes'
         
         } else if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length === 0 && method === 'GET') {
             // getResponseReport()
-            return [ 'responses' ]
+            return 'responses'
         
         } else if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length > 6 && method === 'GET') {
             // getIndividualResponseStatistics()
-            return [ 'object' ]
+            return 'object'
         }
 
         if (primaryPathName === 'reports' && secondaryPathName === 'timeinapp' && method === 'GET') {
-            return [ 'timeinapp' ]
+            return 'timeinapp'
         }
 
         if (primaryPathName === 'reports' && secondaryPathName === 'optins' && method === 'GET') {
-            return [ 'optins' ]
+            return 'optins'
         }
 
         if (primaryPathName === 'reports' && secondaryPathName === 'optouts' && method === 'GET') {
-            return [ 'optouts' ]
+            return 'optouts'
         }
 
         if (primaryPathName === 'push' && secondaryPathName === 'stats' && method === 'GET') {
-            return [ 'object' ]
+            return 'object'
         }
         
         if (primaryPathName === 'location' && method === 'GET') {
-            return [ 'object' ]
+            return 'object'
         }
         
-        // return(LUT[path][method])
     }
     
-    this.recursiveReady = function(error, response, body, data, ready){
+    this.processApiResponse = function(error, response, body, data, ready){
     
         console.log('//////////////////////////////////////////////////////////////////////////////')
         
@@ -903,7 +900,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         
         console.log('Body length : ' + body.length)
         console.log('-----')
-        console.log(body)
+        // console.log(body)
 
         console.log()
         
@@ -911,15 +908,15 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         // console.log(data)
 
         console.log()
-        var pertinentData = this.responseLUT(response.request.uri.pathname, response.req.method);
-        console.log('Pertinent Data : ' + pertinentData)
+        var apiResponseType = this.responseLUT(response.request.uri.pathname, response.req.method);
+        console.log('API Reponse Type : ' + apiResponseType)
 
         // possible options at this point
         /*
             ==
-            if 'none' in the pertinent data? {
+            if 'none' is pertinent data? {
                 call ready(null, { "status_code" : response.statusCode })
-            } else if 'object' is in the pertinent data {
+            } else if 'object' is the pertinent data {
                 call ready(null, JSON.parse(data))
             } else {
                 if 'next_page' is undefined {
@@ -935,13 +932,13 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         */
         // 
         
-        if (pertinentData.indexOf('none') !== -1) {
+        if (apiResponseType === 'none') {
 
             console.log('Got none.  Running callback with status code.')
             ready(null, { status_code: response.statusCode, data:null })
             return
         
-        } else if (pertinentData.indexOf('object') !== -1) {
+        } else if (apiResponseType === 'object') {
             
             console.log('Returned an Object.  Running callback with status code and object')
             
@@ -952,8 +949,6 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             } catch(e) {
                 ready( null, { status_code: response.statusCode, data: body } )
             }
-            
-            
             return
             
         } else {
@@ -962,21 +957,22 @@ exports.API_Client = function APIClient(appKey, appSecret) {
             
             if (body.length === 0) {
                 // there is a 504, all hell is breaking loose
+                // sometimes the last page of a series of requests is empty and will time out
                 ready( null, { status_code: response.statusCode, data: data } )
                 return
             }
             
             var d = JSON.parse(body);
                  
-            if (data[pertinentData[0]] === undefined) {
+            if (data[apiResponseType] === undefined) {
                 console.log('Creating Array in data object')
-                data[pertinentData[0]] = []
+                data[apiResponseType] = []
             }                 
 
             console.log('Appending each element in the body to the data array...')
-            d[pertinentData[0]].forEach(function(item){
+            d[apiResponseType].forEach(function(item){
             
-                data[pertinentData[0]].push(item)
+                data[apiResponseType].push(item)
                 
             })
                         
@@ -1001,7 +997,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                 }
                 
                 request(options, function(error, response, body){
-                        self.recursiveReady(error, response, body, data, ready)
+                        self.processApiResponse(error, response, body, data, ready)
                 })                  
                 
             }

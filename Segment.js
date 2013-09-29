@@ -19,7 +19,7 @@ exports.Segment = function Segment(){
         
         var payload = {}
         
-        payload.display_name = display_name
+        payload.display_name = this.display_name
         
         payload.criteria = this.criteria.toJSON()
         
