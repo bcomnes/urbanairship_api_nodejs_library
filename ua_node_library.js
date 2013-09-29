@@ -3,8 +3,6 @@ var UA = require("./API_Client.js")
 
 var credentials = JSON.parse(fs.readFileSync('./keys.json', 'utf-8'))
 
-var UA = require("./API_Client.js")
-
 var DeviceType = UA.DeviceType
 var Push = UA.Push
 var Notification = UA.Notification
@@ -22,16 +20,11 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret);
 var t = new Tag()
     t.setName("nodejs_lib_tag")
 
-    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
+    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD27')
     t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD2793')
     t.removeDeviceToken('EFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
 
 // client.tagAddRemoveDevices(t, displayResults)
-
-/// Staging
-
-////////////////////////////////
-/// Handled
 
 // Device Listing
     // client.getApids(displayResults)
@@ -52,11 +45,10 @@ var t = new Tag()
     // client.createSegment(seg, displayResults);
 
 // Push
-    var n = new Notification(); n.setAlert("from API updated"); n.setDeviceType("all")
-    var p = new Push(); p.addNotification(n) 
+    /// var n = new Notification(); n.setAlert("from API updated"); n.setDeviceType("all")
+    // var p = new Push(); p.addNotification(n) 
     // client.sendPush(p, displayResults)
-
-client.validatePush(p, displayResults)
+    // client.validatePush(p, displayResults)
 
 // Schedule
 
@@ -97,8 +89,8 @@ client.validatePush(p, displayResults)
     // client.getLocationFromString('Memphis,TN','city',displayResults);
     // client.getLocationFromString('Memphis,TN',null,displayResults);
     // client.getLocationFromString('92705', 'postalcode', displayResults);
-    // client.getLocationFromLatLong(37.7749295, -122.4194155, 'city', displayResults)
-    // client.getLocationFromLatLongBounds(32.528832,-124.482003,42.009517,-114.131211,'postalcode',displayResults)
+    // client.getLocationFromLatLon(37.7749295, -122.4194155, 'city', displayResults)
+    // client.getLocationFromLatLonBounds(32.528832,-124.482003,42.009517,-114.131211,'postalcode',displayResults)
     
     // client.getLocationFromAlias("CA", "us_state", displayResults)    
 

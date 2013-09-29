@@ -413,7 +413,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         })          
     }
     
-    this.getLocationFromLatLong = function(lat, lon, alias, ready){
+    this.getLocationFromLatLon = function(lat, lon, alias, ready){
         
         var params = '?q=' + lat + ',' + lon
         
@@ -436,7 +436,7 @@ exports.API_Client = function APIClient(appKey, appSecret) {
         })           
     }
     
-    this.getLocationFromLatLongBounds = function(lat1, lon1, lat2, lon2, alias, ready){
+    this.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, ready){
         
         var params = '?q=' + lat1 + ',' + lon1 + ',' + lat2 + ',' + lon2
         
