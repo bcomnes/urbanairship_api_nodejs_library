@@ -1,5 +1,9 @@
 var request = require('request')
 
+var fs = require('fs')
+ , Log = require('log')
+ 
+
 exports.Push = require('./Push.js').Push
 exports.Notification = require('./Notification.js').Notification
 exports.Selector = require('./Selector.js').Selector
@@ -15,15 +19,45 @@ exports.DeviceType = function DeviceType() {
     this.ALL = 'all'
 }
 
-exports.API_Client = function APIClient(appKey, appSecret) {
+exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
-    // pagination requires recursion with anonymous functions, thus self
+    var log
+
+    if (loginfo !== undefined) {
+
+        console.log("Custom Log Information Present")
+    
+        var loglevel = 'info'
+        if (loginfo.loglevel !== undefined) {
+            loglevel = loginfo.logLevel
+        }
+        
+        var filename = appKey+'.log'
+        if (loginfo.filename !== undefined) {
+            filename = loginfo.filename
+        }
+        
+        var flags = { 'flags': 'w' }
+        if (loginfo.append === 'true') {
+            flags = { 'flags': 'a' }
+        }
+        
+        log = new Log(loglevel, fs.createWriteStream(filename, flags))
+        
+    } else {
+        
+        log = new Log('info', fs.createWriteStream('urban_airship.log', {'flags': 'a'}))
+    }
+
+    log.info('Creating client with app key : %s', appKey)
+    
+    // paginated results requires recursion with anonymous functions, thus self
     var self = this
     
     this.appKey = appKey
     this.appSecret = appSecret
     
-    this.auth = new Buffer(this.appKey + ":" + this.appSecret).toString('base64')
+    // this.auth = new Buffer(this.appKey + ":" + this.appSecret).toString('base64')
     
     this.getKey = function(){
         return this.appKey
@@ -35,8 +69,16 @@ exports.API_Client = function APIClient(appKey, appSecret) {
     
     // Tags
     this.tagAddRemoveDevices = function(tag, ready){
+
+        log.info('tagAddRemoveDevices called')
         
         var payload = tag.toJSON()
+        
+        log.debug('tag name : %s', tag.name)
+        log.debug('tag payload : %s', JSON.stringify(payload))
+        
+        log.info('For tag named: \'%s\' | adding %s device_tokens ', tag.name, tag.addedDeviceTokens.length)
+        log.info()
         
         var b = JSON.stringify(payload)
         
@@ -49,6 +91,8 @@ exports.API_Client = function APIClient(appKey, appSecret) {
                        , 'Content-Type' : 'application/json'
                     }
         }
+        
+        log.debug('Making HTTP request with options %s', JSON.stringify(options))
         
         request(options, function(error, response, body){
                 var data = {}
