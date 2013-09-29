@@ -1,6 +1,7 @@
 ###TODO
 
 * Add Logging
+* [ ] Write Documentation
 * [X] Completely implement spec
   
 ###List of API Endpoints, Methods, and Response Formats

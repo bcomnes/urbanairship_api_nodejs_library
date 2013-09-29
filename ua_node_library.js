@@ -127,11 +127,9 @@ var seg = new Segment("API_test_with_Segments");
 
 // console.log(JSON.stringify(seg,null,2))
 
-
 function displayResults(error, data) {
     
     console.log('///////////////////////////////////////////')
-    console.log('Made it to the final callback')
     console.log('Error : ' + error)
     console.log('Status Code : ' + data.status_code)
     console.log('Data  : ' + data )
