@@ -1,9 +1,7 @@
-var request = require('request')
-
 var fs = require('fs')
  , Log = require('log')
+ , request = require('request')
  
-
 exports.Push = require('./Push.js').Push
 exports.Notification = require('./Notification.js').Notification
 exports.Selector = require('./Selector.js').Selector
@@ -1156,6 +1154,7 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
 
             log.debug('API response type was \'none\'.')
             log.debug('Calling final callback function passing the status code and null data.')
+            log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: null }))
 
             ready(null, { status_code: response.statusCode, data:null })
             return
@@ -1171,6 +1170,7 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                 log.debug('Succeeded parsing body as JSON object')
                 
                 log.debug('Calling final callback function passing the status code and returning a javascript object as the data.')
+                log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: b }))
                 
                 ready( null, { status_code: response.statusCode, data: b } )
                 
@@ -1178,6 +1178,7 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                 
                 log.debug('Failed trying to parse body as JSON object')
                 log.debug('Calling final callback function passing the status code and returning simple text string as the data.')
+                log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: body }))
                 
                 ready( null, { status_code: response.statusCode, data: body } )
                 
@@ -1194,6 +1195,7 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                 
                 log.debug("last page returned zero byte body with response code %s", response.statusCode)
                 log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
+                log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
                 
                 ready( null, { status_code: response.statusCode, data: data } )
                 return
@@ -1219,6 +1221,7 @@ exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
                 
                 // run the callback
                 log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
+                log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
                 
                 ready( null, { status_code: response.statusCode, data: data } )
                 return

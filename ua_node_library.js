@@ -28,12 +28,12 @@ var client = new UA.API_Client(credentials.appKey, credentials.appSecret, { logl
     // client.createTag("library", displayResults)
     // client.deleteTag("library", displayResults)
 
-var t = new Tag
-    t.setName("nodejs_lib_tag")
-    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
-    t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD2793')
-    t.removeDeviceToken('EFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
-    // client.tagAddRemoveDevices(t, displayResults)
+    // var t = new Tag
+        // t.setName("nodejs_lib_tag")
+        // t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
+        // t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD2793')
+        // t.removeDeviceToken('EFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
+        // client.tagAddRemoveDevices(t, displayResults)
 
 // Segments
     // client.getSegments(displayResults);
@@ -43,10 +43,10 @@ var t = new Tag
     // client.createSegment(seg, displayResults);
 
 // Push
-    // var n = new Notification; n.setAlert('this is an alert'); n.setDeviceType('all')
-    // var p = new Push; p.addNotification(n) 
+    var n = new Notification; n.setAlert('this is an alert'); n.setDeviceType('all')
+    var p = new Push; p.addNotification(n) 
     // client.sendPush(p, displayResults)
-    // client.validatePush(p, displayResults)
+    client.validatePush(p, displayResults)
 
 // Schedule
     // var s = new Schedule;
