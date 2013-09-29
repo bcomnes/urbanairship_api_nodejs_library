@@ -12,6 +12,7 @@ exports.Selector = function Selector(booleanOperator) {
     
     // though it is a boolean trap (http://ariya.ofilabs.com/2011/08/hall-of-api-shame-boolean-trap.html) it is the most elegant solution for the not conditionals
     // I wrote it many other ways, and this was the least complicated way, trust me.
+    // ...it is just in one place and the call is entirely optional... (v_v)
     
     this.addTag = function(tag, bIsNot){
         if (bIsNot === undefined || bIsNot === false) {
