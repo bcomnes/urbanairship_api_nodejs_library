@@ -66,17 +66,17 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
     }
     
     // Tags
-    this.tagAddRemoveDevices = function(tag, ready){
+    this.tagDevices = function(tag, ready){
 
-        log.info('tagAddRemoveDevices called')
+        log.info('tagDevices called')
         
         var payload = tag.toJSON()
         
-        log.info('tag name : %s', tag.name)        
-        log.info('For tag named: \'%s\' \t %s device_tokens added', tag.name, tag.addedDeviceTokens.length)
-        log.info('For tag named: \'%s\' \t %s device_tokens removed', tag.name, tag.removedDeviceTokens.length)
-        log.info('For tag named: \'%s\' \t %s apids added', tag.name, tag.addedApids.length)
-        log.info('For tag named: \'%s\' \t %s apids removed', tag.name, tag.removedApids.length)
+        log.debug('tag name : %s', tag.name)        
+        log.debug('For tag named: \'%s\' \t %s device_tokens added', tag.name, tag.addedDeviceTokens.length)
+        log.debug('For tag named: \'%s\' \t %s device_tokens removed', tag.name, tag.removedDeviceTokens.length)
+        log.debug('For tag named: \'%s\' \t %s apids added', tag.name, tag.addedApids.length)
+        log.debug('For tag named: \'%s\' \t %s apids removed', tag.name, tag.removedApids.length)
         
         log.debug('building payload')
         
