@@ -1,5 +1,5 @@
 var fs = require('fs')
-var UA = require("./API_Client.js")
+var UA = require("./APIClient.js")
 
 var credentials = JSON.parse(fs.readFileSync('./keys.json', 'utf-8'))
 
@@ -13,7 +13,7 @@ var Location = UA.Location
 var Schedule = UA.Schedule
 var Tag = UA.Tag
 
-var client = new UA.API_Client(credentials.appKey, credentials.appSecret, { loglevel: 'debug', filename: './logs/debug.log', append: 'false' });
+var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { loglevel: 'debug', filename: './logs/debug.log', append: 'false' });
 // var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 // var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 
