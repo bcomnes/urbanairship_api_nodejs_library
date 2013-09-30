@@ -17,7 +17,7 @@ exports.DeviceType = function DeviceType() {
     this.ALL = 'all'
 }
 
-exports.API_Client = function APIClient(appKey, appSecret, loginfo) {
+exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
 
     // set up logging
     var log
