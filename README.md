@@ -1,6 +1,7 @@
 ###TODO
 
 * [X] Add Logging
+* [ ] pass error level status codes to 'err' in the final callback
 * [ ] Write Documentation
 * [X] Completely implement spec
   
