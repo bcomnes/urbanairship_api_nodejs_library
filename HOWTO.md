@@ -218,9 +218,11 @@ var loc1 = new Location
     loc0.setTimeRelative(4, 'months')  // sets the conditions of time of 'location has been in the last 4 months'
     loc1.setTimeAbsolute(new Date(2013,7,01), new Date(2013,11,01), 'months') // sets the conditions of time of 'location has been between August and December 2013'
 ```
-The ```setTimeRelative``` method accepts an Integer and resolution.
+The ```setTimeRelative``` method accepts an integer and resolution.
+
 The ```setTimeAbsolute``` method accepts two javascript ```Date``` objects and a resolution.
-*Note:* The javascript date objects constructor field for month starts at zero. (e_e)
+
+**Note:** The javascript date objects constructor field for month starts at zero. (e_e)
 
 ``` 
 var s = new Selector('or')
