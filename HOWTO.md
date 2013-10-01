@@ -215,8 +215,11 @@ var loc0 = new Location
 var loc1 = new Location
     loc1.setId('61QOVAcS2s1nYquCWg7drw')  // the location id for Memphis, TN, USA
     
-    loc0.setTimeRelative(4, 'months')  // sets the conditions of time of 'location has been in the last 4 months'
-    loc1.setTimeAbsolute(new Date(2013,7,01), new Date(2013,11,01), 'months') // sets the conditions of time of 'location has been between August and December 2013'
+    // sets the conditions of time of 'location has been in the last 4 months'
+    loc0.setTimeRelative(4, 'months')
+    
+    // sets the conditions of time of 'location has been between August and December 2013'    
+    loc1.setTimeAbsolute(new Date(2013,7,01), new Date(2013,11,01), 'months') 
 ```
 The ```setTimeRelative``` method accepts an integer and resolution.
 
