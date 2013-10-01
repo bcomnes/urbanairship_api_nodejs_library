@@ -44,7 +44,7 @@ Send the Push Notification with the ```client``` singleton.
 ```
 client.sendPush(p, displayResults)
 ```
-The payload for that Push notification resolved to this JSON:
+The payload for that Push Notification resolved to this JSON:
 ```
 { device_types: 'all',
   notification: { alert: 'this is an alert' },
@@ -66,15 +66,104 @@ var p = new Push;
 ```
 The payload for the Push Notification with Android and iOS specific alerts resolved to this JSON:
 ```
-{ device_types: [ 'android', 'ios' ],
-  notification: 
-   { android: { alert: 'android only payload' },
-     ios: { alert: 'ios only notification' } },
-  audience: 'all' }
+{
+  "device_types": [
+    "android",
+    "ios"
+  ],
+  "notification": {
+    "android": {
+      "alert": "android only payload"
+    },
+    "ios": {
+      "alert": "ios only notification"
+    }
+  },
+  "audience": "all"
+}
 ```
-The ```device_types``` array is built from parsing the ```Notification``` objects added to the ```Push``` object.
+The ```device_types``` array is built from parsing the ```Notification``` objects added to the ```Push``` object.  When there is no device type specificed in the ```Notification``` object, 'all' is presumed.
 
 ####Sending a Push Notification with an Audience Selector
 Urban Airship provides audience segmentation using tags and location.  The audience selector can be a very simple boolean conditional or a complex decision tree.
 
 Create a ```Selector``` object.
+```
+var s = new Selector('and')
+```
+```Selector``` objects require a base boolean conditional, and you pass it in the constructor.
+Add two tags to the ```Selector``` object:
+```
+s.addTag('foo')
+s.addTag('bar')
+```
+This ```Selector``` resolves to this JSON:
+```
+{ and: [ { tag: 'foo' }, { tag: 'bar' } ] }
+```
+Now add this selector to the previously constructed Push Notification.
+```
+p.setAudience(s)
+```
+Which changes the audience field in the payload, and results in a payload that looks like this:
+```
+{
+  "device_types": [
+    "android",
+    "ios"
+  ],
+  "notification": {
+    "android": {
+      "alert": "android only payload"
+    },
+    "ios": {
+      "alert": "ios only notification"
+    }
+  },
+  "audience": {
+    "and": [
+      {
+        "tag": "foo"
+      },
+      {
+        "tag": "bar"
+      }
+    ]
+  }
+}
+```
+This would result in a Push Notification being sent with iOS and Android specific alerts to your audience who are tagged with 'foo' AND 'bar'.
+A ```Selector``` object created with an 'or' operator would result in a payload that looks like this:
+```
+{
+  "device_types": [
+    "android",
+    "ios"
+  ],
+  "notification": {
+    "android": {
+      "alert": "android only payload"
+    },
+    "ios": {
+      "alert": "ios only notification"
+    }
+  },
+  "audience": {
+    "or": [
+      {
+        "tag": "foo"
+      },
+      {
+        "tag": "bar"
+      }
+    ]
+  }
+}
+```
+This would result in a Push Notification being sent with iOS and Android specific alerts to your audience who are tagged with 'foo' OR 'bar'.
+
+
+
+
+
+

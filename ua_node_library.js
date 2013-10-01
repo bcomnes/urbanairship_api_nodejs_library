@@ -58,7 +58,17 @@ var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg'
     p.addNotification(androidNotification)
     p.addNotification(iosNotification)
     
-    console.log(p.toJSON())
+    console.log(JSON.stringify(p.toJSON(),null,2))
+
+var s = new Selector('and')
+    s.addTag('foo')
+    s.addTag('bar')
+
+    // console.log(s.toJSON())
+    
+    p.setAudience(s)
+    
+    console.log(JSON.stringify(p.toJSON(),null,2))
     
     // client.sendPush(p, displayResults)
     // client.validatePush(p, displayResults)
@@ -105,24 +115,25 @@ var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg'
 
 // build audience
 
-var s2 = new Selector('or')
-    s2.addTag('notSnarf', true)
 
-var s = new Selector('and')
-    s.addTag('snarf')
+// var s2 = new Selector('or')
+//    s2.addTag('notSnarf', true)
+
+// var s = new Selector('and')
+//    s.addTag('snarf')
         
-    var l = new Location()
-    l.setId('00xb78Jw3Zz1TyrjqRykN9')
+//    var l = new Location()
+//    l.setId('00xb78Jw3Zz1TyrjqRykN9')
     // l.setTimeAbsolute(new Date(2013,09,01), new Date(2013,12,01), "months")
-    l.setTimeRelative(4, 'months')
+//    l.setTimeRelative(4, 'months')
         
-    s.addLocation(l, true)
+//    s.addLocation(l, true)
 
-    s.addSelector(s2, true)
+//    s.addSelector(s2, true)
 
-var seg = new Segment();
-    seg.setName('API_test_with_segments')
-    seg.setCriteria(s);
+// var seg = new Segment();
+//    seg.setName('API_test_with_segments')
+//    seg.setCriteria(s);
 
 // console.log(JSON.stringify(seg,null,2))
 // client.createSegment(seg, displayResults)
