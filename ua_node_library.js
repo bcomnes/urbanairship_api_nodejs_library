@@ -44,8 +44,11 @@ var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg'
 
 // Push
     var n = new Notification; n.setAlert('this is an alert'); n.setDeviceType('all')
-    var p = new Push; p.addNotification(n) 
-    client.sendPush(p, displayResults)
+    var p = new Push; p.addNotification(n)
+    
+    console.log(p.toJSON())
+    
+    // client.sendPush(p, displayResults)
     // client.validatePush(p, displayResults)
 
 // Schedule
