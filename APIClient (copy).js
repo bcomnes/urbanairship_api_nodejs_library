@@ -953,110 +953,144 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
         
         log.debug('Calling responseLUT | path: %s | method: %s', path, method)
         
-        
-        if (primaryPathName === 'push') {
-            // push & validate push
-            if (method === 'POST') {
-                return 'object'
-            } else {
-                // push/stats
-                return 'object'
-            }
-            
-            
-        } else if (primaryPathName === 'schedules' && method === 'POST') {
-            // schedules
-            if (method === 'POST' || method === 'GET' || method === 'PUT') {
-                return 'object'
-            } else {
-                return 'none'
-            }
-            
-        } else if (primaryPathName === 'apids') {
-            
-            if (secondaryPathName.length === 0) {
-                return 'apids'
-            }
-            else {
-                return 'object'
-            }
-            
-        } else if (primaryPathName === 'device_tokens') {
-            if (secondaryPathName.length === 0) {
-                return 'device_tokens'
-            }
-            else {
-                return 'object'
-            }
-        } else if (primaryPathName === 'tags') {
-            
-            if (method === 'POST' || method === 'PUT' || method === 'DELETE') {
-                return 'none'
-            }
-            else {
-                return 'tags'
-            }
-            
-        } else if (primaryPathName === 'segments') {
-            
-            if (method === 'GET') {
-                if (secondaryPathName.length === 0) {
-                    return 'segments'
-                }
-                else {
-                    return 'object'
-                }        
-            } else {            
-                return 'none'
-            }
-
-        } else if (primaryPathName === 'reports') {
-            
-            if (secondaryPathName === 'activeusers' || secondaryPathName === 'perpush') {
-                
-                return 'object'
-            
-            } else if (secondaryPathName === 'sends') {
-                
-                return 'sends'
-            
-            } else if (secondaryPathName === 'opens') {
-                
-                return 'opens'
-                
-            } else if (secondaryPathName === 'timeinapp'){
-                
-                return 'timeinapp'
-                
-            } else if (secondaryPathName === 'optouts'){
-                
-                return 'optouts'
-                
-            } else if (secondaryPathName === 'optins'){
-                
-                return 'optins'
-                
-            } else if (secondaryPathName === 'responses') {
-                
-                if (thirdPathName === 'list') {
-                    
-                    return 'pushes'
-                
-                } else if (thirdPathName.length === 0) {
-                    
-                    return 'responses'
-                    
-                } else {
-                    
-                    return 'object'
-                    
-                }
-            }
-            
-        } else if (primaryPathName === 'location' && method === 'GET') {
-            
+        // Push
+        if (primaryPathName === 'push' && method === 'POST') {
             return 'object'
+        }
         
+        // Schedules
+        if (primaryPathName === 'schedules' && method === 'POST') {
+            return 'object'
+        }
+
+        if (primaryPathName === 'schedules' && method === 'GET') {
+            return 'object'
+        }
+
+        if (primaryPathName === 'schedules' && method === 'PUT') {
+            return 'object'
+        }
+
+        if (primaryPathName === 'schedules' && method === 'DELETE') {
+            return 'none'
+        }
+
+        // Device Listing
+        // get apids
+        if (primaryPathName === 'apids' && secondaryPathName.length === 0 && method === 'GET') {
+            return 'apids'
+        }        
+        
+        // get single apid
+        if (primaryPathName === 'apids' && secondaryPathName.length !== 0 && method === 'GET') {
+            return 'object'
+        }        
+        
+        // get device tokens
+        if (primaryPathName === 'device_tokens' && secondaryPathName.length === 0 && method === 'GET') {
+            return 'device_tokens'
+        }        
+        
+        // get single device token
+        if (primaryPathName === 'device_tokens' && secondaryPathName.length !== 0 && method === 'GET') {
+            return 'object'
+        }        
+        
+        // Tags
+        if (primaryPathName === 'tags' && method === 'POST') {
+            return 'none'
+        }             
+
+        if (primaryPathName === 'tags' && method === 'GET') {
+            return 'tags'
+        }             
+        
+        if (primaryPathName === 'tags' && method === 'PUT') {
+            return 'none'
+        }        
+
+        if (primaryPathName === 'tags' && method === 'DELETE') {
+            return 'none'
+        }        
+
+        // Segments        
+        // single segment
+        if (primaryPathName === 'segments' && secondaryPathName.length > 0 && method === 'GET') {
+            return 'object'
+        }
+        
+        // multiple segments
+        if (primaryPathName === 'segments' && secondaryPathName.length === 0 && method === 'GET') {
+            return 'segments'
+        }
+        
+        // create a segment
+        if (primaryPathName === 'segments' && method === 'POST') {
+            return 'none'
+        }
+
+        // change segment
+        if (primaryPathName === 'segments' && method === 'PUT') {
+            return 'none'
+        }        
+        
+        // delete segment
+        if (primaryPathName === 'segments' && method === 'DELETE') {
+            return 'none'
+        }        
+        
+        // Reports
+        if (primaryPathName === 'reports' && secondaryPathName === 'activeusers' && method === 'GET') {
+            return 'object'
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'perpush' && method === 'GET') {
+            return 'object'
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'sends' && method === 'GET') {
+            return 'sends'
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'opens' && method === 'GET') {
+            return 'opens'
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName === "list" && method === 'GET') {
+            // getResponseListing()
+            return 'pushes'
+        
+        }
+        
+        if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length === 0 && method === 'GET') {
+            // getResponseReport()
+            return 'responses'
+        
+        }
+        
+        if (primaryPathName === 'reports' && secondaryPathName === 'responses' && thirdPathName.length > 6 && method === 'GET') {
+            // getIndividualResponseStatistics()
+            return 'object'
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'timeinapp' && method === 'GET') {
+            return 'timeinapp'
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'optins' && method === 'GET') {
+            return 'optins'
+        }
+
+        if (primaryPathName === 'reports' && secondaryPathName === 'optouts' && method === 'GET') {
+            return 'optouts'
+        }
+
+        if (primaryPathName === 'push' && secondaryPathName === 'stats' && method === 'GET') {
+            return 'object'
+        }
+        
+        if (primaryPathName === 'location' && method === 'GET') {
+            return 'object'
         }
         
     }

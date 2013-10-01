@@ -12,9 +12,10 @@ exports.Selector = function Selector(booleanOperator) {
     
     // though it is a boolean trap (http://ariya.ofilabs.com/2011/08/hall-of-api-shame-boolean-trap.html) it is the most elegant solution for the not conditionals
     // I wrote it many other ways, and this was the least complicated way, trust me.
-    // ...it is just in one place and the call is entirely optional... (v_v)
+    // ...it is just in one place and the argument is entirely optional... (v_v)
     
     this.addTag = function(tag, bIsNot){
+        
         if (bIsNot === undefined || bIsNot === false) {
             this.tags.push(tag)    
         } else {
@@ -24,6 +25,7 @@ exports.Selector = function Selector(booleanOperator) {
     }
     
     this.addAlias = function(alias, bIsNot){
+        
         if (bIsNot === undefined || bIsNot === false) {
             this.aliases.push(alias)
         } else {
@@ -33,6 +35,7 @@ exports.Selector = function Selector(booleanOperator) {
     }
     
     this.addDeviceToken = function(deviceToken, bIsNot){
+        
         if (bIsNot === undefined || bIsNot === false) {
             this.deviceTokens.push(deviceToken)
         } else {
@@ -42,6 +45,7 @@ exports.Selector = function Selector(booleanOperator) {
     }
     
     this.addApid = function(apid, bIsNot){
+        
         if (bIsNot === undefined || bIsNot === false) {
             this.apids.push(apid)
         } else {
@@ -54,8 +58,7 @@ exports.Selector = function Selector(booleanOperator) {
         
         if (bIsNot === undefined || bIsNot === false) {        
             this.selectors.push(selector)
-        }
-        else {
+        } else {
             this.selectors.push( { selector: selector, not: true })
         }
     }
@@ -64,8 +67,7 @@ exports.Selector = function Selector(booleanOperator) {
 
         if (bIsNot === undefined || bIsNot === false) {
             this.locations.push(location)
-        }
-        else {
+        } else {
             this.locations.push( { location: location, not: true })
         }
     }
@@ -77,6 +79,7 @@ exports.Selector = function Selector(booleanOperator) {
         var nested = payload[this.operator]
         
         this.tags.forEach(function(tag){
+            
             if (tag.not === undefined || tag.not === false) {
                 nested.push({ 'tag' : tag })    
             } else {
@@ -85,6 +88,7 @@ exports.Selector = function Selector(booleanOperator) {
         })
 
         this.aliases.forEach(function(alias){
+            
             if (alias.not === undefined || alias.not === false) {
                 nested.push({ 'alias': alias })    
             } else {
@@ -94,6 +98,7 @@ exports.Selector = function Selector(booleanOperator) {
         })
         
         this.deviceTokens.forEach(function(deviceToken){
+            
             if (deviceToken.not === undefined || deviceToken.not === false) {
                 nested.push({ 'device_token' : deviceToken.deviceToken })    
             } else {
@@ -103,6 +108,7 @@ exports.Selector = function Selector(booleanOperator) {
         })
         
         this.apids.forEach(function(apid){
+            
             if (apid.not === undefined || apid.not === false) {
                 nested.push({ 'apid' : apid })    
             } else {
@@ -112,14 +118,16 @@ exports.Selector = function Selector(booleanOperator) {
         })
         
         this.locations.forEach(function(location){
+            
             if (location.not === undefined || location.not === false) {
-                 nested.push({ 'location' : location.toJSON() })
+                nested.push({ 'location' : location.toJSON() })
             } else {
                 nested.push({ 'not' : { 'location' : location.location.toJSON() }})
             }
         })
         
         this.selectors.forEach(function(selector){
+            
             if(selector.not === undefined || selector.not === false){    
                 nested.push(selector.toJSON())            
             } else {
@@ -129,7 +137,9 @@ exports.Selector = function Selector(booleanOperator) {
         
         // sometimes the selector is nothing, so the audience would be all
         if (nested.length === 0) {
+            
             payload = 'all'
+            
         }
         
         return payload        

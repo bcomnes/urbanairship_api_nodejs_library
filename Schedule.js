@@ -24,7 +24,9 @@ exports.Schedule = function Schedule(){
         
         payload.schedule = {}
         var dateString = this.date.toJSON()
-        payload.schedule.scheduled_time = dateString.substring(0,dateString.length-5)   // to JSON() gives milliseconds, truncate them off, this is ugly, but effective
+        
+        // to JSON() gives milliseconds, truncate them off, this is ugly, but effective and keeps in line with the other usages of the date
+        payload.schedule.scheduled_time = dateString.substring(0,dateString.length-5)   
         
         payload.push = this.push.toJSON()
         

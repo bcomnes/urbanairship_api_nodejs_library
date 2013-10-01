@@ -46,7 +46,7 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
     var n = new Notification; n.setAlert('this is an alert'); n.setDeviceType('all')
     var p = new Push; p.addNotification(n) 
     // client.sendPush(p, displayResults)
-    client.validatePush(p, displayResults)
+    // client.validatePush(p, displayResults)
 
 // Schedule
     // var s = new Schedule;
@@ -81,7 +81,7 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
     // client.getPerPushSeriesWithPrecisionAndRange('9012ad1a-59fd-11e2-8074-d4bed9a88504', new Date(Date.UTC(2013,0,9)), new Date(Date.UTC(2013,0,10)), 'DAILY', displayResults)
 
 // Location
-    // client.getLocationFromString('Memphis,TN','city',displayResults);
+    client.getLocationFromString('Memphis,TN','city',displayResults);
     // client.getLocationFromString('Street', null, displayResults);
     // client.getLocationFromString('92705', 'postalcode', displayResults);
     // client.getLocationFromLatLon(37.7749295, -122.4194155, 'city', displayResults)

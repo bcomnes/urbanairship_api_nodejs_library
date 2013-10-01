@@ -104,10 +104,12 @@ exports.Push = function Push() {
                 }
                 
                 if (notification.extras.length > 0) {
+                    
                     payload.notification.android.extra = {}
                     notification.extras.forEach(function(extra){
                         payload.notification.android.extra[extra.key] = extra.value
                     })
+                    
                 }
             }
 
@@ -115,14 +117,20 @@ exports.Push = function Push() {
         
         // determine if there is an ad-hoc audience selector
         if(this.audience.operator !== undefined){
+            
             payload.audience = this.audience.toJSON()
+            
         }
         else {
-            payload.audience = 'all'            
+            
+            payload.audience = 'all'
+            
         }
         
         if (this.message !== undefined) {
+            
             payload.message = this.message.toJSON()
+            
         }
         
         return payload

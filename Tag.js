@@ -47,8 +47,6 @@ exports.Tag = function(){
         payload.apids = {}
         payload.apids.add = this.addedApids
         payload.apids.remove = this.removedApids
-        
-        // the payload arrays can be empty
                 
         return payload
         
