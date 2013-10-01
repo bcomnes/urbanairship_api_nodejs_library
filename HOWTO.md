@@ -216,7 +216,7 @@ var loc0 = new Location
 var loc1 = new Location
     loc1.setId('61QOVAcS2s1nYquCWg7drw')  // the location id for Memphis, TN, USA
     
-    // sets the conditions of time of 'location has been in the last 4 months'
+    // sets the conditions of time of 'location has been in the last 4 days'
     loc0.setTimeRelative(4, 'days')
     
     // sets the conditions of time of 'location has been between August and December 2013'    
