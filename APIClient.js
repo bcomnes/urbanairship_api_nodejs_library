@@ -455,7 +455,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
         var options = {
               method: 'GET'
             , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-            , url: 'https://go.urbanairship.com/api/segments/' + segment_id + '?with_count=1'
+            , url: 'https://go.urbanairship.com/api/segments/' + segment_id
             , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
         }        
 

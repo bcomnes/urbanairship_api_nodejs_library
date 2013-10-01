@@ -1,9 +1,9 @@
 ###TODO
 
-* [X] Add Logging
-* [X] pass error level status codes to 'err' in the final callback
-* [ ] Write Documentation
-* [X] Completely implement spec
+- [X] Add Logging
+- [X] pass error level status codes to 'err' in the final callback
+- [ ] Write Documentation
+- [X] Completely implement spec
   
 ###List of API Endpoints, Methods, and Response Formats
 
