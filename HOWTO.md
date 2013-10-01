@@ -225,7 +225,7 @@ The ```setTimeRelative``` method accepts an integer and resolution.
 
 The ```setTimeAbsolute``` method accepts two javascript ```Date``` objects and a resolution.
 
-**Note:** The javascript date objects constructor field for month starts at zero. (e_e)
+**Note:** The javascript ```Date``` object constructor for month starts at zero. (e_e)
 
 ``` 
 var s = new Selector('and')
