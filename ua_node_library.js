@@ -43,8 +43,20 @@ var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg'
     // client.createSegment(seg, displayResults);
 
 // Push
-    var n = new Notification; n.setAlert('this is an alert'); n.setDeviceType('all')
-    var p = new Push; p.addNotification(n)
+    // var n = new Notification; n.setAlert('this is an alert'); n.setDeviceType('all')
+    
+    
+    var androidNotification = new Notification;
+    androidNotification.setAlert('android only payload')
+    androidNotification.setDeviceType('android')
+    
+    var iosNotification = new Notification;
+    iosNotification.setAlert('ios only notification')
+    iosNotification.setDeviceType('ios')
+
+    var p = new Push; 
+    p.addNotification(androidNotification)
+    p.addNotification(iosNotification)
     
     console.log(p.toJSON())
     
