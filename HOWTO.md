@@ -200,6 +200,7 @@ This results in a Push Notification payload that looks like this:
 }
 ```
 Which send to the alert to any device in your audience that has the tag 'foo' AND ( tag : 'bar' OR tag: 'baz' )
+
 ####Audience Selector using Location
 You can add a location to a selector just like you would a tag or even another selector.
 Create a ```Location``` object
