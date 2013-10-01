@@ -8,11 +8,17 @@ exports.Selector = function Selector(booleanOperator) {
     this.apids = []
     this.locations = []
     
+    this.segments = []
+    
     this.selectors = []
     
     // though it is a boolean trap (http://ariya.ofilabs.com/2011/08/hall-of-api-shame-boolean-trap.html) it is the most elegant solution for the not conditionals
     // I wrote it many other ways, and this was the least complicated way, trust me.
     // ...it is just in one place and the argument is entirely optional... (v_v)
+    
+    this.addSegment = function(segment){
+        this.segments.push(segment)
+    }
     
     this.addTag = function(tag, bIsNot){
         
@@ -133,6 +139,10 @@ exports.Selector = function Selector(booleanOperator) {
             } else {
                 nested.push({ 'not': selector.selector.toJSON() })
             }
+        })
+        
+        this.segments.forEach(function(segment){
+            nested.push({ 'segment' : segment })    
         })
         
         // sometimes the selector is nothing, so the audience would be all

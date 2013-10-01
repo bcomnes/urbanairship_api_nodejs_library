@@ -41,7 +41,10 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
     // client.deleteSegment('682d62a6-ef11-4000-9a8e-b32d9aa9376c', displayResults)
     // client.changeSegment('287867ca-b603-46ae-b6fd-eac52ba1675b', seg, displayResults)
     // client.createSegment(seg, displayResults);
-
+                   
+                   
+                   
+                   
 // Push
 
     
@@ -57,10 +60,20 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
 
 var n = new Notification;
     n.setAlert('this is an alert');
-    n.setDeviceType('all')
+    n.setDeviceType('android')
+
+var selector = new Selector('and')
+    selector.addSegment('dc3b24c6-fdd4-499a-809f-4c61b2df11c9')
+    selector.addSegment('e6659cab-5309-40a9-b95c-428c6a9a3c80')
     
 var p = new Push;
     p.addNotification(n)
+    p.setAudience(selector)
+
+    console.log(JSON.stringify(p.toJSON(),null,2))
+
+    client.validatePush(p, displayResults)
+
 
 
 var loc0 = new Location
@@ -80,14 +93,14 @@ var s = new Selector('and')
     s.addLocation(loc1)
 
 
-    console.log(JSON.stringify(s.toJSON(),null,2))
+    // console.log(JSON.stringify(s.toJSON(),null,2))
     
-    p.setAudience(s)
+    // p.setAudience(s)
     
     // console.log(JSON.stringify(p.toJSON(),null,2))
     
     // client.sendPush(p, displayResults)
-    // client.validatePush(p, displayResults)
+    // 
 
 // Schedule
     // var s = new Schedule;

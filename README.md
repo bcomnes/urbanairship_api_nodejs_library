@@ -4,7 +4,7 @@
 - [x] pass error level status codes to 'err' in the final callback
 - [ ] Write Documentation
 - [x] Completely implement spec
-  
+
 ###List of API Endpoints, Methods, and Response Formats
 
 | ? | Name | Method | Endpoint  | Reponse Format   |
