@@ -200,7 +200,32 @@ This results in a Push Notification payload that looks like this:
 }
 ```
 Which send to the alert to any device in your audience that has the tag 'foo' AND ( tag : 'bar' OR tag: 'baz' )
-####Audience Selectors using Location
+####Audience Selector using Location
+You can add a location to a selector just like you would a tag or even another selector.
+Create a ```Location``` object
+```
+var loc0 = new Location
+    loc0.setId('00xb78Jw3Zz1TyrjqRykN9')  // the location id for New York City, NY, USA
+```
+The ```Location``` object requires a time range to be specified.  You can set it by a relative time range (ex. "within the last 4 months") or an absolute time range (ex. "Between January 1, 1970 and December 31, 1999").
+```
+var loc0 = new Location
+    loc0.setId('00xb78Jw3Zz1TyrjqRykN9')  // the location id for New York City, NY, USA
+    
+var loc1 = new Location
+    loc1.setId('61QOVAcS2s1nYquCWg7drw')  // the location id for Memphis, TN, USA
+    
+    loc0.setTimeRelative(4, 'months')  // sets the conditions of time of 'location has been in the last 4 months'
+    loc1.setTimeAbsolute(new Date(2013,7,01), new Date(2013,11,01), 'months') // sets the conditions of time of 'location has been between August and December 2013'
+```
+The ```setTimeRelative``` method accepts an Integer and resolution.
+The ```setTimeAbsolute``` method accepts two javascript ```Date``` objects and a resolution.
+*Note:* The javascript date objects constructor field for month starts at zero. (e_e)
 
+``` 
+var s = new Selector('or')
+    s.addLocation(loc0)
+    s.addLocation(loc1)
+```
 
 
