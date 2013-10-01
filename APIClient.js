@@ -1156,6 +1156,8 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
             log.debug('Calling final callback function passing the status code and null data.')
             log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: null }))
 
+            log.info('status code : %s', response.statusCode)
+            
             ready(null, { status_code: response.statusCode, data:null })
             return
         
@@ -1172,18 +1174,22 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 log.debug('Calling final callback function passing the status code and returning a javascript object as the data.')
                 log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: b }))
                 
-                ready( null, { status_code: response.statusCode, data: b } )
+                log.info('status code : %s', response.statusCode)
                 
+                ready( null, { status_code: response.statusCode, data: b } )
+                return
             } catch(e) {
                 
                 log.debug('Failed trying to parse body as JSON object')
                 log.debug('Calling final callback function passing the status code and returning simple text string as the data.')
                 log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: body }))
                 
-                ready( null, { status_code: response.statusCode, data: body } )
+                log.info('status code : %s', response.statusCode)
                 
+                ready( null, { status_code: response.statusCode, data: body } )
+                return
             }
-            return
+            
             
         } else {
             
@@ -1197,6 +1203,8 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
                 log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
                 
+                log.info('status code : %s', response.statusCode)
+                
                 ready( null, { status_code: response.statusCode, data: data } )
                 return
             }
@@ -1204,7 +1212,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
             var d = JSON.parse(body);
                  
             if (data[apiResponseType] === undefined) {
-                console.log('Creating Array in data object')
+                log.debug('Creating Array in data object')
                 data[apiResponseType] = []
             }                 
 
@@ -1239,7 +1247,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 }
                 
                 log.debug('Making HTTP request with options %s', JSON.stringify(options))                        
-                
+
                 request(options, function(error, response, body){
                         self.processApiResponse(error, response, body, data, ready)
                 })                  
