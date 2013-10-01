@@ -43,9 +43,9 @@ var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg'
     // client.createSegment(seg, displayResults);
 
 // Push
-    // var n = new Notification; n.setAlert('this is an alert'); n.setDeviceType('all')
+
     
-    
+/*    
     var androidNotification = new Notification;
     androidNotification.setAlert('android only payload')
     androidNotification.setDeviceType('android')
@@ -53,18 +53,23 @@ var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg'
     var iosNotification = new Notification;
     iosNotification.setAlert('ios only notification')
     iosNotification.setDeviceType('ios')
+*/
 
-    var p = new Push; 
-    p.addNotification(androidNotification)
-    p.addNotification(iosNotification)
+var n = new Notification;
+    n.setAlert('this is an alert');
+    n.setDeviceType('all')
     
-    console.log(JSON.stringify(p.toJSON(),null,2))
+var p = new Push;
+    p.addNotification(n)
 
 var s = new Selector('and')
     s.addTag('foo')
-    s.addTag('bar')
 
-    // console.log(s.toJSON())
+var nestedSelector = new Selector('or')
+    nestedSelector.addTag('bar')
+    nestedSelector.addTag('baz')
+    
+    s.addSelector(nestedSelector)
     
     p.setAudience(s)
     

@@ -82,7 +82,7 @@ The payload for the Push Notification with Android and iOS specific alerts resol
   "audience": "all"
 }
 ```
-The ```device_types``` array is built from parsing the ```Notification``` objects added to the ```Push``` object.  When there is no device type specificed in the ```Notification``` object, 'all' is presumed.
+The ```device_types``` array is built from parsing the ```Notification``` objects added to the ```Push``` object.  If any ```Notification``` objects ```device_types``` are set to 'all' the ```device_types``` for the entire push payload will be set to 'all'.
 
 ####Sending a Push Notification with an Audience Selector
 Urban Airship provides audience segmentation using tags and location.  The audience selector can be a very simple boolean conditional or a complex decision tree.
@@ -161,9 +161,44 @@ A ```Selector``` object created with an 'or' operator would result in a payload 
 }
 ```
 This would result in a Push Notification being sent with iOS and Android specific alerts to your audience who are tagged with 'foo' OR 'bar'.
-####Advanced Audience Selector
-
-
-
+####Advanced Audience Selector Functionality
+You can nest ```Selector``` objects within another ```Selector``` object.
+```
+var s = new Selector('and')
+    s.addTag('foo')
+    
+var nestedSelector = new Selector('or')
+    nestedSelector.addTag('bar')
+    nestedSelector.addTag('baz')
+    
+    s.addSelector(nestedSelector)     
+```
+This results in a Push Notification payload that looks like this:
+```
+{
+  "device_types": "all",
+  "notification": {
+    "alert": "this is an alert"
+  },
+  "audience": {
+    "and": [
+      {
+        "tag": "foo"
+      },
+      {
+        "or": [
+          {
+            "tag": "bar"
+          },
+          {
+            "tag": "baz"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+Which send to the alert to any device in your audience that has the tag 'foo' AND ( tag : 'bar' OR tag: 'baz' )
 
 
