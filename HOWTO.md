@@ -17,4 +17,4 @@ var client = new UA.APIClient( app_key , master_secret, { loglevel: 'debug', fil
 ```
 Keep in mind, the debug log level will expose your master_secret in the log file when it logs the HTTP payload.
 
-####Sending a push
+#####Sending a push
