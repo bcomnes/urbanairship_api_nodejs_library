@@ -32,7 +32,7 @@ Set the device types ('all', 'ios', or 'android'):
 ```
 n.setDeviceType('all')
 ```
-Create a Push object:
+Create a ```Push``` object:
 ```
 var p = new Push
 ```
@@ -72,3 +72,9 @@ The payload for the Push Notification with Android and iOS specific alerts resol
      ios: { alert: 'ios only notification' } },
   audience: 'all' }
 ```
+The ```device_types``` array is built from parsing the ```Notification``` objects added to the ```Push``` object.
+
+####Sending a Push Notification with an Audience Selector
+Urban Airship provides audience segmentation using tags and location.  The audience selector can be a very simple boolean conditional or a complex decision tree.
+
+Create a ```Selector``` object.
