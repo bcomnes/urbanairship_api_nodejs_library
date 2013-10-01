@@ -53,16 +53,16 @@ The payload for that Push notification resolved to this JSON:
 To add an Android specific alert you would create another Notification object and set the device type as 'android'
 ```
 var androidNotification = new Notification;
-androidNotification.setAlert('android only payload')
-androidNotification.setDeviceType('android')
+    androidNotification.setAlert('android only payload')
+    androidNotification.setDeviceType('android')
 
 var iosNotification = new Notification;
-iosNotification.setAlert('ios only notification')
-iosNotification.setDeviceType('ios')
+    iosNotification.setAlert('ios only notification')
+    iosNotification.setDeviceType('ios')
 
 var p = new Push; 
-p.addNotification(androidNotification)
-p.addNotification(iosNotification)    
+    p.addNotification(androidNotification)
+    p.addNotification(iosNotification)    
 ```
 The payload for the Push Notification with Android and iOS specific alerts resolved to this JSON:
 ```
