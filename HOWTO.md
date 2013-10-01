@@ -227,12 +227,12 @@ The ```setTimeRelative``` method accepts an integer ranage and resolution.
 The ```setTimeAbsolute``` method accepts two javascript ```Date``` objects and a resolution.
 
 Valid time resolutions and their corresponding ranges are:
-* 'minutes', 1-120
-* 'hours', 1-48
-* 'days', 1-60 
-* 'weeks', 1-10
-* 'months', 1-48
-* 'years', 1-20
+* 'minutes' 1-120
+* 'hours' 1-48
+* 'days' 1-60 
+* 'weeks' 1-10
+* 'months' 1-48
+* 'years' 1-20
 
 **Note:** The javascript ```Date``` object constructor for month starts at zero. (e_e)
 
