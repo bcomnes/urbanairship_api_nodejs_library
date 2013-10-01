@@ -216,7 +216,7 @@ var loc1 = new Location
     loc1.setId('61QOVAcS2s1nYquCWg7drw')  // the location id for Memphis, TN, USA
     
     // sets the conditions of time of 'location has been in the last 4 months'
-    loc0.setTimeRelative(4, 'months')
+    loc0.setTimeRelative(4, 'days')
     
     // sets the conditions of time of 'location has been between August and December 2013'    
     loc1.setTimeAbsolute(new Date(2013,7,01), new Date(2013,11,01), 'months') 
@@ -228,9 +228,36 @@ The ```setTimeAbsolute``` method accepts two javascript ```Date``` objects and a
 **Note:** The javascript date objects constructor field for month starts at zero. (e_e)
 
 ``` 
-var s = new Selector('or')
+var s = new Selector('and')
     s.addLocation(loc0)
     s.addLocation(loc1)
 ```
-
-
+This audience selector would resolve to this JSON
+```
+{
+  "and": [
+    {
+      "location": {
+        "id": "00xb78Jw3Zz1TyrjqRykN9",
+        "date": {
+          "recent": {
+            "days": 4
+          }
+        }
+      }
+    },
+    {
+      "location": {
+        "id": "61QOVAcS2s1nYquCWg7drw",
+        "date": {
+          "months": {
+            "start": "2013-08",
+            "end": "2013-12"
+          }
+        }
+      }
+    }
+  ]
+}
+```
+Which would match anyone that had been in NYC in the last 4 days, and in Memphis between August and December 2013.

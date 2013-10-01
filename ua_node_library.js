@@ -62,18 +62,29 @@ var n = new Notification;
 var p = new Push;
     p.addNotification(n)
 
-var s = new Selector('and')
-    s.addTag('foo')
 
-var nestedSelector = new Selector('or')
-    nestedSelector.addTag('bar')
-    nestedSelector.addTag('baz')
+var loc0 = new Location
+    loc0.setId('00xb78Jw3Zz1TyrjqRykN9')  // the location id for New York City, NY, USA
     
-    s.addSelector(nestedSelector)
+var loc1 = new Location
+    loc1.setId('61QOVAcS2s1nYquCWg7drw')  // the location id for Memphis, TN, USA
+    
+    // sets the conditions of time of 'location has been in the last 4 months'
+    loc0.setTimeRelative(4, 'days')
+    
+    // sets the conditions of time of 'location has been between August and December 2013'    
+    loc1.setTimeAbsolute(new Date(2013,7,01), new Date(2013,11,01), 'months') 
+
+var s = new Selector('and')
+    s.addLocation(loc0)
+    s.addLocation(loc1)
+
+
+    console.log(JSON.stringify(s.toJSON(),null,2))
     
     p.setAudience(s)
     
-    console.log(JSON.stringify(p.toJSON(),null,2))
+    // console.log(JSON.stringify(p.toJSON(),null,2))
     
     // client.sendPush(p, displayResults)
     // client.validatePush(p, displayResults)
@@ -121,20 +132,6 @@ var nestedSelector = new Selector('or')
 // build audience
 
 
-// var s2 = new Selector('or')
-//    s2.addTag('notSnarf', true)
-
-// var s = new Selector('and')
-//    s.addTag('snarf')
-        
-//    var l = new Location()
-//    l.setId('00xb78Jw3Zz1TyrjqRykN9')
-    // l.setTimeAbsolute(new Date(2013,09,01), new Date(2013,12,01), "months")
-//    l.setTimeRelative(4, 'months')
-        
-//    s.addLocation(l, true)
-
-//    s.addSelector(s2, true)
 
 // var seg = new Segment();
 //    seg.setName('API_test_with_segments')
