@@ -18,4 +18,6 @@ var client = new UA.APIClient( app_key , master_secret, { loglevel: 'debug', fil
 Keep in mind, the debug log level will expose your master_secret in the log file when it logs the HTTP payload.
 
 ####Sending a Push Notification
-A Push Notification is comprised of a number of notifications
+A Push Notification can be comprised of a number of notifications to different device types, each with their own extra payload information.  Or it could be a simple alert sent to every device type configured for the account.  A Push Notification is also be paired with an Audience Selector, which can be a complex decision tree of tags and locations, or 'all.'  The Push Notification can also send a Rich Message.
+
+Create a ```Notification``` object.
