@@ -14,8 +14,8 @@ var Schedule = UA.Schedule
 var Tag = UA.Tag
 
 var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { loglevel: 'debug', filename: './logs/debug.log', append: 'false' });
-// var client = new UA.API_Client('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
-// var client = new UA.API_Client('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
+// var client = new UA.APIClient('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
+// var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 
 // Device Listing
     // client.getApids(displayResults)
@@ -33,11 +33,11 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
         // t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
         // t.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD2793')
         // t.removeDeviceToken('EFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A')
-        // client.tagAddRemoveDevices(t, displayResults)
+        // client.tagDevices(t, displayResults)
 
 // Segments
     // client.getSegments(displayResults);
-    // client.getSegment('0180abda-db50-4eda-860a-aa74cfe4c90d', displayResults)
+    // client.getSegment('ee8b1970-ccc5-4f83-98b8-7a2bc473cbcf', displayResults)
     // client.deleteSegment('682d62a6-ef11-4000-9a8e-b32d9aa9376c', displayResults)
     // client.changeSegment('287867ca-b603-46ae-b6fd-eac52ba1675b', seg, displayResults)
     // client.createSegment(seg, displayResults);
@@ -56,7 +56,7 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
 
     // client.schedulePush(s, displayResults)
     // client.listSchedules(displayResults)
-    // client.listSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
+    // client.listSchedule('bc048b8f-027f-440a-ac11-ac5f57ff9d58', displayResults)
     // client.updateSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', s, displayResults)  
     // client.deleteSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
 
@@ -81,7 +81,7 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
     // client.getPerPushSeriesWithPrecisionAndRange('9012ad1a-59fd-11e2-8074-d4bed9a88504', new Date(Date.UTC(2013,0,9)), new Date(Date.UTC(2013,0,10)), 'DAILY', displayResults)
 
 // Location
-    client.getLocationFromString('Memphis,TN','city',displayResults);
+    // client.getLocationFromString('Memphis,TN','city',displayResults);
     // client.getLocationFromString('Street', null, displayResults);
     // client.getLocationFromString('92705', 'postalcode', displayResults);
     // client.getLocationFromLatLon(37.7749295, -122.4194155, 'city', displayResults)
@@ -112,14 +112,18 @@ var seg = new Segment();
 // console.log(JSON.stringify(seg,null,2))
 // client.createSegment(seg, displayResults)
 
-function displayResults(error, data) {
+function displayResults(err, data) {
     
     console.log('///////////////////////////////////////////')
-    console.log('Error : ' + error)
-    console.log('Status Code : ' + data.status_code)
-    console.log('Data  : ' + data )
-    console.log('Data String : ')
-    console.log('--------------')
-    console.log(JSON.stringify(data,null,2))
+    if (err !== null) {
+        console.log('Error status_code : ' + err.status_code)
+        console.log('Error information : ' + JSON.stringify(err.data, null, 2) )
+    } else {
+        console.log('Status Code : ' + data.status_code)
+        console.log('Data  : ' + data )
+        console.log('Data String : ')
+        console.log('--------------')
+        console.log(JSON.stringify(data,null,2))
+    }
     
 }

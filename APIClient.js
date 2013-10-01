@@ -964,7 +964,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
             }
             
             
-        } else if (primaryPathName === 'schedules' && method === 'POST') {
+        } else if (primaryPathName === 'schedules') {
             // schedules
             if (method === 'POST' || method === 'GET' || method === 'PUT') {
                 return 'object'
@@ -1103,9 +1103,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
             log.debug('Calling final callback function passing the status code and null data.')
             log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: null }))
 
-            log.info('status code : %s', response.statusCode)
-            
-            ready(null, { status_code: response.statusCode, data:null })
+            self.sendToFinalCallback( response.statusCode, data, ready )
             return
         
         } else if (apiResponseType === 'object') {
@@ -1121,19 +1119,16 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 log.debug('Calling final callback function passing the status code and returning a javascript object as the data.')
                 log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: b }))
                 
-                log.info('status code : %s', response.statusCode)
-                
-                ready( null, { status_code: response.statusCode, data: b } )
+                self.sendToFinalCallback( response.statusCode, b, ready )
                 return
+            
             } catch(e) {
                 
                 log.debug('Failed trying to parse body as JSON object')
                 log.debug('Calling final callback function passing the status code and returning simple text string as the data.')
                 log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: body }))
                 
-                log.info('status code : %s', response.statusCode)
-                
-                ready( null, { status_code: response.statusCode, data: body } )
+                self.sendToFinalCallback( response.statusCode, data, ready )
                 return
             }
             
@@ -1150,9 +1145,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
                 log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
                 
-                log.info('status code : %s', response.statusCode)
-                
-                ready( null, { status_code: response.statusCode, data: data } )
+                self.sendToFinalCallback( response.statusCode, data, ready )
                 return
             }
             
@@ -1163,7 +1156,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 data[apiResponseType] = []
             }                 
 
-            log.debug('Appending %s elements in the body to the data array', d[apiResponseType].length)
+            log.debug('Appending elements in the body to the data array')
             d[apiResponseType].forEach(function(item){
             
                 data[apiResponseType].push(item)
@@ -1178,7 +1171,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
                 log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
                 
-                ready( null, { status_code: response.statusCode, data: data } )
+                self.sendToFinalCallback( response.statusCode, data, ready )
                 return
             
             } else {
@@ -1196,11 +1189,28 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 log.debug('Making HTTP request with options %s', JSON.stringify(options))                        
 
                 request(options, function(error, response, body){
-                        self.processApiResponse(error, response, body, data, ready)
+                    self.processApiResponse(error, response, body, data, ready)
                 })                  
                 
             }
             
+        }
+        
+    }
+    
+    this.sendToFinalCallback = function(status_code, data, ready){
+        
+        log.debug("sendToFinalCallback caled")
+        
+        log.info("status code : %s", status_code)
+        
+        if (status_code.toString().charAt(0) === '4' || status_code.toString().charAt(0) === '5'){
+            // error            
+            ready({ status_code: status_code, data: data }, null)
+            
+        } else {
+            // all is well
+            ready(null, { status_code: status_code, data: data })
         }
         
     }
