@@ -54,9 +54,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
     
     this.appKey = appKey
     this.appSecret = appSecret
-    
-    // this.auth = new Buffer(this.appKey + ":" + this.appSecret).toString('base64')
-    
+        
     this.getKey = function(){
         return this.appKey
     }
@@ -583,10 +581,10 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
         
         log.info('getLocationFromLatLon called \t lat : %s \t lon : %s \t alias : %s', lat, lon, alias)
         
-        var params = '?q=' + lat + ',' + lon
+        var params = lat + ',' + lon
         
         if (alias !== null) {
-            params += '&type=' + alias
+            params += '?type=' + alias
         }
         
         var options = {
@@ -609,10 +607,10 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
 
         log.info('getLocationFromLatLonBounds called \t lat1 : %s \t lon1 : %s \t lat2 : %s \t lon2 : %s \t alias : %s', lat1, lon1, lat2, lon2, alias)
         
-        var params = '?q=' + lat1 + ',' + lon1 + ',' + lat2 + ',' + lon2
+        var params = lat1 + ',' + lon1 + ',' + lat2 + ',' + lon2
         
         if (alias !== null) {
-            params += '&type=' + alias
+            params += '?type=' + alias
         }
         
         var options = {
@@ -953,7 +951,6 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
         
         log.debug('Calling responseLUT | path: %s | method: %s', path, method)
         
-        
         if (primaryPathName === 'push') {
             // push & validate push
             if (method === 'POST') {
@@ -962,7 +959,6 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 // push/stats
                 return 'object'
             }
-            
             
         } else if (primaryPathName === 'schedules') {
             // schedules
@@ -1103,7 +1099,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
             log.debug('Calling final callback function passing the status code and null data.')
             log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: null }))
 
-            self.sendToFinalCallback( response.statusCode, data, ready )
+            self.sendToFinalCallback( response.statusCode, body, ready )
             return
         
         } else if (apiResponseType === 'object') {
@@ -1128,7 +1124,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
                 log.debug('Calling final callback function passing the status code and returning simple text string as the data.')
                 log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: body }))
                 
-                self.sendToFinalCallback( response.statusCode, data, ready )
+                self.sendToFinalCallback( response.statusCode, body, ready )
                 return
             }
             

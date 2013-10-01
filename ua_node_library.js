@@ -13,9 +13,9 @@ var Location = UA.Location
 var Schedule = UA.Schedule
 var Tag = UA.Tag
 
-var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { loglevel: 'debug', filename: './logs/debug.log', append: 'false' });
+// var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { loglevel: 'debug', filename: './logs/debug.log', append: 'false' });
 // var client = new UA.APIClient('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
-// var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
+var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 
 // Device Listing
     // client.getApids(displayResults)
@@ -45,7 +45,7 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
 // Push
     var n = new Notification; n.setAlert('this is an alert'); n.setDeviceType('all')
     var p = new Push; p.addNotification(n) 
-    // client.sendPush(p, displayResults)
+    client.sendPush(p, displayResults)
     // client.validatePush(p, displayResults)
 
 // Schedule
@@ -84,8 +84,8 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
     // client.getLocationFromString('Memphis,TN','city',displayResults);
     // client.getLocationFromString('Street', null, displayResults);
     // client.getLocationFromString('92705', 'postalcode', displayResults);
-    // client.getLocationFromLatLon(37.7749295, -122.4194155, 'city', displayResults)
-    // client.getLocationFromLatLonBounds(32.528832,-124.482003,42.009517,-114.131211,'postalcode',displayResults)    
+    // client.getLocationFromLatLon(37.805172690644405,-122.44863510131836, 'postalcode', displayResults)
+    // client.getLocationFromLatLonBounds(32.528832,-124.482003,32.709517,-114.131211,'postalcode',displayResults)    
     // client.getLocationFromAlias("CA", "us_state", displayResults)    
 
 // build audience
@@ -116,8 +116,8 @@ function displayResults(err, data) {
     
     console.log('///////////////////////////////////////////')
     if (err !== null) {
-        console.log('Error status_code : ' + err.status_code)
-        console.log('Error information : ' + JSON.stringify(err.data, null, 2) )
+        console.log("Error")
+        console.log(JSON.stringify(err,null,2))
     } else {
         console.log('Status Code : ' + data.status_code)
         console.log('Data  : ' + data )
