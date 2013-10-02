@@ -1,4 +1,4 @@
-###HOWTO Urban Airship Server Library (Alpha 1)
+Urban Airship Server Library (Alpha 1) Tutorial
 
 npm requirements: request, log
 
