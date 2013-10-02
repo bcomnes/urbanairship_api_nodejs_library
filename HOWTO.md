@@ -85,7 +85,7 @@ The payload for the Push Notification with Android and iOS specific alerts resol
 The ```device_types``` array is built from parsing the ```Notification``` objects added to the ```Push``` object.  If any ```Notification``` objects ```device_types``` are set to 'all' the ```device_types``` for the entire push payload will be set to 'all'.
 
 ####Sending a Push Notification with an Audience Selector
-Urban Airship provides audience segmentation using tags and location.  The audience selector can be a very simple boolean conditional or a complex decision tree.
+Urban Airship provides audience segmentation using Tags and Location.  The audience selector can be a very simple boolean conditional or a complex decision tree.
 
 Create a ```Selector``` object.
 ```
@@ -202,7 +202,7 @@ This results in a Push Notification payload that looks like this:
 Which will send the alert to any device in your audience that has the tag 'foo' AND ( tag : 'bar' OR tag: 'baz' )
 
 ####Audience Selector using Location
-You can add a location to a selector just like you would a tag or even another selector.
+You can add a Location to a selector just like you would a tag or even another selector.
 Create a ```Location``` object
 ```
 var loc0 = new Location
