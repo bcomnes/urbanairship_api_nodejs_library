@@ -16,8 +16,14 @@ exports.Selector = function Selector(booleanOperator) {
     // I wrote it many other ways, and this was the least complicated way, trust me.
     // ...it is just in one place and the argument is entirely optional... (v_v)
     
-    this.addSegment = function(segment){
-        this.segments.push(segment)
+    this.addSegment = function(segment, bIsNot){
+        
+        if (bIsNot === undefined || bIsNot === false) {
+            this.segments.push(segment)    
+        } else {
+            this.segments.push({ 'segment': segment, not: true})    
+        }
+        
     }
     
     this.addTag = function(tag, bIsNot){
@@ -92,36 +98,6 @@ exports.Selector = function Selector(booleanOperator) {
                 nested.push({ 'not' : { 'tag': tag.tag }})
             }
         })
-
-        this.aliases.forEach(function(alias){
-            
-            if (alias.not === undefined || alias.not === false) {
-                nested.push({ 'alias': alias })    
-            } else {
-                nested.push({ 'not' : { 'alias': alias.alias }})    
-            }            
-            
-        })
-        
-        this.deviceTokens.forEach(function(deviceToken){
-            
-            if (deviceToken.not === undefined || deviceToken.not === false) {
-                nested.push({ 'device_token' : deviceToken.deviceToken })    
-            } else {
-                nested.push({ 'not' : { 'device_token' : deviceToken }})    
-            }
-            
-        })
-        
-        this.apids.forEach(function(apid){
-            
-            if (apid.not === undefined || apid.not === false) {
-                nested.push({ 'apid' : apid })    
-            } else {
-                nested.push({ 'not' : { 'apid' : apid.apid }})
-            }
-            
-        })
         
         this.locations.forEach(function(location){
             
@@ -141,12 +117,50 @@ exports.Selector = function Selector(booleanOperator) {
             }
         })
         
-        // when a Selector is used to create a segment, you can't include segments
+        // when a Selector is used to create a segment, you can't include segments, device_tokens, or apids
         // when a Selector is used as the audience field in a push, it can include segments
         if (segment_conditional.use_segments === true) {
+            
             this.segments.forEach(function(segment){
-                nested.push({ 'segment' : segment })    
+                if (segment.not === undefined || segment.not === false) {
+                    nested.push({ 'segment': segment })    
+                } else {
+                    nested.push({ 'not' : { 'segment': segment.segment }})    
+                }            
             })
+            
+            this.aliases.forEach(function(alias){
+                
+                if (alias.not === undefined || alias.not === false) {
+                    nested.push({ 'alias': alias })    
+                } else {
+                    nested.push({ 'not' : { 'alias': alias.alias }})    
+                }            
+                
+            })
+            
+            this.deviceTokens.forEach(function(deviceToken){
+                
+                if (deviceToken.not === undefined || deviceToken.not === false) {
+                    nested.push({ 'device_token' : deviceToken })
+                    
+                } else {
+                    nested.push({ 'not' : { 'device_token' : deviceToken.deviceToken }})    
+                }
+                
+            })
+            
+            this.apids.forEach(function(apid){
+                
+                if (apid.not === undefined || apid.not === false) {
+                    nested.push({ 'apid' : apid })    
+                } else {
+                    nested.push({ 'not' : { 'apid' : apid.apid }})
+                }
+                
+            })            
+            
+            
         }
         
         // sometimes the selector is nothing, so the audience would be all

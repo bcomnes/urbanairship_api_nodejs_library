@@ -23,8 +23,6 @@ exports.Segment = function Segment(){
         
         payload.criteria = this.criteria.toJSON({ use_segments: false })
         
-        console.log(JSON.stringify(payload.criteria,2,null))
-        
         return payload
     
     }

@@ -58,31 +58,37 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
     iosNotification.setDeviceType('ios')
 */
 
-var n = new Notification;
-    n.setAlert('this is an alert');
-    n.setDeviceType('android')
-
 var selector = new Selector('or')
-    selector.addSegment('dc3b24c6-fdd4-499a-809f-4c61b2df11c9')
+    selector.addSegment('dc3b24c6-fdd4-499a-809f-4c61b2df11c9', true)
     selector.addSegment('e6659cab-5309-40a9-b95c-428c6a9a3c80')
-    selector.addTag('derp')
     
-var p = new Push;
-     p.addNotification(n)
-     p.setAudience(selector)
-
-    console.log("push payload")
-    console.log(JSON.stringify(p.toJSON(),null,2))
-
+    selector.addTag('derp')
+    selector.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
+    
 var seg = new Segment();
     seg.setName('API_test_with_segments_of_segments')
     seg.setCriteria(selector);
 
-    console.log("segment payload")
-    console.log(JSON.stringify(seg,null,2))
+    // console.log("segment payload")
+    // console.log(JSON.stringify(seg,null,2))
     // client.createSegment(seg, displayResults)
 
-    // client.validatePush(p, displayResults)
+var n = new Notification
+    n.setAlert('deeerrppp')
+    n.setDeviceType('ios')
+    
+var n2 = new Notification
+    n2.setAlert('all derps')
+    n.setDeviceType('all')
+
+var p = new Push
+    p.addNotification(n)
+
+    p.setAudience(selector)
+
+    console.log(JSON.stringify(p.toJSON(),null,2))
+
+    client.validatePush(p, displayResults)
 
 
 var loc0 = new Location
