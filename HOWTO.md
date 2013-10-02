@@ -199,7 +199,7 @@ This results in a Push Notification payload that looks like this:
   }
 }
 ```
-Which send to the alert to any device in your audience that has the tag 'foo' AND ( tag : 'bar' OR tag: 'baz' )
+Which will send the alert to any device in your audience that has the tag 'foo' AND ( tag : 'bar' OR tag: 'baz' )
 
 ####Audience Selector using Location
 You can add a location to a selector just like you would a tag or even another selector.
@@ -215,7 +215,7 @@ var loc0 = new Location
     
 var loc1 = new Location
     loc1.setId('61QOVAcS2s1nYquCWg7drw')  // the location id for Memphis, TN, USA
-    
+            
     // sets the conditions of time of 'location has been in the last 4 days'
     loc0.setTimeRelative(4, 'days')
     
