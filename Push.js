@@ -118,7 +118,7 @@ exports.Push = function Push() {
         // determine if there is an ad-hoc audience selector
         if(this.audience.operator !== undefined){
             
-            payload.audience = this.audience.toJSON()
+            payload.audience = this.audience.toJSON({ use_segments: true })
             
         }
         else {

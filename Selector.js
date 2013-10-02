@@ -78,8 +78,8 @@ exports.Selector = function Selector(booleanOperator) {
         }
     }
     
-    this.toJSON = function(){
-                
+    this.toJSON = function(segment_conditional){
+        
         var payload = {}
         payload[this.operator] = []
         var nested = payload[this.operator]
@@ -141,9 +141,13 @@ exports.Selector = function Selector(booleanOperator) {
             }
         })
         
-        this.segments.forEach(function(segment){
-            nested.push({ 'segment' : segment })    
-        })
+        // when a Selector is used to create a segment, you can't include segments
+        // when a Selector is used as the audience field in a push, it can include segments
+        if (segment_conditional.use_segments === true) {
+            this.segments.forEach(function(segment){
+                nested.push({ 'segment' : segment })    
+            })
+        }
         
         // sometimes the selector is nothing, so the audience would be all
         if (nested.length === 0) {

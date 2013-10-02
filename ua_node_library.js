@@ -62,18 +62,27 @@ var n = new Notification;
     n.setAlert('this is an alert');
     n.setDeviceType('android')
 
-var selector = new Selector('and')
+var selector = new Selector('or')
     selector.addSegment('dc3b24c6-fdd4-499a-809f-4c61b2df11c9')
     selector.addSegment('e6659cab-5309-40a9-b95c-428c6a9a3c80')
+    selector.addTag('derp')
     
 var p = new Push;
-    p.addNotification(n)
-    p.setAudience(selector)
+     p.addNotification(n)
+     p.setAudience(selector)
 
+    console.log("push payload")
     console.log(JSON.stringify(p.toJSON(),null,2))
 
-    client.validatePush(p, displayResults)
+var seg = new Segment();
+    seg.setName('API_test_with_segments_of_segments')
+    seg.setCriteria(selector);
 
+    console.log("segment payload")
+    console.log(JSON.stringify(seg,null,2))
+    // client.createSegment(seg, displayResults)
+
+    // client.validatePush(p, displayResults)
 
 
 var loc0 = new Location
@@ -86,12 +95,11 @@ var loc1 = new Location
     loc0.setTimeRelative(4, 'days')
     
     // sets the conditions of time of 'location has been between August and December 2013'    
-    loc1.setTimeAbsolute(new Date(2013,7,01), new Date(2013,11,01), 'months') 
+    loc1.setTimeAbsolute(new Date(2013,7,1), new Date(2013,11,1), 'months') 
 
 var s = new Selector('and')
     s.addLocation(loc0)
     s.addLocation(loc1)
-
 
     // console.log(JSON.stringify(s.toJSON(),null,2))
     
@@ -144,14 +152,6 @@ var s = new Selector('and')
 
 // build audience
 
-
-
-// var seg = new Segment();
-//    seg.setName('API_test_with_segments')
-//    seg.setCriteria(s);
-
-// console.log(JSON.stringify(seg,null,2))
-// client.createSegment(seg, displayResults)
 
 function displayResults(err, data) {
     

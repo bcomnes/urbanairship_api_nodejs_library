@@ -10,7 +10,7 @@ exports.Segment = function Segment(){
     }
     
     this.setCriteria = function(criteria){
-        
+
         this.criteria = criteria
         
     }
@@ -21,7 +21,9 @@ exports.Segment = function Segment(){
         
         payload.display_name = this.display_name
         
-        payload.criteria = this.criteria.toJSON()
+        payload.criteria = this.criteria.toJSON({ use_segments: false })
+        
+        console.log(JSON.stringify(payload.criteria,2,null))
         
         return payload
     
