@@ -309,3 +309,19 @@ var selector = new UA.Selector('or')
   client.createSegment(segment, callback)
 ```
 This would create a segment named 'a segment' that would match devices that are associated to the tags 'foo' or 'bar'.
+
+####Adding and Removing Tags from Devices
+Create a ```Tag``` object.
+```javascript
+var tag = new UA.Tag
+  tag.setName('tag_name')
+  
+  tag.addDeviceToken('462F12B23D44E6AA9A9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
+  tag.addDeviceToken('FFCADA8910C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
+
+  tag.removeDeviceToken('99BADCA010C23390FA9220C462F12B23D44E6F236D0D3871277B63871CFBD27D')
+  
+  tag.addApid('c3800096-29ba-4453-8609-208a178c7ba1')
+  
+  client.tagDevices(tag, callback)
+```
