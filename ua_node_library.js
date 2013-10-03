@@ -84,11 +84,11 @@ var n2 = new Notification
 var p = new Push
     p.addNotification(n)
 
-    p.setAudience(selector)
+    //p.setAudience(selector)
 
     console.log(JSON.stringify(p.toJSON(),null,2))
 
-    client.validatePush(p, displayResults)
+    // client.validatePush(p, displayResults)
 
 
 var loc0 = new Location
@@ -117,12 +117,12 @@ var s = new Selector('and')
     // 
 
 // Schedule
-    // var s = new Schedule;
-    //     s.setName('scheduled_by_api');
-    //     s.setDate(new Date(2014,0,1));
-    //     s.setPush(p)
+    var s = new Schedule;
+        s.setName('scheduled_by_api');
+        s.setDate(new Date(2014,0,1));
+        s.setPush(p)
 
-    // client.schedulePush(s, displayResults)
+    client.schedulePush(s, displayResults)
     // client.listSchedules(displayResults)
     // client.listSchedule('bc048b8f-027f-440a-ac11-ac5f57ff9d58', displayResults)
     // client.updateSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', s, displayResults)  

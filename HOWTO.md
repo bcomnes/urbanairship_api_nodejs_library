@@ -22,7 +22,7 @@ A Push Notification can be comprised of a number of notifications to different d
 
 Create a ```Notification``` object:
 ```
-var n = new Notification
+var n = new UA.Notification
 ```
 Set the alert text for the notification:
 ```
@@ -34,7 +34,7 @@ n.setDeviceType('all')
 ```
 Create a ```Push``` object:
 ```
-var p = new Push
+var p = new UA.Push
 ```
 Add the notification to the Push object:
 ```
@@ -42,7 +42,7 @@ p.addNotification(n)
 ```
 Send the Push Notification with the ```client``` singleton.
 ```
-client.sendPush(p, displayResults)
+client.sendPush(p, callback)
 ```
 The payload for that Push Notification resolved to this JSON:
 ```
@@ -52,15 +52,15 @@ The payload for that Push Notification resolved to this JSON:
 ```
 To add an Android specific alert you would create another Notification object and set the device type as 'android'
 ```
-var androidNotification = new Notification;
+var androidNotification = new UA.Notification;
     androidNotification.setAlert('android only payload')
     androidNotification.setDeviceType('android')
 
-var iosNotification = new Notification;
+var iosNotification = new UA.Notification;
     iosNotification.setAlert('ios only notification')
     iosNotification.setDeviceType('ios')
 
-var p = new Push; 
+var p = new UA.Push; 
     p.addNotification(androidNotification)
     p.addNotification(iosNotification)    
 ```
@@ -84,12 +84,25 @@ The payload for the Push Notification with Android and iOS specific alerts resol
 ```
 The ```device_types``` array is built from parsing the ```Notification``` objects added to the ```Push``` object.  If any ```Notification``` objects ```device_types``` are set to 'all' the ```device_types``` for the entire push payload will be set to 'all'.
 
+####Scheduling a Push Notification
+Urban Airship provides the functionality to schedule a Push Notification. 
+
+Create a ```Schedule``` object:
+```javascript
+var schedule = new UA.Schedule
+  schedule.setName('future push notification') // this is optional
+  schedule.setDate(new Date(2014,11,25)) // required
+  schedule.setPush(p) // created above
+  
+  client.schedulePush(schedule, callback)
+```
+
 ####Sending a Push Notification with an Audience Selector
 Urban Airship provides audience segmentation using Tags and Location.  The audience selector can be a very simple boolean conditional or a complex decision tree.
 
 Create a ```Selector``` object.
 ```
-var s = new Selector('and')
+var s = new UA.Selector('and')
 ```
 ```Selector``` objects require a base boolean conditional, and you pass it in the constructor.
 Add two tags to the ```Selector``` object:

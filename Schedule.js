@@ -20,13 +20,14 @@ exports.Schedule = function Schedule(){
         
         var payload = {}
         
-        payload.name = this.name
+        if (this.name !== undefined) {
+            payload.name = this.name
+        }
         
         payload.schedule = {}
-        var dateString = this.date.toJSON()
         
         // to JSON() gives milliseconds, truncate them off, this is ugly, but effective and keeps in line with the other usages of the date
-        payload.schedule.scheduled_time = dateString.substring(0,dateString.length-5)   
+        payload.schedule.scheduled_time = this.date.toJSON().substring(0,this.date.toJSON().length-5)   
         
         payload.push = this.push.toJSON()
         
