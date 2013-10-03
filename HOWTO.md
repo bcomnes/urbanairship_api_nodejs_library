@@ -284,3 +284,4 @@ This audience selector would resolve to this JSON
 }
 ```
 Which would match anyone that had been in NYC in the last 4 days, and in Memphis between August and December 2013.
+####Create a Segment with a ```Selector```
