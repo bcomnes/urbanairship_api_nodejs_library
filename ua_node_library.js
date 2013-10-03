@@ -13,7 +13,7 @@ var Location = UA.Location
 var Schedule = UA.Schedule
 var Tag = UA.Tag
 
-var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { loglevel: 'debug', filename: './logs/debug.log', append: 'false' });
+var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { loglevel: 'debug', filename: './logs/debug.log', append: true });
 // var client = new UA.APIClient('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
 // var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 
@@ -24,7 +24,7 @@ var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { logle
     // client.getDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A', displayResults)
 
 // Tags
-    // client.getTags(displayResults)
+    client.getTags(displayResults)
     // client.createTag("library", displayResults)
     // client.deleteTag("library", displayResults)
 

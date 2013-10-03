@@ -35,7 +35,7 @@ exports.APIClient = function APIClient(appKey, appSecret, loginfo) {
         }
         
         var flags = { 'flags': 'w' }
-        if (loginfo.append === 'true') {
+        if (loginfo.append === true) {
             flags = { 'flags': 'a' }
         }
         
