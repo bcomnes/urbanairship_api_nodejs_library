@@ -13,7 +13,7 @@ var client = new UA.APIClient( app_key , master_secret)
 ```
 This defaults to log level : 'info', and appends to a file called urban_airship.log.  You can include your own log settings.
 ```javascript
-var client = new UA.APIClient( app_key , master_secret, { loglevel: 'debug', filename: './logs/debug.log', append: 'false' });
+var client = new UA.APIClient( app_key , master_secret, { loglevel: 'debug', filename: './logs/debug.log', append: false });
 ```
 Keep in mind, the debug log level will expose your master secret in the log file when it logs the HTTP payload.
 
