@@ -308,4 +308,4 @@ var selector = new UA.Selector('or')
 
   client.createSegment(segment, callback)
 ```
-This would create a segment named 'a segment' that would match the an audience of devices that are associated to the tags 'foo' or 'bar'.
+This would create a segment named 'a segment' that would match devices that are associated to the tags 'foo' or 'bar'.
