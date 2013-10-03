@@ -54,16 +54,16 @@ The payload for that Push Notification resolved to this JSON:
 To add an Android specific alert you would create another Notification object and set the device type as 'android'
 ```javascript
 var androidNotification = new UA.Notification;
-    androidNotification.setAlert('android only payload')
-    androidNotification.setDeviceType('android')
+  androidNotification.setAlert('android only payload')
+  androidNotification.setDeviceType('android')
 
 var iosNotification = new UA.Notification;
-    iosNotification.setAlert('ios only notification')
-    iosNotification.setDeviceType('ios')
+  iosNotification.setAlert('ios only notification')
+  iosNotification.setDeviceType('ios')
 
 var p = new UA.Push; 
-    p.addNotification(androidNotification)
-    p.addNotification(iosNotification)    
+  p.addNotification(androidNotification)
+  p.addNotification(iosNotification)    
 ```
 The payload for the Push Notification with Android and iOS specific alerts resolved to this JSON:
 ```javascript
@@ -178,14 +178,14 @@ This would result in a Push Notification being sent with iOS and Android specifi
 ####Advanced Audience Selector Functionality
 You can nest ```Selector``` objects within another ```Selector``` object.
 ```javascript
-var s = new Selector('and')
-    s.addTag('foo')
+var s = new UA.Selector('and')
+  s.addTag('foo')
     
-var nestedSelector = new Selector('or')
-    nestedSelector.addTag('bar')
-    nestedSelector.addTag('baz')
+var nestedSelector = new UA.Selector('or')
+  nestedSelector.addTag('bar')
+  nestedSelector.addTag('baz')
     
-    s.addSelector(nestedSelector)     
+  s.addSelector(nestedSelector)     
 ```
 This results in a Push Notification payload that looks like this:
 ```javascript
@@ -219,22 +219,22 @@ Which will send the alert to any device in your audience that has the tag 'foo' 
 You can add a Location to a selector just like you would a tag or even another selector.
 Create a ```Location``` object
 ```javascript
-var loc0 = new Location
-    loc0.setId('00xb78Jw3Zz1TyrjqRykN9')  // the location id for New York City, NY, USA
+var loc0 = new UA.Location
+  loc0.setId('00xb78Jw3Zz1TyrjqRykN9')  // the location id for New York City, NY, USA
 ```
 The ```Location``` object requires a time range to be specified.  You can set it by a relative time range (ex. "within the last 4 months") or an absolute time range (ex. "Between January 1, 1970 and December 31, 1999").
 ```javascript
-var loc0 = new Location
-    loc0.setId('00xb78Jw3Zz1TyrjqRykN9')  // the location id for New York City, NY, USA
+var loc0 = new UA.Location
+  loc0.setId('00xb78Jw3Zz1TyrjqRykN9')  // the location id for New York City, NY, USA
     
-var loc1 = new Location
-    loc1.setId('61QOVAcS2s1nYquCWg7drw')  // the location id for Memphis, TN, USA
+var loc1 = new UA.Location
+  loc1.setId('61QOVAcS2s1nYquCWg7drw')  // the location id for Memphis, TN, USA
             
-    // sets the conditions of time of 'location has been in the last 4 days'
-    loc0.setTimeRelative(4, 'days')
+  // sets the conditions of time of 'location has been in the last 4 days'
+  loc0.setTimeRelative(4, 'days')
     
-    // sets the conditions of time of 'location has been between August and December 2013'    
-    loc1.setTimeAbsolute(new Date(2013,7,01), new Date(2013,11,01), 'months') 
+  // sets the conditions of time of 'location has been between August and December 2013'    
+  loc1.setTimeAbsolute(new Date(2013,7,01), new Date(2013,11,01), 'months') 
 ```
 The ```setTimeRelative``` method accepts an integer ranage and resolution.
 
@@ -251,9 +251,9 @@ Valid time resolutions and their corresponding ranges are:
 **Note:** The javascript ```Date``` object constructor for month starts at zero. (e_e)
 
 ```javascript
-var s = new Selector('and')
-    s.addLocation(loc0)
-    s.addLocation(loc1)
+var s = new UA.Selector('and')
+  s.addLocation(loc0)
+  s.addLocation(loc1)
 ```
 This audience selector would resolve to this JSON
 ```javascript
@@ -285,3 +285,19 @@ This audience selector would resolve to this JSON
 ```
 Which would match anyone that had been in NYC in the last 4 days, and in Memphis between August and December 2013.
 ####Create a Segment with a ```Selector```
+Segments are pre-built a audience ```Selector``` that you can send a Push Notification to by their segment ID.  Segments can only contain Tags and Locations.  If your ```Selector``` object contains device tokens, apids, aliases, or other ```Segment``` objects they will not be present in the Segment.
+
+Create a ```Segment``` object:
+```javascript
+var segment = new UA.Segment
+  segment.setName('a segment')
+  
+var selector = new UA.Selector('or')
+  selector.addTag('foo')
+  selector.addTag('bar')
+
+  segment.setCriteria(selector)
+
+  client.createSegment(segment, callback)
+```
+This would create a segment named 'a segment' that would match the an audience of devices that are associated to the tags 'foo' or 'bar'.
