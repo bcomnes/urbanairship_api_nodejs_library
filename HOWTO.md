@@ -102,25 +102,25 @@ var schedule = new UA.Schedule
 Urban Airship provides audience segmentation using Tags and Location.  The audience selector can be a very simple boolean conditional or a complex decision tree.
 
 Create a ```Selector``` object.
-```
+```javascript
 var s = new UA.Selector('and')
 ```
 ```Selector``` objects require a base boolean conditional, and you pass it in the constructor.
 Add two tags to the ```Selector``` object:
-```
+```javascript
 s.addTag('foo')
 s.addTag('bar')
 ```
 This ```Selector``` resolves to this JSON:
-```
+```javascript
 { and: [ { tag: 'foo' }, { tag: 'bar' } ] }
 ```
 Now add this selector to the previously constructed Push Notification.
-```
+```javascript
 p.setAudience(s)
 ```
 Which changes the audience field in the payload, and results in a payload that looks like this:
-```
+```javascript
 {
   "device_types": [
     "android",
@@ -148,7 +148,7 @@ Which changes the audience field in the payload, and results in a payload that l
 ```
 This would result in a Push Notification being sent with iOS and Android specific alerts to your audience who are tagged with 'foo' AND 'bar'.
 A ```Selector``` object created with an 'or' operator would result in a payload that looks like this:
-```
+```javascript
 {
   "device_types": [
     "android",
@@ -177,7 +177,7 @@ A ```Selector``` object created with an 'or' operator would result in a payload 
 This would result in a Push Notification being sent with iOS and Android specific alerts to your audience who are tagged with 'foo' OR 'bar'.
 ####Advanced Audience Selector Functionality
 You can nest ```Selector``` objects within another ```Selector``` object.
-```
+```javascript
 var s = new Selector('and')
     s.addTag('foo')
     
@@ -188,7 +188,7 @@ var nestedSelector = new Selector('or')
     s.addSelector(nestedSelector)     
 ```
 This results in a Push Notification payload that looks like this:
-```
+```javascript
 {
   "device_types": "all",
   "notification": {
@@ -218,12 +218,12 @@ Which will send the alert to any device in your audience that has the tag 'foo' 
 ####Audience Selector using Location
 You can add a Location to a selector just like you would a tag or even another selector.
 Create a ```Location``` object
-```
+```javascript
 var loc0 = new Location
     loc0.setId('00xb78Jw3Zz1TyrjqRykN9')  // the location id for New York City, NY, USA
 ```
 The ```Location``` object requires a time range to be specified.  You can set it by a relative time range (ex. "within the last 4 months") or an absolute time range (ex. "Between January 1, 1970 and December 31, 1999").
-```
+```javascript
 var loc0 = new Location
     loc0.setId('00xb78Jw3Zz1TyrjqRykN9')  // the location id for New York City, NY, USA
     
@@ -250,13 +250,13 @@ Valid time resolutions and their corresponding ranges are:
 
 **Note:** The javascript ```Date``` object constructor for month starts at zero. (e_e)
 
-``` 
+```javascript
 var s = new Selector('and')
     s.addLocation(loc0)
     s.addLocation(loc1)
 ```
 This audience selector would resolve to this JSON
-```
+```javascript
 {
   "and": [
     {
