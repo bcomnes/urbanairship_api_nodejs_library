@@ -122,7 +122,7 @@ var s = new Selector('and')
         s.setDate(new Date(2014,0,1));
         s.setPush(p)
 
-    client.schedulePush(s, displayResults)
+    // client.schedulePush(s, displayResults)
     // client.listSchedules(displayResults)
     // client.listSchedule('bc048b8f-027f-440a-ac11-ac5f57ff9d58', displayResults)
     // client.updateSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', s, displayResults)  

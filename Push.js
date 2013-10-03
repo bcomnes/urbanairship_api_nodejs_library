@@ -115,7 +115,7 @@ exports.Push = function Push() {
 
         });
         
-        // determine if there is an ad-hoc audience selector
+        // determine if there is an ad-hoc audience selector, if not set the audience to 'all'
         if(this.audience.operator !== undefined){
             
             payload.audience = this.audience.toJSON({ use_segments: true })

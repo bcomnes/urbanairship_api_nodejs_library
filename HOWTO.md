@@ -91,9 +91,17 @@ Urban Airship provides the functionality to schedule a Push Notification.
 Create a ```Schedule``` object:
 ```javascript
 var schedule = new UA.Schedule
-  schedule.setName('future push notification') // this is optional
-  schedule.setDate(new Date(2014,11,25)) // required
-  schedule.setPush(p) // created above
+  schedule.setName('a future push notification') // this is optional
+  schedule.setDate(new Date(2013,11,25)) // required
+  
+var notification = new UA.Notification
+  notification.setAlert('merry christmas to all')
+  notification.setDeviceType('all')
+  
+var push = new UA.Push
+  push.addNotification(notification)
+  
+  schedule.setPush(p) 
   
   client.schedulePush(schedule, callback)
 ```
