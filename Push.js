@@ -1,139 +1,128 @@
-exports.Push = function Push() {
-    
-    this.notifications = []
-    this.message
-    this.audience = {}
-    
-    this.addNotification = function(notification){
-        this.notifications.push(notification)
+exports.Push = Push
+
+function Push() {
+  this.message = null
+  this.notifications = []
+  this.audience = {}
+}
+
+var cons = Push
+  , proto = cons.prototype
+
+proto.constructor = cons
+
+proto.addNotification = function(notification) {
+  this.notifications.push(notification)
+}
+
+proto.setMessage = function(message) {
+  this.message = message
+}
+
+proto.setAudience = function(selector) {
+  this.audience = selector
+}
+
+proto.toJSON = function() {
+  var payload = {}
+    , any_notification_set_to_all
+
+  // determine the device types
+  // parse the device types in the list of notifications,
+  // do any of them have all?
+  any_notification_set_to_all = !!this.notifications.filter(set_to_all).length
+
+  if(!any_notification_set_to_all) {
+    // build an array of notificatons from the device types
+    payload.device_types = []
+    this.notifications.forEach(function(notification) {
+      payload.device_types.push(notification.deviceType)
+    })
+  } else {
+    payload.device_types = 'all'
+  }
+
+  // add the notifications to the push payload
+  payload.notification = {}
+
+  this.notifications.forEach(function(notification) {
+    var device_type = notification.deviceType
+      , payload_notification
+
+    if(device_type === 'all') {
+      return payload.notification.alert = notification.alert
     }
 
-    this.setMessage = function(message){
-        this.message = message
+    if(!payload.notification[device_type]) {
+      payload.notification[device_type] = {}
     }
-    
-    this.setAudience = function(selector){
-        this.audience = selector
+
+    payload_notification = payload.notification[device_type]
+
+    if(notification.alert !== undefined) {
+      payload_notification.alert = notification.alert
     }
-    
-    this.toJSON = function(){
-        var payload = {}
 
-        // determine the device types
-        // parse the device types in the list of notifications, do any of them have all?
-        var anyNotificationSetToAll = false
-        this.notifications.forEach(function(notification){
-            if (notification.deviceType === 'all') {
-                anyNotificationSetToAll = true
-            }
-        })
-        
-        if (!anyNotificationSetToAll) {
-            // build an array of notificatons from the device types
-            payload.device_types = []
-            this.notifications.forEach(function(notification){
-                payload.device_types.push(notification.deviceType)                
-            })
-        }
-        else {
-            payload.device_types = 'all'
-        }
+    if(notification.extras.length) {
+      if(!payload_notification.extra) {
+        payload_notification.extra = {}
+      }
 
-        
-        // add the notifications to the push payload
-        payload.notification = {}
-        
-        this.notifications.forEach(function(notification){
-            if (notification.deviceType === 'all') {
-                
-                payload.notification.alert = notification.alert
-                
-            } else if (notification.deviceType === 'ios'){
-                
-                payload.notification.ios = {}
-                
-                if (notification.alert !== undefined) {
-                    payload.notification.ios.alert = notification.alert
-                }
-                
-                if (notification.badge !== undefined) {
-                    payload.notification.ios.badge = notification.badge
-                }
-                
-                if (notification.sound !== undefined) {
-                    payload.notification.ios.sound == notification.sound
-                }
-                
-                if (notification.content_available !== undefined) {
-                    payload.notification.ios.content_available = notification.content_available
-                }
-                
-                if (notification.expiry !== undefined) {
-                    payload.notification.ios.expiry = notification.expiry
-                }
-                
-                if (notification.priority !== undefined) {
-                    payload.notification.ios.priority = notification.priority
-                }
-                
-                if (notification.extras.length > 0) {
-                    payload.notification.ios.extra = {}
-                    notification.extras.forEach(function(extra){
-                        payload.notification.ios.extra[extra.key] = extra.value
-                    })
-                }
-                
-            } else if (notification.deviceType === 'android') {
-                
-                payload.notification.android = {}
-                
-                if (notification.alert !== undefined) {
-                    payload.notification.android.alert = notification.alert
-                }
-
-                if (notification.collapse_key !== undefined) {
-                    payload.notification.android.collapse_key = notification.collapse_key
-                }
-                
-                if (notification.time_to_live !== undefined) {
-                    payload.notification.android.time_to_live = notification.time_to_live
-                }
-                
-                if (notification.delay_while_idle !== undefined) {
-                    payload.notification.android.delay_while_idle = notification.delay_while_idle
-                }
-                
-                if (notification.extras.length > 0) {
-                    
-                    payload.notification.android.extra = {}
-                    notification.extras.forEach(function(extra){
-                        payload.notification.android.extra[extra.key] = extra.value
-                    })
-                    
-                }
-            }
-
-        });
-        
-        // determine if there is an ad-hoc audience selector, if not set the audience to 'all'
-        if(this.audience.operator !== undefined){
-            
-            payload.audience = this.audience.toJSON({ use_segments: true })
-            
-        }
-        else {
-            
-            payload.audience = 'all'
-            
-        }
-        
-        if (this.message !== undefined) {
-            
-            payload.message = this.message.toJSON()
-            
-        }
-        
-        return payload
-        
+      notification.extras.forEach(function(extra) {
+        payload_notification.extra[extra.key] = extra.value
+      })
     }
+
+    if(device_type === 'ios') {
+      if(notification.badge !== undefined) {
+        payload_notification.badge = notification.badge
+      }
+
+      if(notification.sound !== undefined) {
+        payload_notification.sound = notification.sound
+      }
+
+      if(notification.content_available !== undefined) {
+        payload_notification.content_available = notification.content_available
+      }
+
+      if(notification.expiry !== undefined) {
+        payload_notification.expiry = notification.expiry
+      }
+
+      if(notification.priority !== undefined) {
+        payload_notification.priority = notification.priority
+      }
+    } else if(device_type === 'android') {
+      if(notification.collapse_key !== undefined) {
+        payload_notification.collapse_key = notification.collapse_key
+      }
+
+      if(notification.time_to_live !== undefined) {
+        payload_notification.time_to_live = notification.time_to_live
+      }
+
+      if(notification.delay_while_idle !== undefined) {
+        payload_notification.delay_while_idle = notification.delay_while_idle
+      }
+    }
+  })
+
+  // determine if there is an ad-hoc audience selector,
+  // if not set the audience to 'all'
+  if(this.audience.operator !== undefined) {
+    payload.audience = this.audience.toJSON({ use_segments: true })
+  } else {
+    payload.audience = 'all'
+  }
+
+  if(this.message !== undefined) {
+    payload.message = this.message.toJSON()
+  }
+
+  return payload
+
+  function set_all(notification) {
+    return notification.deviceType === 'all'
+  }
 }
