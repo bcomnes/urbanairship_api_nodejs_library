@@ -1,7 +1,7 @@
 exports.Tag = Tag
 
 function Tag() {
-  this.name
+  this.name = null
   this.addedDeviceTokens = []
   this.removedDeviceTokens = []
   this.addedApids = []
