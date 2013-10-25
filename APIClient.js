@@ -97,69 +97,50 @@ proto.tagDevices = function(tag, ready) {
              'charset=utf8;'
         , 'Content-Type': 'application/json' }
   }
-  
+
   log.debug('Making HTTP request with options %s', JSON.stringify(options))
-  
-  request(options, process_response)
-
-  function process_response(error, response, body) {
-    var data = {}
-
-    self.processApiResponse(error, response, body, data, ready)
-  }
+  this.make_request(options, {}, ready)
 }
 
 proto.getTags = function(ready) {
-  var self = this
-    , options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , uri: 'https://go.urbanairship.com/api/tags/'
-      , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
-    }
+  var options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , uri: 'https://go.urbanairship.com/api/tags/'
+    , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
+  }
 
   log.info('getTags called')
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-
-  request(options, process_response)
-
-  function process_response(error, response, body) {
-    var data = {}
-
-    self.processApiResponse(error, response, body, data, ready)
-  }
+  this.make_request(options, {}, ready)
 }
 
-prot.make_request = function(options, ready) {
+prot.make_request = function(options, data, ready) {
   var self = this
 
   request(options, process_response)
-  
-  function process_response(error, response, body) {
-    var data = {}
 
+  function process_response(error, response, body) {
     self.processApiResponse(error, response, body, data, ready)
   }
 }
 
 proto.createTag = function(tag, ready) {
-  var self = this
-    , options = {
+  var options = {
         method: 'PUT'
       , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
       , url: 'https://go.urbanairship.com/api/tags/' + tag
       , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
-  
+
   log.info('createTag called \t tag name : %s', tag)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
 
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.deleteTag = function(tag, ready) {
-  var self = this
-    , options = {
+  var options = {
       method: 'DELETE'
     , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
     , url: 'https://go.urbanairship.com/api/tags/' + tag
@@ -169,7 +150,7 @@ proto.deleteTag = function(tag, ready) {
   log.info('deleteTag called \t tag name : %s', tag)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
 
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 // Device lookup
@@ -184,7 +165,7 @@ proto.getDeviceTokens = function(ready) {
   log.info('getDeviceTokens called')
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
 
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getDeviceToken = function(deviceToken, ready) {
@@ -198,54 +179,38 @@ proto.getDeviceToken = function(deviceToken, ready) {
   log.info('getDeviceToken called \t device_token : %s', deviceToken)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
 
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getApids = function(ready) {
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/apids/'
-      , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/apids/'
+    , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
-  
+
   log.info('getApids called')
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, process_response)
-  
-  function process_response(error, response, body) {
-    var data = {}
-
-    self.processApiResponse(error, response, body, data, ready)
-  }
+  this.make_request(options, {}, ready)
 }
 
 proto.getApid = function(apid, ready) {
-  var self = this
-    , options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/apids/' + apid
-      , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
+  var options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/apids/' + apid
+    , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
-  
+
   log.info('getApid called \t apid : %s', apid)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, process_response)
-  
-  function process_response(error, response, body) {
-    var data = {}
-
-    self.processApiResponse(error, response, body, data, ready)
-  }
+  this.make_request(options, {}, ready)
 }
 
 // Push
 proto.sendPush = function(push, ready) {
-  var self = this
-    , payload
+  var payload
     , options
     , body
 
@@ -254,33 +219,30 @@ proto.sendPush = function(push, ready) {
   // build payload
   payload = push.toJSON()
   log.debug('done building payload')
-  
+
   body = JSON.stringify(payload)
-  
+
   log.debug('push payload : %s', b)
-          
+
   options = {
       method: 'POST'
     , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
     , url: 'https://go.urbanairship.com/api/push/'
-    , body: b
+    , body: body
     , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
                , 'Content-Type' : 'application/json'
-            }   
-  }        
+            }
+  }
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, process_response)
-  
-  function process_response(error, response, body) {
-    var data = {}
-
-    self.processApiResponse(error, response, body, data, ready)
-  }
+  this.make_request(options, {}, ready)
 }
 
 proto.validatePush = function(push, ready) {
+  var options
+    , payload
+    , body
+
   log.info('validatePush called')
 
   log.debug('building payload')
@@ -288,32 +250,29 @@ proto.validatePush = function(push, ready) {
   payload = push.toJSON()
   log.debug('done building payload')
 
-  var b = JSON.stringify(payload)
-          
+  body = JSON.stringify(payload)
+
   log.debug('push payload : %s', b)
-          
-  var options = {
-        method: 'POST'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/push/validate/'
-      , body: b
-      , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
-                 , 'Content-Type' : 'application/json'
-              }   
-  }        
+
+  options = {
+      method: 'POST'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/push/validate/'
+    , body: body
+    , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+               , 'Content-Type' : 'application/json'
+            }
+  }
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-
-    self.processApiResponse(error, response, body, data, ready)
-  })        
-  
+  this.make_request(options, {}, ready)
 }
 
 // Schedule
 proto.schedulePush = function(schedule, ready) {
+  var payload
+    , options
+    , body
 
   log.info('schedulePush called')
 
@@ -322,71 +281,54 @@ proto.schedulePush = function(schedule, ready) {
   payload = schedule.toJSON()
   log.debug('done building payload')
 
-  var b = JSON.stringify(payload)
-          
+  body = JSON.stringify(payload)
+
   log.debug('schedule payload : %s', b)
-          
-  var options = {
-        method: 'POST'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/schedules/'
-      , body: b
-      , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
-                 , 'Content-Type' : 'application/json'
-              }   
-  }        
+
+  options = {
+      method: 'POST'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/schedules/'
+    , body: body
+    , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+               , 'Content-Type' : 'application/json'
+            }
+  }
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-
-    self.processApiResponse(error, response, body, data, ready)
-  })        
-  
+  this.make_request(options, {}, ready)
 }
 
 proto.listSchedules = function(ready) {
+  var options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/schedules/'
+    , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
+  }
 
   log.info('listSchedules called')
-
-  var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/schedules/'
-      , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
-  }        
-
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })      
-
+  this.make_request(options, {}, ready)
 }
 
 proto.listSchedule = function(scheduleID, ready) {
+  var options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
+    , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
+  }
 
   log.info('listSchedule called \t schedule id : %s', scheduleID)
-
-  var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
-      , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
-  }        
-
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })      
-
+  this.make_request(options, {}, ready)
 }
 
 proto.updateSchedule = function(scheduleID, schedule, ready) {
+  var payload
+    , options
+    , body
 
   log.info('updateSchedule called \t schedule id : %s', scheduleID)
 
@@ -395,194 +337,164 @@ proto.updateSchedule = function(scheduleID, schedule, ready) {
   payload = schedule.toJSON()
   log.debug('done building payload')
 
-  var b = JSON.stringify(payload)
-  
+  body = JSON.stringify(payload)
+
   log.debug('schedule payload : %s', b)
-          
-  var options = {
-        method: 'PUT'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
-      , body: b
-      , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
-                 , 'Content-Type' : 'application/json'
-              }   
-  }        
+
+  options = {
+      method: 'PUT'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
+    , body: body
+    , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+               , 'Content-Type' : 'application/json'
+            }
+  }
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })  
-
+  this.make_request(options, {}, ready)
 }
 
 proto.deleteSchedule = function(scheduleID, ready) {
-  log.info('delete schedule called \t schedule id : %s', scheduleID)
-
   var options = {
-        method: 'DELETE'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
-      , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
-  }        
+      method: 'DELETE'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
+    , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
+  }
 
+  log.info('delete schedule called \t schedule id : %s', scheduleID)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })      
-
-}    
+  this.make_request(options, {}, ready)
+}
 
 // Segments
 proto.getSegments = function(ready) {
-  log.info('getSegments called')
-  
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/segments/'
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-  }        
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/segments/'
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+  }
 
+  log.info('getSegments called')
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })          
-  
+  this.make_request(options, {}, ready)
 }
 
 proto.getSegment = function(segment_id, ready) {
-  log.info('getSegment called \t segment id : %s', segment_id)
-  
   var options = {
         method: 'GET'
       , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
       , url: 'https://go.urbanairship.com/api/segments/' + segment_id
       , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-  }        
+  }
 
+  log.info('getSegment called \t segment id : %s', segment_id)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })           
+  this.make_request(options, {}, ready)
 }
 
 proto.createSegment = function(segment, ready) {
+  var payload
+    , options
+    , body
+
   log.info('createSegment called')
   log.debug('building payload')
   payload = segment.toJSON()
   log.debug('done building payload')
-  
-  var b = JSON.stringify(payload)
- 
+
+  body = JSON.stringify(payload)
+
   log.debug('segment payload : %s', b)
- 
-  var options = {
-        method: 'POST'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/segments/'
-      , body: b
-      , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
-                 , 'Content-Type' : 'application/json'
-              }   
-  }        
+
+  options = {
+      method: 'POST'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/segments/'
+    , body: b
+    , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+               , 'Content-Type' : 'application/json'
+            }
+  }
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })        
+  this.make_request(options, {}, ready)
 }
 
 proto.changeSegment = function(segment_id, segment, ready) {
+  var payload
+    , options
+    , body
+
   log.info('changeSegment called \t segment id : %s', segment_id)
-  
+
   log.debug('building payload')
   payload = segment.toJSON()
   log.debug('done building payload')
-          
-  var b = JSON.stringify(payload)
-  
+
+  body = JSON.stringify(payload)
+
   log.debug('segment payload : %s', b)
- 
-  var options = {
-        method: 'PUT'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/segments/' + segment_id
-      , body: b
-      , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'
-                 , 'Content-Type' : 'application/json'
-              }   
+
+  options = {
+      method: 'PUT'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+    , body: body
+    , headers: {
+        'Accept': 'application/vnd.urbanairship+json; version=3; charset=utf8;'
+               , 'Content-Type' : 'application/json'
+            }
   }
-  
+
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })        
+  this.make_request(options, {}, ready)
 }
 
 proto.deleteSegment = function(segment_id, ready) {
-  log.info('deleteSegment called \t segment id : %s ', segment_id)
-  
   var options = {
-        method: 'DELETE'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/segments/' + segment_id
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'DELETE'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('deleteSegment called \t segment id : %s ', segment_id)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })       
-}    
+  this.make_request(options, {}, ready)
+}
 
 // Location
 proto.getLocationFromString = function(query, alias, ready) {
-  log.info('getLocationFromString called \t query : %s \t alias : %s', query, alias)
-  
   var params = '?q=' + query
-  
-  if(alias !== null) {
+    , options
+
+  if(alias) {
     params += '&type=' + alias
   }
-  
-  var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/location/' + params
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+
+  options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/location/' + params
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('getLocationFromString called \t query : %s \t alias : %s', query, alias)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
+  this.make_request(options, {}, ready)
 }
 
 proto.getLocationFromLatLon = function(lat, lon, alias, ready) {
   var params = [lat, lon].join(',')
     , options
-  
+
   if(alias) {
     params += '?type=' + alias
   }
-  
+
   options = {
       method: 'GET'
     , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -592,7 +504,7 @@ proto.getLocationFromLatLon = function(lat, lon, alias, ready) {
 
   log.info('getLocationFromLatLon called \t lat : %s \t lon : %s \t alias : %s', lat, lon, alias)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, ready) {
@@ -602,7 +514,7 @@ proto.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, read
   if(alias) {
     params += '?type=' + alias
   }
-  
+
   options = {
       method: 'GET'
     , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -612,7 +524,7 @@ proto.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, read
 
   log.info('getLocationFromLatLonBounds called \t lat1 : %s \t lon1 : %s \t lat2 : %s \t lon2 : %s \t alias : %s', lat1, lon1, lat2, lon2, alias)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getLocationFromAlias = function(query, alias, ready) {
@@ -626,7 +538,7 @@ proto.getLocationFromAlias = function(query, alias, ready) {
 
   log.info('getLocationFromAlias called \t query : %s \t alias : %s', query, alias)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 // reports
@@ -640,7 +552,7 @@ proto.getActiveUserCount = function(date, ready) {
 
   log.info('getActiveUserCount called \t date : %s', date.toJSON())
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getResponseReport = function(start, end, precision, ready) {
@@ -653,7 +565,7 @@ proto.getResponseReport = function(start, end, precision, ready) {
 
   log.info('getResponseReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getAppOpensReport = function(start, end, precision, ready) {
@@ -666,7 +578,7 @@ proto.getAppOpensReport = function(start, end, precision, ready) {
 
   log.info('getAppOpensReportcalled \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getTimeInAppReport = function(start, end, precision, ready) {
@@ -679,7 +591,7 @@ proto.getTimeInAppReport = function(start, end, precision, ready) {
 
   log.info('getTimeInAppReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getOptInReport = function(start, end, precision, ready) {
@@ -692,7 +604,7 @@ proto.getOptInReport = function(start, end, precision, ready) {
 
   log.info('getOptInReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getOptOutReport = function(start, end, precision, ready) {
@@ -705,7 +617,7 @@ proto.getOptOutReport = function(start, end, precision, ready) {
 
   log.info('getOptOutReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getPushReport = function(start, end, precision, ready) {
@@ -718,7 +630,7 @@ proto.getPushReport = function(start, end, precision, ready) {
 
   log.info('getPushReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getResponseListing = function(start, end, limit, ready) {
@@ -731,7 +643,7 @@ proto.getResponseListing = function(start, end, limit, ready) {
 
   log.info('getReponseListing called \t start : %s \t end : %s \t limit : %s', start.toJSON(), end.toJSON(), limit)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getIndividualResponseStatistics = function(pushID, ready) {
@@ -741,11 +653,11 @@ proto.getIndividualResponseStatistics = function(pushID, ready) {
     , url: 'https://go.urbanairship.com/api/reports/responses/'+pushID
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
   log.info('getIndividualResponseStatistics called \t push id : %s',pushID)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
-}       
+  this.make_request(options, {}, ready)
+}
 
 proto.getStatistics = function(start, end, ready) {
   var options = {
@@ -754,10 +666,10 @@ proto.getStatistics = function(start, end, ready) {
     , url: 'https://go.urbanairship.com/api/push/stats/?start='+start.toJSON()+'&end='+end.toJSON()
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
   log.info('getStatistics called \t start : %s \t end : %s', start.toJSON(), end.toJSON())    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 // per push
@@ -768,11 +680,11 @@ proto.getPerPush = function(pushID, ready) {
     , url: 'https://go.urbanairship.com/api/reports/perpush/detail/' + pushID
     , header: { 'Accept': 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
   log.info('getPerPush called \t push id : %s',pushID)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, data)
-}     
+}
 
 proto.getPerPushSeries = function(pushID, ready) {
   var options = {
@@ -784,7 +696,7 @@ proto.getPerPushSeries = function(pushID, ready) {
 
   log.info('getPerPushSeries called \t push id : %s',pushID)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 proto.getPerPushSeriesWithPrecision = function(pushID, precision, ready) {
@@ -797,11 +709,7 @@ proto.getPerPushSeriesWithPrecision = function(pushID, precision, ready) {
 
   log.info('getPerPushSeriesWithPrecision called \t push id : %s \t precision : %s', pushID, precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
+  this.make_request(options, {}, ready)
 }
 
 proto.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, precision, ready) {
@@ -815,7 +723,7 @@ proto.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, preci
   }
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, ready)
+  this.make_request(options, {}, ready)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1022,12 +930,9 @@ proto.processApiResponse = function(error, response, body, data, ready) {
           , url: d.next_page
           , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
       }
-      
-      log.debug('Making HTTP request with options %s', JSON.stringify(options))                        
 
-      request(options, function(error, response, body) {
-          self.processApiResponse(error, response, body, data, ready)
-      })                  
+      log.debug('Making HTTP request with options %s', JSON.stringify(options))                        
+      this.make_request(options, data, ready)
     }
   }
 }
