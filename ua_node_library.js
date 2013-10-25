@@ -24,9 +24,9 @@ var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg'
 //     client.getDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A', displayResults)
 
 // Tags
-//    client.getTags(displayResults)
-//     client.createTag("library", displayResults)
-//     client.deleteTag("library", displayResults)
+  client.getTags(displayResults)
+     client.createTag("library", displayResults)
+     client.deleteTag("library", displayResults)
 
      var t = new Tag
          t.setName("nodejs_lib_tag")

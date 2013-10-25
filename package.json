@@ -1,0 +1,29 @@
+{
+  "name": "node-urban-airship",
+  "version": "0.0.0",
+  "description": "urban airship client library for node",
+  "main": "APIClient.js",
+  "dependencies": {
+    "log": "~1.4.0",
+    "request": "~2.27.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/billautomata/urbanairship_api_nodejs_library.git"
+  },
+  "keywords": [
+    "urban",
+    "airship",
+    "push",
+    "library"
+  ],
+  "author": "Bill",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/billautomata/urbanairship_api_nodejs_library/issues"
+  }
+}
