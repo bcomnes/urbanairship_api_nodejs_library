@@ -1,7 +1,7 @@
 var fs = require('fs')
 var UA = require("./APIClient.js")
 
-var credentials = JSON.parse(fs.readFileSync('./keys.json', 'utf-8'))
+//var credentials = JSON.parse(fs.readFileSync('./keys.json', 'utf-8'))
 
 var DeviceType = UA.DeviceType
 var Push = UA.Push
@@ -13,12 +13,12 @@ var Location = UA.Location
 var Schedule = UA.Schedule
 var Tag = UA.Tag
 
-var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { loglevel: 'debug', filename: './logs/debug.log', append: true });
+//var client = new UA.APIClient(credentials.appKey, credentials.appSecret, { loglevel: 'debug', filename: './logs/debug.log', append: true });
 // var client = new UA.APIClient('LXpz7sNxTtSJkZDIutJmZw', 'jLfd3TjKSzejKNvon7aBiA')
-// var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
+var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg') // standard push example
 
 // Device Listing
-    // client.getApids(displayResults)
+    client.getApids(displayResults)
     // client.getApid("c3800096-29ba-4453-8609-208a178c7ba1", displayResults)
     // client.getDeviceTokens(displayResults)
     // client.getDeviceToken('FFCADA8910C23390FA9220C462F12B23D446F236D0D3871277B63871CFBD279A', displayResults)

@@ -20,37 +20,36 @@ function DeviceType() {
 }
 
 function APIClient(app_key, app_secret, log_info) {
-  // set up logging
+  // set up this.logging
   var filename = app_key + '.log'
     , log_level = 'info'
     , flag = 'w'
-    , log
 
   if(log_info) {
     if(log_info.loglevel) {
-      log_level = log_info.loglevel
+      log_level = this.log_info.loglevel
     }
 
     if(log_info.filename) {
-      filename = log_info.filename
+      filename = this.log_info.filename
     }
 
     if(log_info.append) {
       flag = 'a'
     }
 
-    log = new Log(loglevel, fs.createWriteStream(filename, { flags: flag }))
+    this.log = new Log(loglevel, fs.createWriteStream(filename, { flags: flag }))
 
   } else {
-    log = new Log(
+    this.log = new Log(
         'info'
       , fs.createWriteStream('urban_airship.log', { flags: 'a' })
     )
   }
 
-  log.info('Creating client with app key : %s', appKey)
-  this.appKey = appKey
-  this.appSecret = appSecret
+  this.log.info('Creating client with app key : %s', app_key)
+  this.appKey = app_key
+  this.appSecret = app_secret
 
 }
 
@@ -73,9 +72,9 @@ proto.tagDevices = function(tag, ready) {
     , body = JSON.stringify(payload)
     , options
 
-  log.info('tagDevices called')
+  this.log.info('tagDevices called')
 
-  log.info(
+  this.log.info(
       'tag name : %s \t %s device_tokens added \t %s device_tokens ' +
       'removed \t %s apids added \t %s apids removed'
     , tag.name
@@ -84,8 +83,8 @@ proto.tagDevices = function(tag, ready) {
     , tag.removedApids.length
   )
 
-  log.debug('building payload')
-  log.debug('done building payload')
+  this.log.debug('building payload')
+  this.log.debug('done building payload')
 
   options = {
       method: 'POST'
@@ -98,7 +97,7 @@ proto.tagDevices = function(tag, ready) {
         , 'Content-Type': 'application/json' }
   }
 
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))
   this.make_request(options, {}, ready)
 }
 
@@ -110,12 +109,12 @@ proto.getTags = function(ready) {
     , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
 
-  log.info('getTags called')
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getTags called')
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
-prot.make_request = function(options, data, ready) {
+proto.make_request = function(options, data, ready) {
   var self = this
 
   request(options, process_response)
@@ -133,8 +132,8 @@ proto.createTag = function(tag, ready) {
       , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
 
-  log.info('createTag called \t tag name : %s', tag)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('createTag called \t tag name : %s', tag)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
 
   this.make_request(options, {}, ready)
 }
@@ -147,8 +146,8 @@ proto.deleteTag = function(tag, ready) {
     , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
 
-  log.info('deleteTag called \t tag name : %s', tag)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('deleteTag called \t tag name : %s', tag)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
 
   this.make_request(options, {}, ready)
 }
@@ -162,8 +161,8 @@ proto.getDeviceTokens = function(ready) {
     , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
 
-  log.info('getDeviceTokens called')
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getDeviceTokens called')
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
 
   this.make_request(options, {}, ready)
 }
@@ -176,8 +175,8 @@ proto.getDeviceToken = function(deviceToken, ready) {
     , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
 
-  log.info('getDeviceToken called \t device_token : %s', deviceToken)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getDeviceToken called \t device_token : %s', deviceToken)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
 
   this.make_request(options, {}, ready)
 }
@@ -190,8 +189,8 @@ proto.getApids = function(ready) {
     , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
 
-  log.info('getApids called')
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getApids called')
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -203,8 +202,8 @@ proto.getApid = function(apid, ready) {
     , header: 'Content-type: application/vnd.urbanairship+json; version=3; charset=utf8;' 
   }
 
-  log.info('getApid called \t apid : %s', apid)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getApid called \t apid : %s', apid)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -214,15 +213,15 @@ proto.sendPush = function(push, ready) {
     , options
     , body
 
-  log.info('sendPush called')
-  log.debug('building payload')
+  this.log.info('sendPush called')
+  this.log.debug('building payload')
   // build payload
   payload = push.toJSON()
-  log.debug('done building payload')
+  this.log.debug('done building payload')
 
   body = JSON.stringify(payload)
 
-  log.debug('push payload : %s', b)
+  this.log.debug('push payload : %s', b)
 
   options = {
       method: 'POST'
@@ -234,7 +233,7 @@ proto.sendPush = function(push, ready) {
             }
   }
 
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -243,16 +242,16 @@ proto.validatePush = function(push, ready) {
     , payload
     , body
 
-  log.info('validatePush called')
+  this.log.info('validatePush called')
 
-  log.debug('building payload')
+  this.log.debug('building payload')
   // build payload
   payload = push.toJSON()
-  log.debug('done building payload')
+  this.log.debug('done building payload')
 
   body = JSON.stringify(payload)
 
-  log.debug('push payload : %s', b)
+  this.log.debug('push payload : %s', b)
 
   options = {
       method: 'POST'
@@ -264,7 +263,7 @@ proto.validatePush = function(push, ready) {
             }
   }
 
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -274,16 +273,16 @@ proto.schedulePush = function(schedule, ready) {
     , options
     , body
 
-  log.info('schedulePush called')
+  this.log.info('schedulePush called')
 
-  log.debug('building payload')
+  this.log.debug('building payload')
   // build payload
   payload = schedule.toJSON()
-  log.debug('done building payload')
+  this.log.debug('done building payload')
 
   body = JSON.stringify(payload)
 
-  log.debug('schedule payload : %s', b)
+  this.log.debug('schedule payload : %s', b)
 
   options = {
       method: 'POST'
@@ -295,7 +294,7 @@ proto.schedulePush = function(schedule, ready) {
             }
   }
 
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -307,8 +306,8 @@ proto.listSchedules = function(ready) {
     , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
   }
 
-  log.info('listSchedules called')
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('listSchedules called')
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -320,8 +319,8 @@ proto.listSchedule = function(scheduleID, ready) {
     , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
   }
 
-  log.info('listSchedule called \t schedule id : %s', scheduleID)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('listSchedule called \t schedule id : %s', scheduleID)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -330,16 +329,16 @@ proto.updateSchedule = function(scheduleID, schedule, ready) {
     , options
     , body
 
-  log.info('updateSchedule called \t schedule id : %s', scheduleID)
+  this.log.info('updateSchedule called \t schedule id : %s', scheduleID)
 
-  log.debug('building payload')
+  this.log.debug('building payload')
   // build payload
   payload = schedule.toJSON()
-  log.debug('done building payload')
+  this.log.debug('done building payload')
 
   body = JSON.stringify(payload)
 
-  log.debug('schedule payload : %s', b)
+  this.log.debug('schedule payload : %s', b)
 
   options = {
       method: 'PUT'
@@ -351,7 +350,7 @@ proto.updateSchedule = function(scheduleID, schedule, ready) {
             }
   }
 
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -363,8 +362,8 @@ proto.deleteSchedule = function(scheduleID, ready) {
     , headers: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;'}   
   }
 
-  log.info('delete schedule called \t schedule id : %s', scheduleID)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('delete schedule called \t schedule id : %s', scheduleID)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -377,8 +376,8 @@ proto.getSegments = function(ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getSegments called')
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getSegments called')
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -390,8 +389,8 @@ proto.getSegment = function(segment_id, ready) {
       , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getSegment called \t segment id : %s', segment_id)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getSegment called \t segment id : %s', segment_id)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -400,14 +399,14 @@ proto.createSegment = function(segment, ready) {
     , options
     , body
 
-  log.info('createSegment called')
-  log.debug('building payload')
+  this.log.info('createSegment called')
+  this.log.debug('building payload')
   payload = segment.toJSON()
-  log.debug('done building payload')
+  this.log.debug('done building payload')
 
   body = JSON.stringify(payload)
 
-  log.debug('segment payload : %s', b)
+  this.log.debug('segment payload : %s', b)
 
   options = {
       method: 'POST'
@@ -419,7 +418,7 @@ proto.createSegment = function(segment, ready) {
             }
   }
 
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -428,15 +427,15 @@ proto.changeSegment = function(segment_id, segment, ready) {
     , options
     , body
 
-  log.info('changeSegment called \t segment id : %s', segment_id)
+  this.log.info('changeSegment called \t segment id : %s', segment_id)
 
-  log.debug('building payload')
+  this.log.debug('building payload')
   payload = segment.toJSON()
-  log.debug('done building payload')
+  this.log.debug('done building payload')
 
   body = JSON.stringify(payload)
 
-  log.debug('segment payload : %s', b)
+  this.log.debug('segment payload : %s', b)
 
   options = {
       method: 'PUT'
@@ -449,7 +448,7 @@ proto.changeSegment = function(segment_id, segment, ready) {
             }
   }
 
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -461,8 +460,8 @@ proto.deleteSegment = function(segment_id, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('deleteSegment called \t segment id : %s ', segment_id)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('deleteSegment called \t segment id : %s ', segment_id)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -482,8 +481,8 @@ proto.getLocationFromString = function(query, alias, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getLocationFromString called \t query : %s \t alias : %s', query, alias)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getLocationFromString called \t query : %s \t alias : %s', query, alias)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -502,8 +501,8 @@ proto.getLocationFromLatLon = function(lat, lon, alias, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getLocationFromLatLon called \t lat : %s \t lon : %s \t alias : %s', lat, lon, alias)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getLocationFromLatLon called \t lat : %s \t lon : %s \t alias : %s', lat, lon, alias)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -522,8 +521,8 @@ proto.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, read
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getLocationFromLatLonBounds called \t lat1 : %s \t lon1 : %s \t lat2 : %s \t lon2 : %s \t alias : %s', lat1, lon1, lat2, lon2, alias)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getLocationFromLatLonBounds called \t lat1 : %s \t lon1 : %s \t lat2 : %s \t lon2 : %s \t alias : %s', lat1, lon1, lat2, lon2, alias)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -536,8 +535,8 @@ proto.getLocationFromAlias = function(query, alias, ready) {
       , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
     }
 
-  log.info('getLocationFromAlias called \t query : %s \t alias : %s', query, alias)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getLocationFromAlias called \t query : %s \t alias : %s', query, alias)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -550,8 +549,8 @@ proto.getActiveUserCount = function(date, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getActiveUserCount called \t date : %s', date.toJSON())
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getActiveUserCount called \t date : %s', date.toJSON())
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -563,8 +562,8 @@ proto.getResponseReport = function(start, end, precision, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getResponseReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getResponseReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -576,8 +575,8 @@ proto.getAppOpensReport = function(start, end, precision, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getAppOpensReportcalled \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getAppOpensReportcalled \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -589,8 +588,8 @@ proto.getTimeInAppReport = function(start, end, precision, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getTimeInAppReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getTimeInAppReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -602,8 +601,8 @@ proto.getOptInReport = function(start, end, precision, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getOptInReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getOptInReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -615,8 +614,8 @@ proto.getOptOutReport = function(start, end, precision, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getOptOutReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getOptOutReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -628,8 +627,8 @@ proto.getPushReport = function(start, end, precision, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getPushReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getPushReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -641,8 +640,8 @@ proto.getResponseListing = function(start, end, limit, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getReponseListing called \t start : %s \t end : %s \t limit : %s', start.toJSON(), end.toJSON(), limit)    
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getReponseListing called \t start : %s \t end : %s \t limit : %s', start.toJSON(), end.toJSON(), limit)    
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -654,8 +653,8 @@ proto.getIndividualResponseStatistics = function(pushID, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getIndividualResponseStatistics called \t push id : %s',pushID)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getIndividualResponseStatistics called \t push id : %s',pushID)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -667,8 +666,8 @@ proto.getStatistics = function(start, end, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getStatistics called \t start : %s \t end : %s', start.toJSON(), end.toJSON())    
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getStatistics called \t start : %s \t end : %s', start.toJSON(), end.toJSON())    
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -681,8 +680,8 @@ proto.getPerPush = function(pushID, ready) {
     , header: { 'Accept': 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getPerPush called \t push id : %s',pushID)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getPerPush called \t push id : %s',pushID)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, data)
 }
 
@@ -694,8 +693,8 @@ proto.getPerPushSeries = function(pushID, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getPerPushSeries called \t push id : %s',pushID)
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getPerPushSeries called \t push id : %s',pushID)
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -707,13 +706,13 @@ proto.getPerPushSeriesWithPrecision = function(pushID, precision, ready) {
     , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.info('getPerPushSeriesWithPrecision called \t push id : %s \t precision : %s', pushID, precision)    
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getPerPushSeriesWithPrecision called \t push id : %s \t precision : %s', pushID, precision)    
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
 proto.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, precision, ready) {
-  log.info('getPerPushSeriesWithPrecisionAndRange called \t push id : %s \t start : %s \t end : %s \t precision : %s',pushID, start.toJSON(), end.toJSON(), precision)        
+  this.log.info('getPerPushSeriesWithPrecisionAndRange called \t push id : %s \t start : %s \t end : %s \t precision : %s',pushID, start.toJSON(), end.toJSON(), precision)        
 
   var options = {
         method: 'GET'
@@ -722,7 +721,7 @@ proto.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, preci
       , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
 
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
@@ -737,9 +736,9 @@ proto.responseLUT = function name(path, method) {
     , secondary_pathname = path_names[3] || ''
     , third_pathname = path_names[4]
 
-  log.debug('Calling responseLUT | path: %s | method: %s', path, method)
+  this.log.debug('Calling responseLUT | path: %s | method: %s', path, method)
 
-  if(primary_path_name === 'push') {
+  if(primary_pathname === 'push') {
     // push & validate push
     if(method === 'POST') {
       return 'object'
@@ -747,36 +746,36 @@ proto.responseLUT = function name(path, method) {
       // push/stats
       return 'object'
     }
-  } else if(primary_path_name === 'schedules') {
+  } else if(primary_pathname === 'schedules') {
     // schedules
     if(method === 'POST' || method === 'GET' || method === 'PUT') {
       return 'object'
     } else {
       return 'none'
     }
-  } else if(primary_path_name === 'apids') {
+  } else if(primary_pathname === 'apids') {
 
-    if(secondary_path_name.length === 0) {
+    if(secondary_pathname.length === 0) {
       return 'apids'
     } else {
       return 'object'
     }
 
-  } else if(primary_path_name === 'device_tokens') {
-    if(secondary_path_name.length === 0) {
+  } else if(primary_pathname === 'device_tokens') {
+    if(secondary_pathname.length === 0) {
       return 'device_tokens'
     } else {
       return 'object'
     }
-  } else if(primary_path_name === 'tags') {
+  } else if(primary_pathname === 'tags') {
     if(method === 'POST' || method === 'PUT' || method === 'DELETE') {
       return 'none'
     } else {
       return 'tags'
     }
-  } else if(primary_path_name === 'segments') {
+  } else if(primary_pathname === 'segments') {
     if(method === 'GET') {
-      if(secondary_path_name.length === 0) {
+      if(secondary_pathname.length === 0) {
         return 'segments'
       } else {
         return 'object'
@@ -784,9 +783,9 @@ proto.responseLUT = function name(path, method) {
     } else {
       return 'none'
     }
-  } else if(primary_path_name === 'reports') {
+  } else if(primary_pathname === 'reports') {
 
-    if(secondary_path_name === 'responses') {
+    if(secondary_pathname === 'responses') {
 
       if(third_path_name === 'list') {
         return 'pushes'
@@ -809,30 +808,30 @@ proto.responseLUT = function name(path, method) {
       , optins: 'optins'
     }
 
-    return map[secondary_path_name]
+    return map[secondary_pathname]
 
-  } else if(primary_path_name === 'location' && method === 'GET') {
+  } else if(primary_pathname === 'location' && method === 'GET') {
     return 'object'
   }
 }
 
 proto.processApiResponse = function(error, response, body, data, ready) {
-  log.debug('processApiResponse called')
-  log.debug('response status code %s', response.statusCode)
+  this.log.debug('processApiResponse called')
+  this.log.debug('response status code %s', response.statusCode)
 
-  log.debug('error %s', error)
+  this.log.debug('error %s', error)
 
-  log.debug('body length %s', body.length)
-  log.debug('body : %s', body)
+  this.log.debug('body length %s', body.length)
+  this.log.debug('body : %s', body)
 
-  log.debug('Looking up API response type...')
+  this.log.debug('Looking up API response type...')
   
   var apiResponseType = this.responseLUT(
       response.request.uri.pathname
     , response.req.method
   )
 
-  log.debug('API reponse type : ' + apiResponseType)
+  this.log.debug('API reponse type : ' + apiResponseType)
 
   // possible options at this point
   /*
@@ -854,74 +853,73 @@ proto.processApiResponse = function(error, response, body, data, ready) {
       
   */
   // 
-  
-  if(apiResponseType === 'none') {
-    log.debug('API response type was \'none\'.')
-    log.debug('Calling final callback function passing the status code and null data.')
-    log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: null }))
 
-    self.sendToFinalCallback( response.statusCode, body, ready )
+  if(apiResponseType === 'none') {
+    this.log.debug('API response type was \'none\'.')
+    this.log.debug('Calling final callback function passing the status code and null data.')
+    this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: null }))
+
+    this.sendToFinalCallback(response.statusCode, body, ready)
     return
   } else if(apiResponseType === 'object') {
-    log.debug('API response type was \'object\'')
+    this.log.debug('API response type was \'object\'')
 
     try {
-      log.debug('Trying to parse body as JSON object')                
+      this.log.debug('Trying to parse body as JSON object')                
       var b = JSON.parse(body)
-      log.debug('Succeeded parsing body as JSON object')
+      this.log.debug('Succeeded parsing body as JSON object')
+      this.log.debug('Calling final callback function passing the status code and returning a javascript object as the data.')
+      this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: b }))
       
-      log.debug('Calling final callback function passing the status code and returning a javascript object as the data.')
-      log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: b }))
-      
-      self.sendToFinalCallback( response.statusCode, b, ready )
+      this.sendToFinalCallback(response.statusCode, b, ready)
       return
     } catch(e) {
-      log.debug('Failed trying to parse body as JSON object')
-      log.debug('Calling final callback function passing the status code and returning simple text string as the data.')
-      log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: body }))
+      this.log.debug('Failed trying to parse body as JSON object')
+      this.log.debug('Calling final callback function passing the status code and returning simple text string as the data.')
+      this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: body }))
       
-      self.sendToFinalCallback( response.statusCode, body, ready )
+      this.sendToFinalCallback(response.statusCode, body, ready)
       return
     }
   } else {
       
-    log.debug('API response type \'%s\' possibly has a next page', apiResponseType)
+    this.log.debug('API response type \'%s\' possibly has a next page', apiResponseType)
     
     if(body.length === 0) {
       // there is a 504, all hell is breaking loose
       // sometimes the last page of a series of requests is empty and will time out
       
-      log.debug("last page returned zero byte body with response code %s", response.statusCode)
-      log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
-      log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
+      this.log.debug("last page returned zero byte body with response code %s", response.statusCode)
+      this.log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
+      this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
       
-      self.sendToFinalCallback( response.statusCode, data, ready )
+      this.sendToFinalCallback( response.statusCode, data, ready )
       return
     }
-    
-    var d = JSON.parse(body);
-         
-    if(data[apiResponseType] === undefined) {
-      log.debug('Creating Array in data object')
-      data[apiResponseType] = []
-    }                 
 
-    log.debug('Appending elements in the body to the data array')
+    var d = JSON.parse(body);
+
+    if(data[apiResponseType] === undefined) {
+      this.log.debug('Creating Array in data object')
+      data[apiResponseType] = []
+    }
+
+    this.log.debug('Appending elements in the body to the data array')
     d[apiResponseType].forEach(function(item) {
       data[apiResponseType].push(item)
     })
-                
+
     if(d.next_page === undefined) {
-      log.debug('next_page was undefined')
-      
+      this.log.debug('next_page was undefined')
+
       // run the callback
-      log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
-      log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
-      
-      self.sendToFinalCallback( response.statusCode, data, ready )
+      this.log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
+      this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
+
+      this.sendToFinalCallback( response.statusCode, data, ready )
       return
     } else {
-      log.debug('getting next page: %s', d.next_page)
+      this.log.debug('getting next page: %s', d.next_page)
 
       // run the request again with the URI found in the next page
       var options = {
@@ -931,7 +929,7 @@ proto.processApiResponse = function(error, response, body, data, ready) {
           , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
       }
 
-      log.debug('Making HTTP request with options %s', JSON.stringify(options))                        
+      this.log.debug('Making HTTP request with options %s', JSON.stringify(options))                        
       this.make_request(options, data, ready)
     }
   }
@@ -940,8 +938,8 @@ proto.processApiResponse = function(error, response, body, data, ready) {
 proto.sendToFinalCallback = function(status_code, data, ready) {
     var status_first = status_code.toString().charAt(0)
 
-    log.debug('sendToFinalCallback caled')
-    log.info('status code : %s', status_code)
+    this.log.debug('sendToFinalCallback caled')
+    this.log.info('status code : %s', status_code)
     
     if(status_first === '4' || status_first === '5') {
       // error

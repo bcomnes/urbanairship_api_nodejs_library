@@ -116,13 +116,13 @@ proto.toJSON = function() {
     payload.audience = 'all'
   }
 
-  if(this.message !== undefined) {
+  if(this.message) {
     payload.message = this.message.toJSON()
   }
 
   return payload
 
-  function set_all(notification) {
+  function set_to_all(notification) {
     return notification.deviceType === 'all'
   }
 }
