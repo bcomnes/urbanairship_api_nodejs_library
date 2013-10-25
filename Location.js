@@ -58,10 +58,7 @@ proto.toJSON = function() {
 
   payload.date = {}
 
-  if(this.recent === true) {
-    payload.date.recent = {}
-    payload.date.recent[this.resolution] = this.recentRange
-  } else {
+  if(!this.recent) {
     var split_start = this.start.toJSON().split('T')
       , split_end = this.end.toJSON().split('T')
 
@@ -102,8 +99,10 @@ proto.toJSON = function() {
       payload.date.years.start = split_start[0].substring(0, 4)
       payload.date.years.end = split_end[0].substring(0, 4)
     }
+  } else {
+    payload.date.recent = {}
+    payload.date.recent[this.resolution] = this.recentRange
   }
 
   return payload
-
 }

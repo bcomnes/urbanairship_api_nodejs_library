@@ -344,8 +344,8 @@ proto.getSegments = function(ready) {
 
 proto.getSegment = function(segment_id, ready) {
   var options = {
-        method: 'GET'
-      , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+      method: 'GET'
+    , url: 'https://go.urbanairship.com/api/segments/' + segment_id
   }
 
   this.log.info('getSegment called \t segment id : %s', segment_id)
@@ -454,7 +454,8 @@ proto.getLocationFromLatLon = function(lat, lon, alias, ready) {
   this.make_request(options, {}, ready)
 }
 
-proto.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, ready) {
+proto.getLocationFromLatLonBounds =
+function(lat1, lon1, lat2, lon2, alias, ready) {
   var params = [lat1, lon1, lat2, lon2].join(',')
     , options
 
@@ -528,88 +529,138 @@ proto.getResponseReport = function(start, end, precision, ready) {
 proto.getAppOpensReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/reports/opens/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , url: 'https://go.urbanairship.com/api/reports/opens/?start=' +
+        start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
-  this.log.info('getAppOpensReportcalled \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getAppOpensReportcalled \t start : %s \t end : %s \t ' +
+      'precision : %s'
+    , start.toJSON()
+    , end.toJSON()
+    , precision
+  )
+
   this.make_request(options, {}, ready)
 }
 
 proto.getTimeInAppReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/reports/timeinapp/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , url: 'https://go.urbanairship.com/api/reports/timeinapp/?start=' +
+        start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
-  this.log.info('getTimeInAppReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getTimeInAppReport called \t start : %s \t end : %s \t ' +
+      'precision : %s'
+    , start.toJSON()
+    , end.toJSON()
+    , precision
+  )
+
   this.make_request(options, {}, ready)
 }
 
 proto.getOptInReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/reports/optins/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , url: 'https://go.urbanairship.com/api/reports/optins/?start=' +
+        start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
-  this.log.info('getOptInReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getOptInReport called \t start : %s \t end : %s \t ' +
+      'precision : %s'
+    , start.toJSON()
+    , end.toJSON()
+    , precision
+  )
+
   this.make_request(options, {}, ready)
 }
 
 proto.getOptOutReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/reports/optouts/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , url: 'https://go.urbanairship.com/api/reports/optouts/?start=' +
+        start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
-  this.log.info('getOptOutReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getOptOutReport called \t start : %s \t end : %s \t ' +
+      'precision : %s'
+    , start.toJSON()
+    , end.toJSON()
+    , precision
+  )
+
   this.make_request(options, {}, ready)
 }
 
 proto.getPushReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/reports/sends/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , url: 'https://go.urbanairship.com/api/reports/sends/?start=' +
+        start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
-  this.log.info('getPushReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getPushReport called \t start : %s \t end : %s \t precision' +
+      ' : %s'
+    , start.toJSON()
+    , end.toJSON()
+    , precision
+  )
+
   this.make_request(options, {}, ready)
 }
 
 proto.getResponseListing = function(start, end, limit, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/reports/responses/list/?start='+start.toJSON()+'&end='+end.toJSON()+'&limit='+limit
+    , url: 'https://go.urbanairship.com/api/reports/responses/list/?start=' +
+        start.toJSON() + '&end=' + end.toJSON() + '&limit=' + limit
   }
 
-  this.log.info('getReponseListing called \t start : %s \t end : %s \t limit : %s', start.toJSON(), end.toJSON(), limit)    
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getReponseListing called \t start : %s \t end : %s \t limit' +
+      ' : %s'
+    , start.toJSON()
+    , end.toJSON()
+    , limit
+  )
+
   this.make_request(options, {}, ready)
 }
 
 proto.getIndividualResponseStatistics = function(pushID, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/reports/responses/'+pushID
+    , url: 'https://go.urbanairship.com/api/reports/responses/' + pushID
   }
 
-  this.log.info('getIndividualResponseStatistics called \t push id : %s',pushID)
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getIndividualResponseStatistics called \t push id : %s'
+    , pushID
+  )
+
   this.make_request(options, {}, ready)
 }
 
 proto.getStatistics = function(start, end, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/push/stats/?start='+start.toJSON()+'&end='+end.toJSON()
+    , url: 'https://go.urbanairship.com/api/push/stats/?start=' +
+        start.toJSON() + '&end=' + end.toJSON()
   }
 
-  this.log.info('getStatistics called \t start : %s \t end : %s', start.toJSON(), end.toJSON())    
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getStatistics called \t start : %s \t end : %s'
+    , start.toJSON()
+    , end.toJSON()
+  )
+
   this.make_request(options, {}, ready)
 }
 
@@ -620,8 +671,7 @@ proto.getPerPush = function(pushID, ready) {
     , url: 'https://go.urbanairship.com/api/reports/perpush/detail/' + pushID
   }
 
-  this.log.info('getPerPush called \t push id : %s',pushID)
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info('getPerPush called \t push id : %s', pushID)
   this.make_request(options, {}, ready)
 }
 
@@ -632,30 +682,43 @@ proto.getPerPushSeries = function(pushID, ready) {
   }
 
   this.log.info('getPerPushSeries called \t push id : %s',pushID)
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, {}, ready)
 }
 
 proto.getPerPushSeriesWithPrecision = function(pushID, precision, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+ pushID + '?precision=' + precision
+    , url: 'https://go.urbanairship.com/api/reports/perpush/series/' + pushID +
+        '?precision=' + precision
   }
 
-  this.log.info('getPerPushSeriesWithPrecision called \t push id : %s \t precision : %s', pushID, precision)    
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getPerPushSeriesWithPrecision called \t push id : %s \t precision : %s'
+    , pushID
+    , precision
+  )
+
   this.make_request(options, {}, ready)
 }
 
-proto.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, precision, ready) {
-  this.log.info('getPerPushSeriesWithPrecisionAndRange called \t push id : %s \t start : %s \t end : %s \t precision : %s',pushID, start.toJSON(), end.toJSON(), precision)        
-
+proto.getPerPushSeriesWithPrecisionAndRange =
+function(pushID, start, end, precision, ready) {
   var options = {
-        method: 'GET'
-      , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+ pushID + '?precision=' + precision + '&start=' + start.toJSON() + '&end=' + end.toJSON()
+      method: 'GET'
+    , url: 'https://go.urbanairship.com/api/reports/perpush/series/' +
+        pushID + '?precision=' + precision + '&start=' + start.toJSON() +
+        '&end=' + end.toJSON()
   }
 
-  this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.log.info(
+      'getPerPushSeriesWithPrecisionAndRange called \t push id :' +
+      '%s \t start : %s \t end : %s \t precision : %s'
+    , pushID
+    , start.toJSON()
+    , end.toJSON()
+    , precision
+  )
+
   this.make_request(options, {}, ready)
 }
 
@@ -666,8 +729,9 @@ proto.responseLUT = function name(path, method) {
   // handle them all by parsing the endpoint and using an awful if/else chain
   // this is where the sausage gets made
   var path_names = path.split('/')
+
+  var secondary_pathname = path_names[3] || ''
     , primary_pathname = path_names[2]
-    , secondary_pathname = path_names[3] || ''
     , third_pathname = path_names[4]
 
   this.log.debug('Calling responseLUT | path: %s | method: %s', path, method)
@@ -676,48 +740,59 @@ proto.responseLUT = function name(path, method) {
     // push & validate push
     if(method === 'POST') {
       return 'object'
-    } else {
-      // push/stats
-      return 'object'
     }
-  } else if(primary_pathname === 'schedules') {
+
+    // push/stats
+    return 'object'
+  }
+
+  if(primary_pathname === 'schedules') {
     // schedules
     if(method === 'POST' || method === 'GET' || method === 'PUT') {
       return 'object'
-    } else {
-      return 'none'
     }
-  } else if(primary_pathname === 'apids') {
 
-    if(secondary_pathname.length === 0) {
+    return 'none'
+  }
+
+  if(primary_pathname === 'apids') {
+
+    if(!secondary_pathname.length) {
       return 'apids'
-    } else {
-      return 'object'
     }
 
-  } else if(primary_pathname === 'device_tokens') {
-    if(secondary_pathname.length === 0) {
+    return 'object'
+  }
+
+  if(primary_pathname === 'device_tokens') {
+    if(!secondary_pathname.length) {
       return 'device_tokens'
-    } else {
-      return 'object'
     }
-  } else if(primary_pathname === 'tags') {
+
+    return 'object'
+  }
+
+  if(primary_pathname === 'tags') {
     if(method === 'POST' || method === 'PUT' || method === 'DELETE') {
       return 'none'
-    } else {
-      return 'tags'
     }
-  } else if(primary_pathname === 'segments') {
+
+    return 'tags'
+  }
+
+  if(primary_pathname === 'segments') {
     if(method === 'GET') {
-      if(secondary_pathname.length === 0) {
+      if(!secondary_pathname.length) {
         return 'segments'
-      } else {
-        return 'object'
       }
-    } else {
-      return 'none'
+
+      return 'object'
     }
-  } else if(primary_pathname === 'reports') {
+
+    return 'none'
+  }
+
+  if(primary_pathname === 'reports') {
 
     if(secondary_pathname === 'responses') {
 
@@ -744,7 +819,9 @@ proto.responseLUT = function name(path, method) {
 
     return map[secondary_pathname]
 
-  } else if(primary_pathname === 'location' && method === 'GET') {
+  }
+
+  if(primary_pathname === 'location' && method === 'GET') {
     return 'object'
   }
 }
@@ -784,90 +861,118 @@ proto.processApiResponse = function(error, response, body, data, ready) {
               send another request with the updated URL
           }
       }
-      
-  */
-  // 
 
+  */
+  //
   if(apiResponseType === 'none') {
     this.log.debug('API response type was \'none\'.')
-    this.log.debug('Calling final callback function passing the status code and null data.')
-    this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: null }))
+    this.log.debug(
+        'Calling final callback function passing the status code and null ' +
+        'data.'
+    )
+    this.log.debug(
+        'returned data : %s'
+      , JSON.stringify({ status_code: response.statusCode, data: null })
+    )
 
-    this.sendToFinalCallback(response.statusCode, body, ready)
-    return
-  } else if(apiResponseType === 'object') {
+    return this.sendToFinalCallback(response.statusCode, body, ready)
+  }
+
+  if(apiResponseType === 'object') {
     this.log.debug('API response type was \'object\'')
 
     try {
-      this.log.debug('Trying to parse body as JSON object')                
-      var b = JSON.parse(body)
-      this.log.debug('Succeeded parsing body as JSON object')
-      this.log.debug('Calling final callback function passing the status code and returning a javascript object as the data.')
-      this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: b }))
+      this.log.debug('Trying to parse body as JSON object')
 
-      this.sendToFinalCallback(response.statusCode, b, ready)
-      return
+      var b = JSON.parse(body)
+
+      this.log.debug('Succeeded parsing body as JSON object')
+      this.log.debug(
+          'Calling final callback function passing the status code and ' +
+          'returning a javascript object as the data.'
+      )
+      this.log.debug(
+          'returned data : %s'
+        , JSON.stringify({ status_code: response.statusCode, data: b })
+      )
+
+      return this.sendToFinalCallback(response.statusCode, b, ready)
     } catch(e) {
       this.log.debug('Failed trying to parse body as JSON object')
-      this.log.debug('Calling final callback function passing the status code and returning simple text string as the data.')
-      this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: body }))
+      this.log.debug(
+          'Calling final callback function passing the status code and ' +
+          'returning simple text string as the data.'
+      )
+      this.log.debug(
+          'returned data : %s'
+        , JSON.stringify({ status_code: response.statusCode, data: body })
+      )
 
-      this.sendToFinalCallback(response.statusCode, body, ready)
-      return
-    }
-  } else {
-
-    this.log.debug('API response type \'%s\' possibly has a next page', apiResponseType)
-
-    if(!body.length) {
-      // there is a 504, all hell is breaking loose
-      // sometimes the last page of a series of requests is empty and will time out
-
-      this.log.debug('last page returned zero byte body with response code %s'
-        , response.statusCode)
-      this.log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
-      this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
-
-      this.sendToFinalCallback( response.statusCode, data, ready )
-      return
-    }
-
-    var d = JSON.parse(body)
-
-    if(data[apiResponseType] === undefined) {
-      this.log.debug('Creating Array in data object')
-      data[apiResponseType] = []
-    }
-
-    this.log.debug('Appending elements in the body to the data array')
-    d[apiResponseType].forEach(function(item) {
-      data[apiResponseType].push(item)
-    })
-
-    if(d.next_page === undefined) {
-      this.log.debug('next_page was undefined')
-
-      // run the callback
-      this.log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
-      this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
-
-      this.sendToFinalCallback( response.statusCode, data, ready )
-      return
-    } else {
-      this.log.debug('getting next page: %s', d.next_page)
-
-      // run the request again with the URI found in the next page
-      var options = {
-            method: response.req.method
-          , auth: this.auth
-          , url: d.next_page
-          , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-      }
-
-      this.log.debug('Making HTTP request with options %s', JSON.stringify(options))                        
-      this.make_request(options, data, ready)
+      return this.sendToFinalCallback(response.statusCode, body, ready)
     }
   }
+
+  this.log.debug(
+      'API response type \'%s\' possibly has a next page'
+    , apiResponseType
+  )
+
+  if(!body.length) {
+    // there is a 504, all hell is breaking loose
+    // sometimes the last page of a series of requests is empty and will
+    // time out
+
+    this.log.debug('last page returned zero byte body with response code %s'
+      , response.statusCode)
+    this.log.debug(
+        'Calling final callback function passing the status code and ' +
+        'returning array of objects as the data.'
+    )
+    this.log.debug(
+        'returned data : %s'
+      , JSON.stringify({ status_code: response.statusCode, data: data })
+    )
+
+    return this.sendToFinalCallback( response.statusCode, data, ready )
+  }
+
+  var d = JSON.parse(body)
+
+  if(data[apiResponseType] === undefined) {
+    this.log.debug('Creating Array in data object')
+    data[apiResponseType] = []
+  }
+
+  this.log.debug('Appending elements in the body to the data array')
+  d[apiResponseType].forEach(function(item) {
+    data[apiResponseType].push(item)
+  })
+
+  if(!d.next_page) {
+    this.log.debug('next_page was undefined')
+
+    // run the callback
+    this.log.debug(
+        'Calling final callback function passing the status code and ' +
+        'returning array of objects as the data.'
+    )
+    this.log.debug(
+        'returned data : %s'
+      , JSON.stringify({ status_code: response.statusCode, data: data })
+    )
+
+    return this.sendToFinalCallback( response.statusCode, data, ready )
+  }
+
+  this.log.debug('getting next page: %s', d.next_page)
+
+  // run the request again with the URI found in the next page
+  var options = {
+      method: response.req.method
+    , url: d.next_page
+  }
+
+  this.make_request(options, data, ready)
 }
 
 proto.sendToFinalCallback = function(status_code, data, ready) {
