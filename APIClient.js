@@ -93,6 +93,7 @@ proto.make_request = function(options, data, ready) {
   }
 
   options.auth = self.auth()
+  options.url = 'https://go.urbanairship.com/api' + options.url
 
   self.log.debug(
       'Making HTTP request with options %s'
@@ -127,7 +128,7 @@ proto.tagDevices = function(tag, ready) {
 
   options = {
       method: 'POST'
-    , uri: 'https://go.urbanairship.com/api/tags/' + tag.name
+    , url: '/tags/' + tag.name
     , body: body
   }
 
@@ -138,7 +139,7 @@ proto.getTags = function(ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , uri: 'https://go.urbanairship.com/api/tags/'
+    , url: '/tags/'
   }
 
   this.log.info('getTags called')
@@ -149,7 +150,7 @@ proto.createTag = function(tag, ready) {
   var options = {
       method: 'PUT'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/tags/' + tag
+    , url: '/tags/' + tag
   }
 
   this.log.info('createTag called \t tag name : %s', tag)
@@ -160,7 +161,7 @@ proto.deleteTag = function(tag, ready) {
   var options = {
       method: 'DELETE'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/tags/' + tag
+    , url: '/tags/' + tag
   }
 
   this.log.info('deleteTag called \t tag name : %s', tag)
@@ -172,7 +173,7 @@ proto.getDeviceTokens = function(ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/device_tokens/'
+    , url: '/device_tokens/'
   }
 
   this.log.info('getDeviceTokens called')
@@ -183,7 +184,7 @@ proto.getDeviceToken = function(deviceToken, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/device_tokens/' + deviceToken
+    , url: '/device_tokens/' + deviceToken
   }
 
   this.log.info('getDeviceToken called \t device_token : %s', deviceToken)
@@ -194,7 +195,7 @@ proto.getApids = function(ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/apids/'
+    , url: '/apids/'
   }
 
   this.log.info('getApids called')
@@ -205,7 +206,7 @@ proto.getApid = function(apid, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/apids/' + apid
+    , url: '/apids/' + apid
   }
 
   this.log.info('getApid called \t apid : %s', apid)
@@ -230,7 +231,7 @@ proto.sendPush = function(push, ready) {
 
   options = {
       method: 'POST'
-    , url: 'https://go.urbanairship.com/api/push/'
+    , url: '/push/'
     , body: body
   }
 
@@ -254,7 +255,7 @@ proto.validatePush = function(push, ready) {
 
   options = {
       method: 'POST'
-    , url: 'https://go.urbanairship.com/api/push/validate/'
+    , url: '/push/validate/'
     , body: body
   }
 
@@ -280,7 +281,7 @@ proto.schedulePush = function(schedule, ready) {
 
   options = {
       method: 'POST'
-    , url: 'https://go.urbanairship.com/api/schedules/'
+    , url: '/schedules/'
     , body: body
   }
 
@@ -290,7 +291,7 @@ proto.schedulePush = function(schedule, ready) {
 proto.listSchedules = function(ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/schedules/'
+    , url: '/schedules/'
   }
 
   this.log.info('listSchedules called')
@@ -300,7 +301,7 @@ proto.listSchedules = function(ready) {
 proto.listSchedule = function(scheduleID, ready) {
   var options = {
       method: 'GET'
-    , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
+    , url: '/schedules/' + scheduleID
   }
 
   this.log.info('listSchedule called \t schedule id : %s', scheduleID)
@@ -325,7 +326,7 @@ proto.updateSchedule = function(scheduleID, schedule, ready) {
 
   options = {
       method: 'PUT'
-    , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
+    , url: '/schedules/' + scheduleID
     , body: body
   }
 
@@ -335,7 +336,7 @@ proto.updateSchedule = function(scheduleID, schedule, ready) {
 proto.deleteSchedule = function(scheduleID, ready) {
   var options = {
       method: 'DELETE'
-    , url: 'https://go.urbanairship.com/api/schedules/' + scheduleID
+    , url: '/schedules/' + scheduleID
   }
 
   this.log.info('delete schedule called \t schedule id : %s', scheduleID)
@@ -347,7 +348,7 @@ proto.getSegments = function(ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/segments/'
+    , url: '/segments/'
   }
 
   this.log.info('getSegments called')
@@ -358,7 +359,7 @@ proto.getSegment = function(segment_id, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+    , url: '/segments/' + segment_id
   }
 
   this.log.info('getSegment called \t segment id : %s', segment_id)
@@ -381,7 +382,7 @@ proto.createSegment = function(segment, ready) {
 
   options = {
       method: 'POST'
-    , url: 'https://go.urbanairship.com/api/segments/'
+    , url: '/segments/'
     , body: body
   }
 
@@ -405,7 +406,7 @@ proto.changeSegment = function(segment_id, segment, ready) {
 
   options = {
       method: 'PUT'
-    , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+    , url: '/segments/' + segment_id
     , body: body
   }
 
@@ -416,7 +417,7 @@ proto.deleteSegment = function(segment_id, ready) {
   var options = {
       method: 'DELETE'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/segments/' + segment_id
+    , url: '/segments/' + segment_id
   }
 
   this.log.info('deleteSegment called \t segment id : %s ', segment_id)
@@ -435,7 +436,7 @@ proto.getLocationFromString = function(query, alias, ready) {
   options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/location/' + params
+    , url: '/location/' + params
   }
 
   this.log.info(
@@ -457,7 +458,7 @@ proto.getLocationFromLatLon = function(lat, lon, alias, ready) {
   options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/location/' + params
+    , url: '/location/' + params
   }
 
   this.log.info(
@@ -482,7 +483,7 @@ function(lat1, lon1, lat2, lon2, alias, ready) {
   options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/location/' + params
+    , url: '/location/' + params
   }
 
   this.log.info(
@@ -502,7 +503,7 @@ proto.getLocationFromAlias = function(query, alias, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/location/from-alias?' + alias +
+    , url: '/location/from-alias?' + alias +
         '=' + query
   }
 
@@ -520,7 +521,7 @@ proto.getActiveUserCount = function(date, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/activeusers/?date=' +
+    , url: '/reports/activeusers/?date=' +
         date.toJSON()
   }
 
@@ -532,7 +533,7 @@ proto.getResponseReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/responses/?start=' +
+    , url: '/reports/responses/?start=' +
         start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
@@ -550,7 +551,7 @@ proto.getAppOpensReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/opens/?start=' +
+    , url: '/reports/opens/?start=' +
         start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
@@ -569,7 +570,7 @@ proto.getTimeInAppReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/timeinapp/?start=' +
+    , url: '/reports/timeinapp/?start=' +
         start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
@@ -588,7 +589,7 @@ proto.getOptInReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/optins/?start=' +
+    , url: '/reports/optins/?start=' +
         start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
@@ -607,7 +608,7 @@ proto.getOptOutReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/optouts/?start=' +
+    , url: '/reports/optouts/?start=' +
         start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
@@ -626,7 +627,7 @@ proto.getPushReport = function(start, end, precision, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/sends/?start=' +
+    , url: '/reports/sends/?start=' +
         start.toJSON() + '&end=' + end.toJSON() + '&precision=' + precision
   }
 
@@ -645,7 +646,7 @@ proto.getResponseListing = function(start, end, limit, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/responses/list/?start=' +
+    , url: '/reports/responses/list/?start=' +
         start.toJSON() + '&end=' + end.toJSON() + '&limit=' + limit
   }
 
@@ -664,7 +665,7 @@ proto.getIndividualResponseStatistics = function(pushID, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/responses/' + pushID
+    , url: '/reports/responses/' + pushID
   }
 
   this.log.info(
@@ -679,7 +680,7 @@ proto.getStatistics = function(start, end, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/push/stats/?start=' +
+    , url: '/push/stats/?start=' +
         start.toJSON() + '&end=' + end.toJSON()
   }
 
@@ -697,7 +698,7 @@ proto.getPerPush = function(pushID, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/perpush/detail/' + pushID
+    , url: '/reports/perpush/detail/' + pushID
   }
 
   this.log.info('getPerPush called \t push id : %s', pushID)
@@ -708,7 +709,7 @@ proto.getPerPushSeries = function(pushID, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/perpush/series/' + pushID
+    , url: '/reports/perpush/series/' + pushID
   }
 
   this.log.info('getPerPushSeries called \t push id : %s',pushID)
@@ -719,7 +720,7 @@ proto.getPerPushSeriesWithPrecision = function(pushID, precision, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/perpush/series/' + pushID +
+    , url: '/reports/perpush/series/' + pushID +
         '?precision=' + precision
   }
 
@@ -737,7 +738,7 @@ function(pushID, start, end, precision, ready) {
   var options = {
       method: 'GET'
     , headers: {}
-    , url: 'https://go.urbanairship.com/api/reports/perpush/series/' +
+    , url: '/reports/perpush/series/' +
         pushID + '?precision=' + precision + '&start=' + start.toJSON() +
         '&end=' + end.toJSON()
   }
