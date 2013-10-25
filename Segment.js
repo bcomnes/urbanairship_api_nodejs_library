@@ -15,7 +15,7 @@ proto.setName = function(name) {
 }
 
 proto.setCriteria = function(criteria) {
-  proto.criteria = criteria
+  this.criteria = criteria
 }
 
 proto.toJSON = function() {

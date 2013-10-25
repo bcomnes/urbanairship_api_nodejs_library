@@ -56,11 +56,11 @@ proto.toJSON = function() {
   payload.content_type = this.content_type
   payload.content_encoding = this.content_encoding
 
-  if(this.expiry !== undefined) {
+  if(this.expiry) {
     payload.expiry = this.expiry
   }
 
-  if(this.icons !== undefined) {
+  if(this.icons) {
     payload.icons.list_icon = this.icons
   }
 

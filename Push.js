@@ -59,7 +59,7 @@ proto.toJSON = function() {
 
     payload_notification = payload.notification[device_type]
 
-    if(notification.alert !== undefined) {
+    if(notification.alert) {
       payload_notification.alert = notification.alert
     }
 
@@ -74,35 +74,35 @@ proto.toJSON = function() {
     }
 
     if(device_type === 'ios') {
-      if(notification.badge !== undefined) {
+      if(notification.badge) {
         payload_notification.badge = notification.badge
       }
 
-      if(notification.sound !== undefined) {
+      if(notification.sound) {
         payload_notification.sound = notification.sound
       }
 
-      if(notification.content_available !== undefined) {
+      if(notification.content_available) {
         payload_notification.content_available = notification.content_available
       }
 
-      if(notification.expiry !== undefined) {
+      if(notification.expiry) {
         payload_notification.expiry = notification.expiry
       }
 
-      if(notification.priority !== undefined) {
+      if(notification.priority) {
         payload_notification.priority = notification.priority
       }
     } else if(device_type === 'android') {
-      if(notification.collapse_key !== undefined) {
+      if(notification.collapse_key) {
         payload_notification.collapse_key = notification.collapse_key
       }
 
-      if(notification.time_to_live !== undefined) {
+      if(notification.time_to_live) {
         payload_notification.time_to_live = notification.time_to_live
       }
 
-      if(notification.delay_while_idle !== undefined) {
+      if(notification.delay_while_idle) {
         payload_notification.delay_while_idle = notification.delay_while_idle
       }
     }
@@ -110,7 +110,7 @@ proto.toJSON = function() {
 
   // determine if there is an ad-hoc audience selector,
   // if not set the audience to 'all'
-  if(this.audience.operator !== undefined) {
+  if(this.audience.operator) {
     payload.audience = this.audience.toJSON({ use_segments: true })
   } else {
     payload.audience = 'all'
