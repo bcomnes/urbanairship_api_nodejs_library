@@ -122,10 +122,10 @@ var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg'
         s.setPush(p)
 //
      client.schedulePush(s, displayResults)
-//     client.listSchedules(displayResults)
-//     client.listSchedule('bc048b8f-027f-440a-ac11-ac5f57ff9d58', displayResults)
-//     client.updateSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', s, displayResults)  
-//     client.deleteSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
+     client.listSchedules(displayResults)
+     client.listSchedule('bc048b8f-027f-440a-ac11-ac5f57ff9d58', displayResults)
+     client.updateSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', s, displayResults)  
+     client.deleteSchedule('a1b8a9cc-7155-402f-ac98-de0ae06f7361', displayResults)
 
 // Reports                 
 //     client.getPushReport(new Date(2013,1,1), new Date(2013,6,5), 'MONTHLY', displayResults)
@@ -148,12 +148,12 @@ var client = new UA.APIClient('YPDu34kcS6q42ioANsv8KA', 'IXGz8cn_TdmnSJ44N6ssAg'
 //     client.getPerPushSeriesWithPrecisionAndRange('9012ad1a-59fd-11e2-8074-d4bed9a88504', new Date(Date.UTC(2013,0,9)), new Date(Date.UTC(2013,0,10)), 'DAILY', displayResults)
 
 // Location
-//     client.getLocationFromString('Memphis,TN','city',displayResults);
-//     client.getLocationFromString('Street', null, displayResults);
-//     client.getLocationFromString('92705', 'postalcode', displayResults);
-//     client.getLocationFromLatLon(37.805172690644405,-122.44863510131836, 'postalcode', displayResults)
-//     client.getLocationFromLatLonBounds(32.528832,-124.482003,32.709517,-114.131211,'postalcode',displayResults)    
-//     client.getLocationFromAlias("CA", "us_state", displayResults)    
+     client.getLocationFromString('Memphis,TN','city',displayResults);
+     client.getLocationFromString('Street', null, displayResults);
+     client.getLocationFromString('92705', 'postalcode', displayResults);
+     client.getLocationFromLatLon(37.805172690644405,-122.44863510131836, 'postalcode', displayResults)
+     client.getLocationFromLatLonBounds(32.528832,-124.482003,32.709517,-114.131211,'postalcode',displayResults)    
+     client.getLocationFromAlias("CA", "us_state", displayResults)    
 
 // build audience
 
