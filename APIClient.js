@@ -938,7 +938,7 @@ proto.processApiResponse = function(error, response, body, data, ready) {
 
   var d = JSON.parse(body)
 
-  if(data[apiResponseType] === undefined) {
+  if(!data[apiResponseType]) {
     this.log.debug('Creating Array in data object')
     data[apiResponseType] = []
   }

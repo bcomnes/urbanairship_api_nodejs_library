@@ -26,7 +26,7 @@ proto.setPush = function(push) {
 proto.toJSON = function() {
   var payload = {}
 
-  if(this.name !== undefined) {
+  if(this.name) {
     payload.name = this.name
   }
 

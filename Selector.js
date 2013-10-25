@@ -28,7 +28,7 @@ proto.addSegment = function(segment, b_is_not) {
     this.segments.push(segment)
   }
 
-  this.segments.push({ 'segment': segment, not: true})
+  this.segments.push({ segment: segment, not: true})
 }
 
 proto.addTag = function(tag, b_is_not) {

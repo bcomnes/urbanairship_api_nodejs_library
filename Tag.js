@@ -17,12 +17,12 @@ proto.setName = function(name) {
   this.name = name
 }
 
-proto.addDeviceToken = function(deviceToken) {
-  this.addedDeviceTokens.push(deviceToken)
+proto.addDeviceToken = function(device_token) {
+  this.addedDeviceTokens.push(device_token)
 }
 
-proto.removeDeviceToken = function(deviceToken) {
-  this.removedDeviceTokens.push(deviceToken)
+proto.removeDeviceToken = function(device_token) {
+  this.removedDeviceTokens.push(device_token)
 }
 
 proto.addApid = function(apid) {

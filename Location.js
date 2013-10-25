@@ -28,13 +28,13 @@ proto.setLastSeen = function(lastSeen) {
   this.lastSeen = lastSeen
 }
 
-proto.setTimeRelative = function(recentRange, resolution, lastSeen) {
-  if(lastSeen !== undefined) {
-    this.lastSeen = lastSeen
+proto.setTimeRelative = function(recent_range, resolution, last_seen) {
+  if(lastSeen) {
+    this.lastSeen = last_seen
   }
 
   this.recent = true
-  this.recentRange = recentRange
+  this.recentRange = recent_range
   this.resolution = resolution
 }
 
@@ -50,7 +50,7 @@ proto.toJSON = function() {
   var payload = {}
 
   // id or alias
-  if(this.id === undefined) {
+  if(!this.id) {
     payload.alias = this.alias
   } else {
     payload.id = this.id
