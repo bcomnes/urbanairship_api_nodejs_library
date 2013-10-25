@@ -70,11 +70,11 @@ proto.toJSON = function() {
     if(this.resolution === 'minutes') {
       payload.date.minutes.start = [
           split_start[0]
-        , splitStart[1].substring(0, 5)
+        , split_start[1].substring(0, 5)
       ].join(' ')
       payload.date.minutes.end = [
           split_end[0]
-        , splitEnd[1].substring(0,5)
+        , split_end[1].substring(0,5)
       ].join(' ')
     } else if(this.resolution === 'hours') {
       payload.date.hours.start = [
@@ -96,11 +96,11 @@ proto.toJSON = function() {
       ].join('-W')
       payload.date.weeks.end = split_end[0]
     } else if(this.resolution === 'months') {
-      payload.date.months.start = splitStart[0].substring(0, 7)
-      payload.date.months.end = splitEnd[0].substring(0, 7)
+      payload.date.months.start = split_start[0].substring(0, 7)
+      payload.date.months.end = split_end[0].substring(0, 7)
     } else if(this.resolution === 'years') {
-      payload.date.years.start = splitStart[0].substring(0, 4)
-      payload.date.years.end = splitEnd[0].substring(0, 4)
+      payload.date.years.start = split_start[0].substring(0, 4)
+      payload.date.years.end = split_end[0].substring(0, 4)
     }
   }
 

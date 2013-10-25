@@ -221,7 +221,7 @@ proto.sendPush = function(push, ready) {
 
   body = JSON.stringify(payload)
 
-  this.log.debug('push payload : %s', b)
+  this.log.debug('push payload : %s', body)
 
   options = {
       method: 'POST'
@@ -251,7 +251,7 @@ proto.validatePush = function(push, ready) {
 
   body = JSON.stringify(payload)
 
-  this.log.debug('push payload : %s', b)
+  this.log.debug('push payload : %s', body)
 
   options = {
       method: 'POST'
@@ -282,7 +282,7 @@ proto.schedulePush = function(schedule, ready) {
 
   body = JSON.stringify(payload)
 
-  this.log.debug('schedule payload : %s', b)
+  this.log.debug('schedule payload : %s', body)
 
   options = {
       method: 'POST'
@@ -338,7 +338,7 @@ proto.updateSchedule = function(scheduleID, schedule, ready) {
 
   body = JSON.stringify(payload)
 
-  this.log.debug('schedule payload : %s', b)
+  this.log.debug('schedule payload : %s', body)
 
   options = {
       method: 'PUT'
@@ -682,7 +682,7 @@ proto.getPerPush = function(pushID, ready) {
 
   this.log.info('getPerPush called \t push id : %s',pushID)
   this.log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  this.make_request(options, data)
+  this.make_request(options, {}, ready)
 }
 
 proto.getPerPushSeries = function(pushID, ready) {
@@ -885,11 +885,12 @@ proto.processApiResponse = function(error, response, body, data, ready) {
       
     this.log.debug('API response type \'%s\' possibly has a next page', apiResponseType)
     
-    if(body.length === 0) {
+    if(!body.length) {
       // there is a 504, all hell is breaking loose
       // sometimes the last page of a series of requests is empty and will time out
       
-      this.log.debug("last page returned zero byte body with response code %s", response.statusCode)
+      this.log.debug('last page returned zero byte body with response code %s'
+        , response.statusCode)
       this.log.debug('Calling final callback function passing the status code and returning array of objects as the data.')
       this.log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: data }))
       
@@ -897,7 +898,7 @@ proto.processApiResponse = function(error, response, body, data, ready) {
       return
     }
 
-    var d = JSON.parse(body);
+    var d = JSON.parse(body)
 
     if(data[apiResponseType] === undefined) {
       this.log.debug('Creating Array in data object')
