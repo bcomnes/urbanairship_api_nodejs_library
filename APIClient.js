@@ -576,183 +576,136 @@ proto.getLocationFromString = function(query, alias, ready) {
 }
 
 proto.getLocationFromLatLon = function(lat, lon, alias, ready) {
-  log.info('getLocationFromLatLon called \t lat : %s \t lon : %s \t alias : %s', lat, lon, alias)
+  var params = [lat, lon].join(',')
+    , options
   
-  var params = lat + ',' + lon
-  
-  if(alias !== null) {
+  if(alias) {
     params += '?type=' + alias
   }
   
-  var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/location/' + params
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+  options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/location/' + params
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('getLocationFromLatLon called \t lat : %s \t lon : %s \t alias : %s', lat, lon, alias)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
+  this.make_request(options, ready)
 }
 
 proto.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, ready) {
+  var params = [lat1, lon1, lat2, lon2].join(',')
+    , options
 
-  log.info('getLocationFromLatLonBounds called \t lat1 : %s \t lon1 : %s \t lat2 : %s \t lon2 : %s \t alias : %s', lat1, lon1, lat2, lon2, alias)
-  
-  var params = lat1 + ',' + lon1 + ',' + lat2 + ',' + lon2
-  
-  if(alias !== null) {
+  if(alias) {
     params += '?type=' + alias
   }
   
-  var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/location/' + params
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+  options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/location/' + params
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('getLocationFromLatLonBounds called \t lat1 : %s \t lon1 : %s \t lat2 : %s \t lon2 : %s \t alias : %s', lat1, lon1, lat2, lon2, alias)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
-}    
+  this.make_request(options, ready)
+}
 
 proto.getLocationFromAlias = function(query, alias, ready) {
-  log.info('getLocationFromAlias called \t query : %s \t alias : %s', query, alias)
-  
   var params = '?' + alias + '=' + query
-  
-  var options = {
+    , options = {
         method: 'GET'
       , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
       , url: 'https://go.urbanairship.com/api/location/from-alias' + params
       , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-  }
-  
+    }
+
+  log.info('getLocationFromAlias called \t query : %s \t alias : %s', query, alias)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
-}      
+  this.make_request(options, ready)
+}
 
 // reports
 proto.getActiveUserCount = function(date, ready) {
+  var options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/activeusers/?date='+date.toJSON()
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+  }
+
   log.info('getActiveUserCount called \t date : %s', date.toJSON())
-
-  var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/activeusers/?date='+date.toJSON()
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-  }
-  
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
+  this.make_request(options, ready)
 }
-    
-proto.getResponseReport = function(start, end, precision, ready) {
-  log.info('getResponseReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
 
+proto.getResponseReport = function(start, end, precision, ready) {
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/responses/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/responses/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('getResponseReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
+  this.make_request(options, ready)
 }
 
 proto.getAppOpensReport = function(start, end, precision, ready) {
-  log.info('getAppOpensReportcalled \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
-
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/opens/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/opens/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('getAppOpensReportcalled \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
-  
+  this.make_request(options, ready)
 }
 
 proto.getTimeInAppReport = function(start, end, precision, ready) {
-  log.info('getTimeInAppReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/timeinapp/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/timeinapp/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('getTimeInAppReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
+  this.make_request(options, ready)
 }
 
 proto.getOptInReport = function(start, end, precision, ready) {
-  log.info('getOptInReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/optins/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/optins/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('getOptInReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
-  
+  this.make_request(options, ready)
 }
 
 proto.getOptOutReport = function(start, end, precision, ready) {
-  log.info('getOptOutReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/optouts/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/optouts/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('getOptOutReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body) {
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
+  this.make_request(options, ready)
 }
 
 proto.getPushReport = function(start, end, precision, ready) {
@@ -766,8 +719,7 @@ proto.getPushReport = function(start, end, precision, ready) {
   log.info('getPushReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   this.make_request(options, ready)
-  
-}    
+}
 
 proto.getResponseListing = function(start, end, limit, ready) {
   var options = {
