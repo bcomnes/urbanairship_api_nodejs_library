@@ -63,12 +63,12 @@ proto.getKey = function() {
   return this.appKey
 }
 
-proto.getSecret = function(){
+proto.getSecret = function() {
   return this.appSecret
 }
 
 // Tags
-proto.tagDevices = function(tag, ready){
+proto.tagDevices = function(tag, ready) {
   var payload = tag.toJSON()
     , body = JSON.stringify(payload)
     , options
@@ -135,7 +135,7 @@ prot.make_request = function(options, ready) {
 
   request(options, process_response)
   
-  function process_response(error, response, body){
+  function process_response(error, response, body) {
     var data = {}
 
     self.processApiResponse(error, response, body, data, ready)
@@ -173,7 +173,7 @@ proto.deleteTag = function(tag, ready) {
 }
 
 // Device lookup
-proto.getDeviceTokens = function(ready){
+proto.getDeviceTokens = function(ready) {
   var options = {
       method: 'GET'
     , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -187,7 +187,7 @@ proto.getDeviceTokens = function(ready){
   this.make_request(options, ready)
 }
 
-proto.getDeviceToken = function(deviceToken, ready){
+proto.getDeviceToken = function(deviceToken, ready) {
   var options = {
       method: 'GET'
     , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -201,7 +201,7 @@ proto.getDeviceToken = function(deviceToken, ready){
   this.make_request(options, ready)
 }
 
-proto.getApids = function(ready){
+proto.getApids = function(ready) {
   var options = {
         method: 'GET'
       , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
@@ -214,14 +214,14 @@ proto.getApids = function(ready){
   
   request(options, process_response)
   
-  function process_response(error, response, body){
+  function process_response(error, response, body) {
     var data = {}
 
     self.processApiResponse(error, response, body, data, ready)
   }
 }
 
-proto.getApid = function(apid, ready){
+proto.getApid = function(apid, ready) {
   var self = this
     , options = {
         method: 'GET'
@@ -235,7 +235,7 @@ proto.getApid = function(apid, ready){
   
   request(options, process_response)
   
-  function process_response(error, response, body){
+  function process_response(error, response, body) {
     var data = {}
 
     self.processApiResponse(error, response, body, data, ready)
@@ -243,7 +243,7 @@ proto.getApid = function(apid, ready){
 }
 
 // Push
-proto.sendPush = function(push, ready){
+proto.sendPush = function(push, ready) {
   var self = this
     , payload
     , options
@@ -273,14 +273,14 @@ proto.sendPush = function(push, ready){
   
   request(options, process_response)
   
-  function process_response(error, response, body){
+  function process_response(error, response, body) {
     var data = {}
 
     self.processApiResponse(error, response, body, data, ready)
   }
 }
 
-proto.validatePush = function(push, ready){
+proto.validatePush = function(push, ready) {
   log.info('validatePush called')
 
   log.debug('building payload')
@@ -304,7 +304,7 @@ proto.validatePush = function(push, ready){
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
 
     self.processApiResponse(error, response, body, data, ready)
@@ -313,7 +313,7 @@ proto.validatePush = function(push, ready){
 }
 
 // Schedule
-proto.schedulePush = function(schedule, ready){
+proto.schedulePush = function(schedule, ready) {
 
   log.info('schedulePush called')
 
@@ -338,7 +338,7 @@ proto.schedulePush = function(schedule, ready){
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
 
     self.processApiResponse(error, response, body, data, ready)
@@ -346,7 +346,7 @@ proto.schedulePush = function(schedule, ready){
   
 }
 
-proto.listSchedules = function(ready){
+proto.listSchedules = function(ready) {
 
   log.info('listSchedules called')
 
@@ -359,14 +359,14 @@ proto.listSchedules = function(ready){
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })      
 
 }
 
-proto.listSchedule = function(scheduleID, ready){
+proto.listSchedule = function(scheduleID, ready) {
 
   log.info('listSchedule called \t schedule id : %s', scheduleID)
 
@@ -379,14 +379,14 @@ proto.listSchedule = function(scheduleID, ready){
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })      
 
 }
 
-proto.updateSchedule = function(scheduleID, schedule, ready){
+proto.updateSchedule = function(scheduleID, schedule, ready) {
 
   log.info('updateSchedule called \t schedule id : %s', scheduleID)
 
@@ -411,14 +411,14 @@ proto.updateSchedule = function(scheduleID, schedule, ready){
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })  
 
 }
 
-proto.deleteSchedule = function(scheduleID, ready){
+proto.deleteSchedule = function(scheduleID, ready) {
   log.info('delete schedule called \t schedule id : %s', scheduleID)
 
   var options = {
@@ -430,7 +430,7 @@ proto.deleteSchedule = function(scheduleID, ready){
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })      
@@ -438,7 +438,7 @@ proto.deleteSchedule = function(scheduleID, ready){
 }    
 
 // Segments
-proto.getSegments = function(ready){
+proto.getSegments = function(ready) {
   log.info('getSegments called')
   
   var options = {
@@ -450,14 +450,14 @@ proto.getSegments = function(ready){
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })          
   
 }
 
-proto.getSegment = function(segment_id, ready){
+proto.getSegment = function(segment_id, ready) {
   log.info('getSegment called \t segment id : %s', segment_id)
   
   var options = {
@@ -469,13 +469,13 @@ proto.getSegment = function(segment_id, ready){
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })           
 }
 
-proto.createSegment = function(segment, ready){
+proto.createSegment = function(segment, ready) {
   log.info('createSegment called')
   log.debug('building payload')
   payload = segment.toJSON()
@@ -497,13 +497,13 @@ proto.createSegment = function(segment, ready){
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })        
 }
 
-proto.changeSegment = function(segment_id, segment, ready){
+proto.changeSegment = function(segment_id, segment, ready) {
   log.info('changeSegment called \t segment id : %s', segment_id)
   
   log.debug('building payload')
@@ -526,13 +526,13 @@ proto.changeSegment = function(segment_id, segment, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })        
 }
 
-proto.deleteSegment = function(segment_id, ready){
+proto.deleteSegment = function(segment_id, ready) {
   log.info('deleteSegment called \t segment id : %s ', segment_id)
   
   var options = {
@@ -544,19 +544,19 @@ proto.deleteSegment = function(segment_id, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })       
 }    
 
 // Location
-proto.getLocationFromString = function(query, alias, ready){
+proto.getLocationFromString = function(query, alias, ready) {
   log.info('getLocationFromString called \t query : %s \t alias : %s', query, alias)
   
   var params = '?q=' + query
   
-  if (alias !== null) {
+  if(alias !== null) {
     params += '&type=' + alias
   }
   
@@ -569,18 +569,18 @@ proto.getLocationFromString = function(query, alias, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
 }
 
-proto.getLocationFromLatLon = function(lat, lon, alias, ready){
+proto.getLocationFromLatLon = function(lat, lon, alias, ready) {
   log.info('getLocationFromLatLon called \t lat : %s \t lon : %s \t alias : %s', lat, lon, alias)
   
   var params = lat + ',' + lon
   
-  if (alias !== null) {
+  if(alias !== null) {
     params += '?type=' + alias
   }
   
@@ -593,19 +593,19 @@ proto.getLocationFromLatLon = function(lat, lon, alias, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
 }
 
-proto.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, ready){
+proto.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, ready) {
 
   log.info('getLocationFromLatLonBounds called \t lat1 : %s \t lon1 : %s \t lat2 : %s \t lon2 : %s \t alias : %s', lat1, lon1, lat2, lon2, alias)
   
   var params = lat1 + ',' + lon1 + ',' + lat2 + ',' + lon2
   
-  if (alias !== null) {
+  if(alias !== null) {
     params += '?type=' + alias
   }
   
@@ -618,13 +618,13 @@ proto.getLocationFromLatLonBounds = function(lat1, lon1, lat2, lon2, alias, read
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
 }    
 
-proto.getLocationFromAlias = function(query, alias, ready){
+proto.getLocationFromAlias = function(query, alias, ready) {
   log.info('getLocationFromAlias called \t query : %s \t alias : %s', query, alias)
   
   var params = '?' + alias + '=' + query
@@ -638,14 +638,14 @@ proto.getLocationFromAlias = function(query, alias, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
 }      
 
 // reports
-proto.getActiveUserCount = function(date, ready){
+proto.getActiveUserCount = function(date, ready) {
   log.info('getActiveUserCount called \t date : %s', date.toJSON())
 
   var options = {
@@ -657,13 +657,13 @@ proto.getActiveUserCount = function(date, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
 }
     
-proto.getResponseReport = function(start, end, precision, ready){
+proto.getResponseReport = function(start, end, precision, ready) {
   log.info('getResponseReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
 
   var options = {
@@ -675,13 +675,13 @@ proto.getResponseReport = function(start, end, precision, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
 }
 
-proto.getAppOpensReport = function(start, end, precision, ready){
+proto.getAppOpensReport = function(start, end, precision, ready) {
   log.info('getAppOpensReportcalled \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)
 
   var options = {
@@ -693,14 +693,14 @@ proto.getAppOpensReport = function(start, end, precision, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
   
 }
 
-proto.getTimeInAppReport = function(start, end, precision, ready){
+proto.getTimeInAppReport = function(start, end, precision, ready) {
   log.info('getTimeInAppReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
 
   var options = {
@@ -712,13 +712,13 @@ proto.getTimeInAppReport = function(start, end, precision, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
 }
 
-proto.getOptInReport = function(start, end, precision, ready){
+proto.getOptInReport = function(start, end, precision, ready) {
   log.info('getOptInReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
 
   var options = {
@@ -730,14 +730,14 @@ proto.getOptInReport = function(start, end, precision, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
   
 }
 
-proto.getOptOutReport = function(start, end, precision, ready){
+proto.getOptOutReport = function(start, end, precision, ready) {
   log.info('getOptOutReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
 
   var options = {
@@ -749,141 +749,110 @@ proto.getOptOutReport = function(start, end, precision, ready){
   
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
   
-  request(options, function(error, response, body){
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
 }
 
-proto.getPushReport = function(start, end, precision, ready){
-  log.info('getPushReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
-
+proto.getPushReport = function(start, end, precision, ready) {
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/sends/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/sends/?start='+start.toJSON()+'&end='+end.toJSON()+'&precision='+precision
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
-  
+
+  log.info('getPushReport called \t start : %s \t end : %s \t precision : %s', start.toJSON(), end.toJSON(), precision)    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.make_request(options, ready)
   
-  request(options, function(error, response, body){
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
 }    
 
-proto.getResponseListing = function(start, end, limit, ready){
+proto.getResponseListing = function(start, end, limit, ready) {
+  var options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/responses/list/?start='+start.toJSON()+'&end='+end.toJSON()+'&limit='+limit
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+  }
 
   log.info('getReponseListing called \t start : %s \t end : %s \t limit : %s', start.toJSON(), end.toJSON(), limit)    
+  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
+  this.make_request(options, ready)
+}
 
+proto.getIndividualResponseStatistics = function(pushID, ready) {
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/responses/list/?start='+start.toJSON()+'&end='+end.toJSON()+'&limit='+limit
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/responses/'+pushID
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
   
-  log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body){
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
-}    
-
-proto.getIndividualResponseStatistics = function(pushID, ready){
   log.info('getIndividualResponseStatistics called \t push id : %s',pushID)
-
-  var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/responses/'+pushID
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-  }
-  
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body){
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
+  this.make_request(options, ready)
 }       
 
-proto.getStatistics = function(start, end, ready){
-  log.info('getStatistics called \t start : %s \t end : %s', start.toJSON(), end.toJSON())    
-
+proto.getStatistics = function(start, end, ready) {
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/push/stats/?start='+start.toJSON()+'&end='+end.toJSON()
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/push/stats/?start='+start.toJSON()+'&end='+end.toJSON()
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
   
+  log.info('getStatistics called \t start : %s \t end : %s', start.toJSON(), end.toJSON())    
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body){
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
-}    
+  this.make_request(options, ready)
+}
 
 // per push
-proto.getPerPush = function(pushID, ready){
-  log.info('getPerPush called \t push id : %s',pushID)    
-
+proto.getPerPush = function(pushID, ready) {
   var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/perpush/detail/' + pushID
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/perpush/detail/' + pushID
+    , header: { 'Accept': 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
   }
   
+  log.info('getPerPush called \t push id : %s',pushID)
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body){
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
+  this.make_request(options, data)
 }     
 
-proto.getPerPushSeries = function(pushID, ready){
+proto.getPerPushSeries = function(pushID, ready) {
+  var options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/perpush/series/' + pushID
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+  }
+
   log.info('getPerPushSeries called \t push id : %s',pushID)
-
-  var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/perpush/series/' + pushID
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-  }
-  
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body){
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
-}    
+  this.make_request(options, ready)
+}
 
-proto.getPerPushSeriesWithPrecision = function(pushID, precision, ready){
+proto.getPerPushSeriesWithPrecision = function(pushID, precision, ready) {
+  var options = {
+      method: 'GET'
+    , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+    , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+ pushID + '?precision=' + precision
+    , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
+  }
+
   log.info('getPerPushSeriesWithPrecision called \t push id : %s \t precision : %s', pushID, precision)    
-
-  var options = {
-        method: 'GET'
-      , auth: { user: this.appKey, pass: this.appSecret, sendImmediately: true }
-      , url: 'https://go.urbanairship.com/api/reports/perpush/series/'+ pushID + '?precision=' + precision
-      , header: { 'Accept' : 'application/vnd.urbanairship+json; version=3; charset=utf8;' }   
-  }
-  
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-  
-  request(options, function(error, response, body){
+
+  request(options, function(error, response, body) {
     var data = {}
     self.processApiResponse(error, response, body, data, ready)
   })
-}    
+}
 
-proto.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, precision, ready){
+proto.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, precision, ready) {
   log.info('getPerPushSeriesWithPrecisionAndRange called \t push id : %s \t start : %s \t end : %s \t precision : %s',pushID, start.toJSON(), end.toJSON(), precision)        
 
   var options = {
@@ -894,31 +863,23 @@ proto.getPerPushSeriesWithPrecisionAndRange = function(pushID, start, end, preci
   }
 
   log.debug('Making HTTP request with options %s', JSON.stringify(options))        
-
-  request(options, function(error, response, body){
-    var data = {}
-    self.processApiResponse(error, response, body, data, ready)
-  })
-}    
+  this.make_request(options, ready)
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 proto.responseLUT = function name(path, method) {
   // there is no elegant solution to this problem
-  // every endpoint has different behavior and pertinent data        
+  // every endpoint has different behavior and pertinent data
   // handle them all by parsing the endpoint and using an awful if/else chain
   // this is where the sausage gets made
-   
-  var primaryPathName = path.split('/')[2]
-  var secondaryPathName = path.split('/')[3]
-  var thirdPathName = path.split('/')[4]
-  
-  if (secondaryPathName === undefined) {
-    secondaryPathName = ''
-  }
-  
+  var path_names = path.split('/')
+    , primary_pathname = path_names[2]
+    , secondary_pathname = path_names[3] || ''
+    , third_pathname = path_names[4]
+
   log.debug('Calling responseLUT | path: %s | method: %s', path, method)
-  
-  if(primaryPathName === 'push') {
+
+  if(primary_path_name === 'push') {
     // push & validate push
     if(method === 'POST') {
       return 'object'
@@ -926,82 +887,91 @@ proto.responseLUT = function name(path, method) {
       // push/stats
       return 'object'
     }
-  } else if (primaryPathName === 'schedules') {
+  } else if(primary_path_name === 'schedules') {
     // schedules
     if(method === 'POST' || method === 'GET' || method === 'PUT') {
       return 'object'
     } else {
       return 'none'
     }
-  } else if(primaryPathName === 'apids') {
-    
-    if(secondaryPathName.length === 0) {
+  } else if(primary_path_name === 'apids') {
+
+    if(secondary_path_name.length === 0) {
       return 'apids'
     } else {
       return 'object'
     }
-    
-  } else if(primaryPathName === 'device_tokens') {
-    if(secondaryPathName.length === 0) {
+
+  } else if(primary_path_name === 'device_tokens') {
+    if(secondary_path_name.length === 0) {
       return 'device_tokens'
     } else {
       return 'object'
     }
-  } else if(primaryPathName === 'tags') {
-    if (method === 'POST' || method === 'PUT' || method === 'DELETE') {
+  } else if(primary_path_name === 'tags') {
+    if(method === 'POST' || method === 'PUT' || method === 'DELETE') {
       return 'none'
     } else {
       return 'tags'
     }
-  } else if(primaryPathName === 'segments') {
+  } else if(primary_path_name === 'segments') {
     if(method === 'GET') {
-      if(secondaryPathName.length === 0) {
+      if(secondary_path_name.length === 0) {
         return 'segments'
       } else {
         return 'object'
-      }        
-    } else {            
+      }
+    } else {
       return 'none'
     }
-  } else if(primaryPathName === 'reports') {
-      if(secondaryPathName === 'activeusers' || secondaryPathName === 'perpush') {
-        return 'object'
-      } else if(secondaryPathName === 'sends') {
-        return 'sends'
-      } else if(secondaryPathName === 'opens') {
-        return 'opens'
-      } else if(secondaryPathName === 'timeinapp'){
-        return 'timeinapp'
-      } else if(secondaryPathName === 'optouts'){
-        return 'optouts'
-      } else if(secondaryPathName === 'optins'){
-          return 'optins'
-      } else if(secondaryPathName === 'responses') {
-        if(thirdPathName === 'list') {
-          return 'pushes'
-        } else if(thirdPathName.length === 0) {
-            return 'responses'
-        } else {
-          return 'object'
-        }
+  } else if(primary_path_name === 'reports') {
+
+    if(secondary_path_name === 'responses') {
+
+      if(third_path_name === 'list') {
+        return 'pushes'
       }
-  } else if (primaryPathName === 'location' && method === 'GET') {
+
+      if(!third_path_name.length) {
+        return 'responses'
+      }
+
+      return 'object'
+    }
+
+    var map = {
+        activeusers: 'object'
+      , perpush: 'object'
+      , sends: 'sends'
+      , opens: 'opens'
+      , timeinapp: 'timeinapp'
+      , optouts: 'optouts'
+      , optins: 'optins'
+    }
+
+    return map[secondary_path_name]
+
+  } else if(primary_path_name === 'location' && method === 'GET') {
     return 'object'
   }
 }
 
-proto.processApiResponse = function(error, response, body, data, ready){
+proto.processApiResponse = function(error, response, body, data, ready) {
   log.debug('processApiResponse called')
-  log.debug('response status code %s', response.statusCode)        
+  log.debug('response status code %s', response.statusCode)
 
   log.debug('error %s', error)
-  
+
   log.debug('body length %s', body.length)
   log.debug('body : %s', body)
 
   log.debug('Looking up API response type...')
   
-  var apiResponseType = this.responseLUT(response.request.uri.pathname, response.req.method);
+  var apiResponseType = this.responseLUT(
+      response.request.uri.pathname
+    , response.req.method
+  )
+
   log.debug('API reponse type : ' + apiResponseType)
 
   // possible options at this point
@@ -1025,14 +995,14 @@ proto.processApiResponse = function(error, response, body, data, ready){
   */
   // 
   
-  if (apiResponseType === 'none') {
+  if(apiResponseType === 'none') {
     log.debug('API response type was \'none\'.')
     log.debug('Calling final callback function passing the status code and null data.')
     log.debug('returned data : %s', JSON.stringify({ status_code: response.statusCode, data: null }))
 
     self.sendToFinalCallback( response.statusCode, body, ready )
     return
-  } else if (apiResponseType === 'object') {
+  } else if(apiResponseType === 'object') {
     log.debug('API response type was \'object\'')
 
     try {
@@ -1057,7 +1027,7 @@ proto.processApiResponse = function(error, response, body, data, ready){
       
     log.debug('API response type \'%s\' possibly has a next page', apiResponseType)
     
-    if (body.length === 0) {
+    if(body.length === 0) {
       // there is a 504, all hell is breaking loose
       // sometimes the last page of a series of requests is empty and will time out
       
@@ -1071,17 +1041,17 @@ proto.processApiResponse = function(error, response, body, data, ready){
     
     var d = JSON.parse(body);
          
-    if (data[apiResponseType] === undefined) {
+    if(data[apiResponseType] === undefined) {
       log.debug('Creating Array in data object')
       data[apiResponseType] = []
     }                 
 
     log.debug('Appending elements in the body to the data array')
-    d[apiResponseType].forEach(function(item){
+    d[apiResponseType].forEach(function(item) {
       data[apiResponseType].push(item)
     })
                 
-    if (d.next_page === undefined) {
+    if(d.next_page === undefined) {
       log.debug('next_page was undefined')
       
       // run the callback
@@ -1103,20 +1073,20 @@ proto.processApiResponse = function(error, response, body, data, ready){
       
       log.debug('Making HTTP request with options %s', JSON.stringify(options))                        
 
-      request(options, function(error, response, body){
+      request(options, function(error, response, body) {
           self.processApiResponse(error, response, body, data, ready)
       })                  
     }
   }
 }
 
-proto.sendToFinalCallback = function(status_code, data, ready){
+proto.sendToFinalCallback = function(status_code, data, ready) {
     var status_first = status_code.toString().charAt(0)
 
     log.debug('sendToFinalCallback caled')
     log.info('status code : %s', status_code)
     
-    if (status_first === '4' || status_first === '5'){
+    if(status_first === '4' || status_first === '5') {
       // error
       ready({ status_code: status_code, data: data }, null)
     } else {
