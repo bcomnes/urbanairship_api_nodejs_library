@@ -24,12 +24,12 @@ proto.setId = function(id) {
   this.id = id
 }
 
-proto.setLastSeen = function(lastSeen) {
-  this.lastSeen = lastSeen
+proto.setLastSeen = function(last_seen) {
+  this.lastSeen = last_seen
 }
 
 proto.setTimeRelative = function(recent_range, resolution, last_seen) {
-  if(lastSeen) {
+  if(last_seen) {
     this.lastSeen = last_seen
   }
 

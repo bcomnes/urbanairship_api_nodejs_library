@@ -60,7 +60,9 @@ var cons = APIClient
 
 proto.constructor = cons
 
-proto.auth = { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+proto.auth = function() {
+  return { user: this.appKey, pass: this.appSecret, sendImmediately: true }
+}
 
 proto.get_headers = {
     Accept: 'application/vnd.urbanairship+json; version=3;charset=utf8;'
@@ -77,6 +79,29 @@ proto.getKey = function() {
 
 proto.getSecret = function() {
   return this.appSecret
+}
+
+proto.make_request = function(options, data, ready) {
+  var self = this
+
+  if(options.method === 'GET' || options.method === 'DELETE') {
+    options.headers = self.get_headers
+  } else {
+    options.headers = self.post_headers
+  }
+
+  options.auth = self.auth()
+
+  self.log.debug(
+      'Making HTTP request with options %s'
+    , JSON.stringify(options)
+  )
+
+  request(options, process_response)
+
+  function process_response(error, response, body) {
+    self.processApiResponse(error, response, body, data, ready)
+  }
 }
 
 // Tags
@@ -115,29 +140,6 @@ proto.getTags = function(ready) {
 
   this.log.info('getTags called')
   this.make_request(options, {}, ready)
-}
-
-proto.make_request = function(options, data, ready) {
-  var self = this
-
-  if(options.method === 'GET' || options.method === 'DELETE') {
-    options.headers = self.get_headers
-  } else {
-    options.headers = self.post_headers
-  }
-
-  options.auth = this.auth
-
-  this.log.debug(
-      'Making HTTP request with options %s'
-    , JSON.stringify(options)
-  )
-
-  request(options, process_response)
-
-  function process_response(error, response, body) {
-    self.processApiResponse(error, response, body, data, ready)
-  }
 }
 
 proto.createTag = function(tag, ready) {
@@ -896,7 +898,7 @@ proto.processApiResponse = function(error, response, body, data, ready) {
         , JSON.stringify({ status_code: response.statusCode, data: b })
       )
 
-      return this.sendToFinalCallback(response.statusCode, b, ready)
+      this.sendToFinalCallback(response.statusCode, b, ready)
     } catch(e) {
       this.log.debug('Failed trying to parse body as JSON object')
       this.log.debug(
@@ -908,8 +910,10 @@ proto.processApiResponse = function(error, response, body, data, ready) {
         , JSON.stringify({ status_code: response.statusCode, data: body })
       )
 
-      return this.sendToFinalCallback(response.statusCode, body, ready)
+      this.sendToFinalCallback(response.statusCode, body, ready)
     }
+
+    return
   }
 
   this.log.debug(
